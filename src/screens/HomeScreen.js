@@ -1,12 +1,16 @@
 import React from 'react';
 import { View, Text, StyleSheet, Button, Alert } from 'react-native';
-import DocumentUploader from './DocumentUploader'; 
+// import DocumentUploader from './DocumentUploader'; 
 
-function HomeScreen() {
+function HomeScreen({navigation}) {
+
+  const moveTo = () => {
+    
+  }
   return (
     <View style={styles.container}>
       <Text>Welcome to the Home Screen!</Text>
-      <DocumentUploader />
+      {/* <DocumentUploader /> */}
     </View>
   );
 }
