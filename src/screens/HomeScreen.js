@@ -1,154 +1,51 @@
-// import React from 'react';
-// import { View, Text, StyleSheet, Button, Alert } from 'react-native';
-// // import DocumentUploader from './DocumentUploader'; 
-
-// function HomeScreen({navigation}) {
-
-//   const moveTo = () => {
-    
-//   }
-//   return (
-//     <View style={styles.container}>
-//       <Text>Welcome to the Home Screen!</Text>
-//       {/* <DocumentUploader /> */}
-//     </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-// });
-
-// export default HomeScreen;
-
-
+import { Center } from '@gluestack-ui/themed';
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 function HomeScreen({ navigation }) {
+
+  const navigateToDashBoard = () => {
+    navigation.navigate('Dashboard'); 
+  };
+
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerText}>Dashboard</Text>
-        <Image source={require('./../../assets/userImage.png')} style={styles.profileImage} />
+    <View style={styles.container}>
+      <TouchableOpacity onPress={navigateToDashBoard}>
+        <Image source={require('./../../assets/logo.png')} style={styles.logo} />
+      </TouchableOpacity>
+      <View style={styles.titleStyle}>
+        <Text style={styles.title}>SMART COURSE</Text>
+        <Text style={styles.title}>MANAGEMENT SYSTEM</Text>
       </View>
-      <Text style={styles.greeting}>Hey, Kristen</Text>
-      
-      <View style={styles.sectionHeader}>
-        <Text style={styles.sectionTitle}>Courses</Text>
-      </View>
-      <View style={styles.coursesContainer}>
-        {/* Course 1 */}
-        <TouchableOpacity style={styles.courseCard}>
-          <Text style={styles.courseTitle}>Project Management</Text>
-          <Text style={styles.courseDate}>Jan 6 - Apr 6, 2024</Text>
-          <Text style={styles.courseDuration}>12 weeks</Text>
-        </TouchableOpacity>
-        {/* Course 2 */}
-        <TouchableOpacity style={styles.courseCard}>
-          <Text style={styles.courseTitle}>Project Management</Text>
-          <Text style={styles.courseDate}>Jan 6 - Apr 6, 2024</Text>
-          <Text style={styles.courseDuration}>12 weeks</Text>
-        </TouchableOpacity>
-      </View>
-      
-      <View style={styles.sectionHeader}>
-        <Text style={styles.sectionTitle}>Quizzes</Text>
-        <TouchableOpacity>
-          <Text style={styles.showAll}>Show all</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.quizzesContainer}>
-        <TouchableOpacity style={styles.quizCard}>
-          <Text style={styles.quizTitle}>W1 - Overview</Text>
-        </TouchableOpacity>
-        {/* Add more quizzes as needed */}
-      </View>
-      
-      <View style={styles.bottomNavigation}>
-        {/* Navigation Icons */}
-      </View>
-    </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    backgroundColor: '#263750',
     alignItems: 'center',
-    paddingHorizontal: 20,
-    paddingTop: 40,
+    justifyContent: 'center',
   },
-  headerText: {
-    fontSize: 24,
-    fontWeight: 'bold',
+  logo: {
+    width: 160,
+    height: 240,
+    resizeMode: 'contain',
   },
-  profileImage: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-  },
-  greeting: {
-    fontSize: 20,
-    paddingHorizontal: 20,
-    marginVertical: 10,
-  },
-  sectionHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  showAll: {
+  title: {
     fontSize: 16,
-    color: '#0000ff',
+    color: '#D9D9D9',
+    marginTop: 20,
+    textAlign: 'center',
   },
-  coursesContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    padding: 20,
-  },
-  courseCard: {
-    backgroundColor: '#0000ff',
-    padding: 20,
-    borderRadius: 10,
-    width: '45%',
-  },
-  courseTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#fff',
-  },
-  courseDate: {
-    fontSize: 14,
-    color: '#fff',
-  },
-  courseDuration: {
-    fontSize: 14,
-    color: '#fff',
-  },
-  quizzesContainer: {
-    // Styles for your quizzes container
-  },
-  quizCard: {
-    // Styles for your individual quiz cards
-  },
-  bottomNavigation: {
-    // Styles for your bottom navigation
-  },
+
+  titleStyle: {
+    position: 'absolute',
+    bottom: 20,
+    left: 0,
+    right: 0,
+  }
 });
 
 export default HomeScreen;
