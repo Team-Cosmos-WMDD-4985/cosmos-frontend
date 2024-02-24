@@ -39,8 +39,14 @@ function AppStack() {
 
         />
 
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Dashboard" component={Dashboard} />       </Stack.Navigator>
+        {/* <Stack.Screen name="Home" component={HomeScreen} /> */}
+        <Stack.Screen name="Dashboard" component={Dashboard}
+          options={
+            {
+              headerShown: false
+            }
+          } />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
