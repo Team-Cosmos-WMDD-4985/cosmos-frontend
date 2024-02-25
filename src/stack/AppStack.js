@@ -9,13 +9,16 @@ const Stack = createNativeStackNavigator();
 import Welcome from '../screens/welcome';
 import Login from '../screens/login'
 import Signup from '../screens/signup'
-import AddingTopicsForQuizGeneration from "./../components/quiz/AddingTopicsForQuizGeneration"
+import AddingTopicsForQuizGeneration from "./../components/quiz/AddingTopicsForQuizGeneration";
+import Dashboard from "./../components/dashboard/dashboard";
+
 function AppStack() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
         {/* <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Welcome' }} /> */}
 
+        <Stack.Screen name="dashboard" component={Dashboard}/>
         <Stack.Screen name="Welcome" component={Welcome}
           options={
             {
