@@ -1,5 +1,5 @@
 const COLORS = {
-  primary: "#312651",
+  primary: "#263750",
   secondary: "#444262",
   tertiary: "#FF7754",
 
@@ -11,16 +11,20 @@ const COLORS = {
 };
 
 const FONT = {
-  regular: "DMRegular",
-  medium: "DMMedium",
-  bold: "DMBold",
+  // regular: "DMRegular",
+  // medium: "DMMedium",
+  // bold: "DMBold",
 };
+
+const WEIGHT = {
+  bold: 700
+}
 
 const SIZES = {
   xSmall: 10,
   small: 12,
   medium: 16,
-  large: 20,
+  large: 18,
   xLarge: 24,
   xxLarge: 32,
 };
@@ -48,4 +52,4 @@ const SHADOWS = {
   },
 };
 
-export { COLORS, FONT, SIZES, SHADOWS };
+export { COLORS, FONT, SIZES, SHADOWS, WEIGHT };

@@ -4,27 +4,27 @@ import { COLORS, FONT, SHADOWS, SIZES } from "../../constants";
 
 const styles = StyleSheet.create({
   container: () => ({
-    width: 250,
-    padding: SIZES.xLarge,
+    width: 240,
+    // padding: SIZES.xLarge,
     backgroundColor: "#FFF",
     borderRadius: SIZES.medium,
     justifyContent: "space-between",
     ...SHADOWS.medium,
     shadowColor: COLORS.white,
   }),
-  logoContainer: () => ({
-    width: 50,
-    height: 50,
-    backgroundColor: COLORS.white,
+  logoContainer:  {
+    width: "100%",
+    height:180,
+    backgroundColor: COLORS.primary,
     borderRadius: SIZES.medium,
     justifyContent: "center",
     alignItems: "center",
-  }),
-  logoImage: {
-    width: "70%",
-    height: "70%",
   },
-  companyName: {
+  logoImage: {
+    width: 50,
+    height: 50,
+  },
+  courseDate: {
     fontSize: SIZES.medium,
     fontFamily: FONT.regular,
     color: "#B3AEC6",
@@ -32,11 +32,19 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     marginTop: SIZES.large,
+    display:"flex",
+    justifyContent: "space-between",
+    flexDirection: "row"
   },
-  jobName: (selectedJob, item) => ({
+  iconStyle: {
+    width: 24,
+    height: 24
+  },  
+  courseName: ({
     fontSize: SIZES.large,
     fontFamily: FONT.medium,
     color:  COLORS.primary,
+    lineHeight: 30
   }),
   infoWrapper: {
     flexDirection: "row",

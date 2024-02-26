@@ -8,14 +8,14 @@ import styles from './CourseList.style';
 
 import QuizCard from "../../common/cards/QuizCard";
 
-const NearByJob = () => {
+const QuizList = () => {
 
   const data = [ {}, {} , {}]
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}> Nearby Jobs</Text>
+        <Text style={styles.headerTitle}>Quizzes</Text>
         <TouchableOpacity> 
           <Text style={styles.headerBtn}> Show all </Text> 
           </TouchableOpacity>
@@ -23,10 +23,10 @@ const NearByJob = () => {
       
       <View style={styles.cardsContainer}>
         { 
-          data?.map((job) => (
+          data?.map((job, index) => (
               <QuizCard
                 job={job}
-                key={`nearby-job-${job?.job_id}`}
+                key={`quiz-list-${index}`}
               />
             ))
         }
@@ -35,4 +35,4 @@ const NearByJob = () => {
   )
 }
 
-export default NearByJob
+export default QuizList

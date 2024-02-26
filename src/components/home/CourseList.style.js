@@ -16,6 +16,8 @@ const styles = StyleSheet.create({
     fontSize: SIZES.large,
     fontFamily: FONT.medium,
     color: COLORS.primary,
+    lineHeight: 28,
+    fontWeight: "700"
   },
   headerBtn: {
     fontSize: SIZES.medium,

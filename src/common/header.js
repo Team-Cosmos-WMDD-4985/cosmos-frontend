@@ -1,68 +1,20 @@
-import React, { useState } from 'react';
-import { 
-  View, 
-  Text ,
-  TextInput,
-  TouchableOpacity,
-  Image,
-  FlatList
-} from 'react-native'
+import React from 'react'
+import { TouchableOpacity, Image, Text } from 'react-native'
 
-import styles from './welcome.style';
-import { icons, SIZES, Sizes } from "../../../constants";
+import styles from './screenheader.style'
 
-const jobTypes = ["Full-time", "Part-Time", "Contract"]
-
-const Welcome = () => {
-  const [activeJobType, setActiveJobType] = useState("Full-time");
-
+const ScreenHeaderBtn = ({iconUrl, dimension}) => {
+  
   return (
-    <View>
-
-      <View style={styles.container}>
-        <Text style={styles.userName}>Hello AKash</Text>
-        <Text style={styles.welcomeMessage}> Find your perfect job </Text>
-      </View>
-
-      <View style={styles.searchContainer} >
-        <View style={styles.searchWrapper}>
-          <TextInput
-            style={styles.searchInput}
-            value=''
-            onChange={ () => {}}
-            placeholder='What are you looking for'
-          />
-        </View>
-
-        <TouchableOpacity style={styles.searchBtn} onPress={() => {}}>
-          <Image
-            source={icons.search}
-            resizeMode='contain'
-            style={styles.searchBtnImage}
-          />
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.tabsContainer}>
-
-        <FlatList
-          data={jobTypes}
-          renderItem={( {item} ) => {
-            return (
-              <TouchableOpacity 
-                style={styles.tab(activeJobType, item)}
-              >
-                <Text style={styles.tabText(activeJobType, item)}> {item} </Text>
-              </TouchableOpacity>
-          )}}
-          keyExtractor={item => item}
-          contentContainerStyle= {{ columnGap: SIZES.small }}
-          horizontal
-        />
-      </View>
-
-    </View>
+    // <Text>Header</Text>
+    <TouchableOpacity style={styles.btnContainer}>
+      <Image 
+        source={iconUrl}
+        resizeMode='cover'
+        style={styles.btnImg(dimension)}
+      />
+    </TouchableOpacity>
   )
 }
 
-export default Welcome
+export default ScreenHeaderBtn
