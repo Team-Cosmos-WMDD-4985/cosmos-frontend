@@ -8,6 +8,7 @@ const COLORS = {
 
   white: "#F3F4F8",
   lightWhite: "#FAFAFC",
+  button: "#C14E00",
 };
 
 const FONT = {
@@ -28,6 +29,7 @@ const SIZES = {
   xLarge: 24,
   xxLarge: 32,
 };
+
 
 const SHADOWS = {
   small: {
