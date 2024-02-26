@@ -13,7 +13,7 @@ import Signup from '../screens/signup'
 import AddingTopicsForQuizGeneration from "./../components/quiz/AddingTopicsForQuizGeneration";
 import Dashboard from "./../components/dashboard/dashboard";
 import DashboardHeader from "./../common/header";
-import MainTabScreen from "../screens/MinTabScreen"
+import NavigationBar from "../screens/NavigationBar"
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -48,21 +48,15 @@ function AppStack() {
 
         <Stack.Screen
           name="Main"
-          component={MainTabScreen}
+          component={NavigationBar}
           options={{ headerShown: false }}
         />
-        {/* Uncomment these if you want these screens outside of the bottom tabs */}
-        {/* <Stack.Screen name="Welcome" component={Welcome} options={{ headerShown: false }} />
-        <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
-        <Stack.Screen name="Signup" component={Signup} options={{ headerShown: false }} /> */}
+        <Stack.Screen
+          name="Dashboard" component={Dashboard}
+          options={{ headerShown: false }}
+        />
 
 
-        <Stack.Screen name="Dashboard" component={Dashboard}
-          options={
-            {
-              headerShown: false
-            }
-          } />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -2,17 +2,18 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Image } from 'react-native';
-import { icons } from "./../constants";
+import { icons } from "../constants";
 
 
-import AddingTopicsForQuizGeneration from "./../components/quiz/AddingTopicsForQuizGeneration";
-import Dashboard from "./../components/dashboard/dashboard";
+import AddingTopicsForQuizGeneration from "../components/quiz/AddingTopicsForQuizGeneration";
+import Dashboard from "../components/dashboard/dashboard";
+import CoursesScreen from "../components/courses/CoursesScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 // Bottom Tabs
-function MainTabScreen() {
+function NavigationBar() {
     return (
         <Tab.Navigator
             screenOptions={({ route }) => ({
@@ -21,9 +22,9 @@ function MainTabScreen() {
 
                     if (route.name === 'Dashboard') {
                         iconName = focused ? icons.dashboard_active : icons.dashboard_inactive;
-                    } else if (route.name === 'Add Topics') {
+                    } else if (route.name === 'Courses') {
                         iconName = focused ? icons.course_active : icons.course_inactive;
-                    } else if (route.name === 'Profile') {
+                    } else if (route.name === 'quizzes') {
                         iconName = focused ? icons.quiz_active : icons.quiz_inactive;
                     }
 
@@ -31,14 +32,18 @@ function MainTabScreen() {
                 },
                 tabBarActiveTintColor: 'tomato',
                 tabBarInactiveTintColor: 'gray',
+                tabBarStyle: { height: 100 },
+                tabBarShowLabel: false, 
+                headerShown: false,
+
             })}
         >
             <Tab.Screen name="Dashboard" component={Dashboard} />
-            <Tab.Screen name="Add Topics" component={AddingTopicsForQuizGeneration} />
-            <Tab.Screen name="Profile" component={Dashboard} />
+            <Tab.Screen name="Courses" component={CoursesScreen} />
+            <Tab.Screen name="quizzes" component={AddingTopicsForQuizGeneration} />
         </Tab.Navigator>
     );
 }
 
 
-export default MainTabScreen;
+export default NavigationBar;

@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, SafeAreaView } from 'react-native';
+import { COLORS, icons, images, SIZES } from "./../../constants";
 
 function CoursesScreen({ navigation }) {
   const hasCourses = false;
@@ -8,28 +9,26 @@ function CoursesScreen({ navigation }) {
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Courses</Text>
-        <Image source={require('./path-to-your-profile-image.jpg')} style={styles.profileImage} />
       </View>
       <Text style={styles.greeting}>Hi, Professor</Text>
 
       {hasCourses ? (
-        // If there are courses, display them here
         <View>
           {/* List of courses */}
         </View>
       ) : (
         // This will display if there are no courses
         <View style={styles.noCoursesContainer}>
-          <Image source={require('./path-to-illustration.jpg')} style={styles.illustration} />
-          <Text style={styles.noCoursesText}>You did not have any courses.</Text>
-          <Text style={styles.noCoursesPrompt}>Would you like to create a course now?</Text>
+          <Image source={images.noCourse} style={styles.illustration} />
+          <Text style={styles.noCoursesText}>You do not have any courses.</Text>
+          <Text style={styles.noCoursesText}>Would you like to create a course now?</Text>
+
           <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('CreateCourse')}>
             <Text style={styles.addButtonText}>+ Add Course</Text>
           </TouchableOpacity>
         </View>
       )}
 
-      {/* Bottom navigation goes here */}
     </SafeAreaView>
   );
 }
@@ -43,12 +42,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    paddingTop: 40,
     paddingHorizontal: 20,
-    paddingTop: 20,
   },
   headerTitle: {
-    fontSize: 24,
+    fontSize: SIZES.xxLarge,
     fontWeight: 'bold',
+    color: COLORS.primary,
   },
   profileImage: {
     width: 40,
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   greeting: {
-    fontSize: 20,
+    fontSize: SIZES.xLarge,
     marginHorizontal: 20,
     marginTop: 20,
     marginBottom: 30,
@@ -73,25 +73,22 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   noCoursesText: {
-    fontSize: 18,
-    textAlign: 'center',
-    marginTop: 20,
-  },
-  noCoursesPrompt: {
-    fontSize: 16,
-    color: 'gray',
+    fontSize: SIZES.large,
     textAlign: 'center',
     marginTop: 10,
+    fontWeight: 'bold'
   },
   addButton: {
-    backgroundColor: 'orange',
+    backgroundColor: COLORS.button,
     paddingVertical: 15,
     paddingHorizontal: 30,
     borderRadius: 30,
-    marginTop: 20,
-  },
+    marginTop: 40,
+    alignItems: 'flex-end',
+    marginLeft: 100,
+  },  
   addButtonText: {
-    fontSize: 18,
+    fontSize: SIZES.large,
     color: '#fff',
     textAlign: 'center',
   },
