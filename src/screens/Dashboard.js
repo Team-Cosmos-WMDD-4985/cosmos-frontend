@@ -1,5 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, Tab } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import { NavigationContainer } from '@react-navigation/native';
 
 function HomeScreen({ navigation }) {
     return (
@@ -18,7 +21,8 @@ function HomeScreen({ navigation }) {
                 <View style={styles.coursesContainer}>
 
                     <TouchableOpacity style={styles.courseCard}>
-                        <Image source={require('./../../assets/course_La.png')} style={styles.courseImage} />
+                        <Image source={require('./../../assets/course_La.png')} style={styles.courseImage}
+                        />
                         <Text style={styles.courseTitle}>Project Management</Text>
                         <Text style={styles.courseDate}>Jan 6 - Apr 6, 2024</Text>
                         <Text style={styles.courseDuration}>12 weeks</Text>
@@ -48,18 +52,20 @@ function HomeScreen({ navigation }) {
                 </View>
             </ScrollView>
 
-            <View style={styles.sectionHeader}>
-                <Text style={styles.sectionTitle}>Quizzes</Text>
-                <TouchableOpacity>
-                    <Text style={styles.showAll}>Show all</Text>
-                </TouchableOpacity>
-            </View>
-            <View style={styles.quizzesContainer}>
-                <TouchableOpacity style={styles.quizCard}>
-                    <Text style={styles.quizTitle}>W1 - Overview</Text>
-                    <Text style={styles.quizTitle}>W2 - GuideLines</Text>
-                    <Text style={styles.quizTitle}>W3 - Summary</Text>
-                </TouchableOpacity>
+            <View style={styles.quizSection}>
+                <View style={styles.sectionHeader}>
+                    <Text style={styles.sectionTitle}>Quizzes</Text>
+                    <TouchableOpacity>
+                        <Text style={styles.showAll}>Show all</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.quizzesContainer}>
+                    <TouchableOpacity style={styles.quizCard}>
+                        <Text style={styles.quizTitle}>W1 - Overview</Text>
+                        <Text style={styles.quizTitle}>W2 - GuideLines</Text>
+                        <Text style={styles.quizTitle}>W3 - Summary</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
 
             <View style={styles.bottomNavigation}>
@@ -67,9 +73,50 @@ function HomeScreen({ navigation }) {
                 <Image source={require('./../../assets/button_Courses.png')} style={styles.navButtons} />
                 <Image source={require('./../../assets/button_quizzes.png')} style={styles.navButtons} />
             </View>
+
+            <NavigationContainer>
+                <Tab.Navigator
+                    screenOptions={({ route }) => ({
+                        tabBarIcon: ({ focused, color, size }) => {
+                            let iconName;
+
+                            if (route.name === 'Home') {
+                                iconName = focused ? 'ios-home' : 'ios-home-outline';
+                            } else if (route.name === 'Settings') {
+                                iconName = focused ? 'ios-settings' : 'ios-settings-outline';
+                            }
+
+                            // You can return any component that you like here!
+                            return <Ionicons name={iconName} size={size} color={color} />;
+                        },
+                        tabBarActiveTintColor: 'tomato',
+                        tabBarInactiveTintColor: 'gray',
+                    })}
+                >
+
+                    <Tab.Screen name="Home" component={HomeScreen} />
+                    {/* <Tab.Screen name="Settings" component={SettingsScreen} /> */}
+                </Tab.Navigator>
+            </NavigationContainer>
+
+
         </ScrollView>
     );
 }
+// const Tab = createBottomTabNavigator();
+
+// const HomeScreen = () => (
+//     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+//       <Text>Home!</Text>
+//     </View>
+//   );
+  
+//   const SettingsScreen = () => (
+//     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+//       <Text>Settings!</Text>
+//     </View>
+//   );
+
 
 const styles = StyleSheet.create({
     container: {
@@ -154,11 +201,22 @@ const styles = StyleSheet.create({
         height: 50,
     },
     quizCard: {
-        // Styles for your individual quiz cards
+        borderRadius: 5,
+        color: '#263750',
+    },
+    quizSection: {
+        borderRadius: 5,
+        color: '#263750',
+        borderColor: '#263750',
+        borderWidth: 1,
+        padding: 10,
     },
     bottomNavigation: {
-        // display: flex,
-
+        display: 'flex',
+        position: 'absolute',
+        bottom: 20,
+        left: 0,
+        right: 0,
     },
     navButtons: {
         width: 30,

@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, SafeAreaView } from 'react-native';
 
 function CoursesScreen({ navigation }) {
-  const hasCourses = false; // Change this to true if there are courses to display
+  const hasCourses = false;
 
   return (
     <SafeAreaView style={styles.container}>

@@ -16,7 +16,7 @@ function AppStack() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Welcome" component={Welcome}
+        {/* <Stack.Screen name="Welcome" component={Welcome}
           options={
             {
               headerShown: false
@@ -37,9 +37,14 @@ function AppStack() {
             }
           }
 
-        />
+        /> */}
 
-        {/* <Stack.Screen name="Home" component={HomeScreen} /> */}
+        {/* <Stack.Screen name="Home" component={HomeScreen}
+          options={
+            {
+              headerShown: false
+            }
+          } /> */}
         <Stack.Screen name="Dashboard" component={Dashboard}
           options={
             {
