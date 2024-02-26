@@ -1,8 +1,9 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { COLORS, icons, images, SIZES   } from "./../constants";
+import { COLORS, icons, images, SIZES } from "./../constants";
 import { NavigationContainer } from '@react-navigation/native';
-const Stack = createNativeStackNavigator();
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 
 
 // componenets
@@ -12,15 +13,17 @@ import Signup from '../screens/signup'
 import AddingTopicsForQuizGeneration from "./../components/quiz/AddingTopicsForQuizGeneration";
 import Dashboard from "./../components/dashboard/dashboard";
 import DashboardHeader from "./../common/header";
+import MainTabScreen from "../screens/MinTabScreen"
+
+const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 
 function AppStack() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {/* <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Welcome' }} /> */}
-
-        <Stack.Screen name="Welcome" component={Welcome}
+        {/* <Stack.Screen name="Welcome" component={Welcome}
           options={
             {
               headerShown: false
@@ -41,14 +44,19 @@ function AppStack() {
             }
           }
 
-        /> */}
+        />  */}
 
-        {/* <Stack.Screen name="Home" component={HomeScreen}
-          options={
-            {
-              headerShown: false
-            }
-          } /> */}
+        <Stack.Screen
+          name="Main"
+          component={MainTabScreen}
+          options={{ headerShown: false }}
+        />
+        {/* Uncomment these if you want these screens outside of the bottom tabs */}
+        {/* <Stack.Screen name="Welcome" component={Welcome} options={{ headerShown: false }} />
+        <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+        <Stack.Screen name="Signup" component={Signup} options={{ headerShown: false }} /> */}
+
+
         <Stack.Screen name="Dashboard" component={Dashboard}
           options={
             {
