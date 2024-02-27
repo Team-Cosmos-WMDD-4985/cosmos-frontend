@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Button, Image, TouchableOpacity, Platform, ScrollView, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, Button, Image, TouchableOpacity, ScrollView, SafeAreaView, Modal } from 'react-native';
 import { COLORS, SIZES } from "./../../constants";
-// import { Chip } from 'react-native-paper';
 import { HStack, VStack } from 'native-base';
+import { icons, images } from "./../../constants";
+
+// import { Chip } from 'react-native-paper';
 // import Chip from '@mui/material/Chip';
 // import Stack from '@mui/material/Stack';
 // import Fab from '@mui/material/Fab';
@@ -39,18 +41,65 @@ function AddTopics({ navigation }) {
     //     { week: 1, topics: ['User flow', 'Persona'] },
     //     { week: 2, topics: ['Low fidelity wire-frames'] },
     // ]);
+    const [modalVisible, setModalVisible] = useState(false);
+
 
     const handleCreate = () => {
-        // Handle the create button press
+        setModalVisible(true);
     };
 
-    
+    const handleCancel = () => {
+        setModalVisible(false);
+        console.log("Cancel Pressed");
+    };
+
+    const handleConfirm = () => {
+        setModalVisible(false);
+        console.log("Confirm Pressed");
+        // Place your code here to create the course
+    };
+
+
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={true}>
+
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={modalVisible}
+                    onRequestClose={() => {
+                        setModalVisible(!modalVisible);
+
+                    }}
+                >
+                    <View style={styles.centeredView}>
+                        <View style={styles.overlay} />
+                        <View style={styles.modalView}>
+                            <Image source={icons.checkcircle} style={styles.checkcirclestyle} />
+                            <Text style={styles.modalText}>Confirm to Create Course.</Text>
+                            <View style={styles.buttonContainer}>
+                                <TouchableOpacity
+                                    style={styles.cancelButton}
+                                    onPress={handleCancel}
+                                >
+                                    <Text style={styles.cancelButtonText}>Cancel</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={styles.createButton}
+                                    onPress={handleConfirm}
+                                >
+                                    <Text style={styles.generateButtonText}>Confirm</Text>
+                                </TouchableOpacity>
+                            </View>
+
+                        </View>
+                    </View>
+                </Modal>
+
                 <View style={styles.header}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>
-                        <Image source={require('./../../assets/icons/chevron-left.png')} style={styles.backIcon} />
+                        <Image source={icons.chevronLeft} style={styles.backIcon} />
                     </TouchableOpacity>
                     <Text style={styles.headerTitle}>Arrange or Add Topics</Text>
                 </View>
@@ -161,7 +210,7 @@ function AddTopics({ navigation }) {
                     </View>
                 </View>
 
-                
+
                 <View style={styles.topicByWeek}>
                     <Text style={styles.WeekLabel}>Week 4</Text>
                     <View style={styles.topicBox} >
@@ -199,10 +248,10 @@ function AddTopics({ navigation }) {
             </ScrollView>
 
             <View style={styles.buttonContainer}>
-                <TouchableOpacity style={[styles.button, styles.cancelButton]} onPress={() => navigation.goBack()}>
+                <TouchableOpacity style={styles.cancelButton} onPress={() => navigation.goBack()}>
                     <Text style={styles.cancelButtonText}>Cancel</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.button, styles.createButton]} onPress={handleCreate}>
+                <TouchableOpacity style={styles.createButton} onPress={handleCreate}>
                     <Text style={styles.generateButtonText}>Create</Text>
                 </TouchableOpacity>
             </View>
@@ -276,19 +325,20 @@ const styles = StyleSheet.create({
         paddingBottom: 20,
         marginTop: 20,
     },
-    button: {
-        paddingVertical: 15,
-        paddingHorizontal: 30,
-        borderRadius: 30,
-    },
     cancelButton: {
         backgroundColor: COLORS.lightGray,
         borderWidth: 1,
         borderColor: COLORS.button,
-        padding: 15,
+        paddingVertical: 15,
+        paddingHorizontal: 30,
+        borderRadius: 30,
+        marginRight: 10,
     },
     createButton: {
         backgroundColor: COLORS.button,
+        paddingVertical: 15,
+        paddingHorizontal: 30,
+        borderRadius: 30,
     },
     cancelButtonText: {
         fontSize: SIZES.large,
@@ -324,10 +374,42 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         borderWidth: 1,
         borderColor: COLORS.primary,
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
 
     },
+    modalView: {
+        backgroundColor: "white",
+        borderRadius: 32,
+        padding: 20,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.75,
+        shadowRadius: 3.84,
+        elevation: 5
+    },
 
-
+    modalText: {
+        marginBottom: 10,
+        marginTop: 10,
+        fontSize: SIZES.medium,
+        textAlign: "center"
+    },
+    checkcirclestyle: {
+        width: 40,
+        height: 40,
+    },
+    overlay: {
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: 'rgba(0, 0, 0, 0.8)'
+    },
 });
 
 export default AddTopics;

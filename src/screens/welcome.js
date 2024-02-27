@@ -1,16 +1,23 @@
 import { StyleSheet, Text, View, Image, Button } from 'react-native'
-import React from 'react'
-import pattern from '../../assets/pattern.jpg'
+import { useEffect, React, useState } from 'react';
 import welcomeLogo from '../../assets/logo.png'
 import { button1 } from '../common/button'
+import { COLORS, SIZES } from "./../constants/theme";
 
 
 const Welcome = ({ navigation }) => {
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      navigation.navigate('Login');
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [navigation]);
+
 
   return (
     <View style={styles.container}>
-      <Image style={styles.patternbg} source={pattern} />
       <View style={styles.container1}>
         {/* <Image style={styles.logo} source={welcomeLogo} /> */}
         {/* <Text style={styles.head}>Welcome To</Text> */}
@@ -31,7 +38,8 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     height: "100%",
-  },
+    backgroundColor: COLORS.primary,
+   },
 
   patternbg: {
     position: "absolute",
@@ -44,17 +52,17 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 30
   },
-  container1:{
-    display:"flex",
-    justifyContent:"center",
-    alignItems:"center",
+  container1: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
     height: "100%"
   },
-  logo:{
+  logo: {
     // width: "70%",
-    height:"20%",
-    resizeMode:'contain',
-    marginBottom:20
+    height: "20%",
+    resizeMode: 'contain',
+    marginBottom: 20
 
   },
   // button1:{
