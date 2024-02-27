@@ -13,7 +13,7 @@ const Login = ({ navigation }) => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigation.navigate('Dashboard');
+      navigation.navigate('NavigationBar');
     }, 3000);
 
     return () => clearTimeout(timer);

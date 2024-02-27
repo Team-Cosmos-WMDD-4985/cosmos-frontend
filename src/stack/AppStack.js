@@ -23,21 +23,20 @@ const Tab = createBottomTabNavigator();
 
 function AppStack() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
 
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="SplashScreen">
         <Stack.Screen name="SplashScreen" component={SplashScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Welcome" component={Welcome} options={{ headerShown: false }} />
         <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
-        <Stack.Screen name="Signup" component={Signup} options={{ headerShown: false }} />
+        {/* <Stack.Screen name="Signup" component={Signup} options={{ headerShown: false }} /> */}
         <Stack.Screen name="NavigationBar" component={NavigationBar} options={{ headerShown: false }} />
         <Stack.Screen name="Dashboard" component={Dashboard} options={{ headerShown: false }} />
         <Stack.Screen name="AddCourse" component={AddCourse} options={{ headerShown: false }} />
-        <Stack.Screen name="AddTopics" component={AddTopics} options={{ headerShown: false }} />
-
-
+       <Stack.Screen name="AddTopics" component={AddTopics} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
+
   );
 }
 
