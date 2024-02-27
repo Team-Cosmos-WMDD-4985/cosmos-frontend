@@ -9,7 +9,7 @@ import AddingTopicsForQuizGeneration from "../components/quiz/AddingTopicsForQui
 import Dashboard from "../components/dashboard/dashboard";
 import CoursesScreen from "../components/courses/CoursesScreen";
 
-const Stack = createNativeStackNavigator();
+// const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 // Bottom Tabs

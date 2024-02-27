@@ -1,0 +1,333 @@
+import React, { useState } from 'react';
+import { View, Text, TextInput, StyleSheet, Button, Image, TouchableOpacity, Platform, ScrollView, SafeAreaView } from 'react-native';
+import { COLORS, SIZES } from "./../../constants";
+// import { Chip } from 'react-native-paper';
+import { HStack, VStack } from 'native-base';
+// import Chip from '@mui/material/Chip';
+// import Stack from '@mui/material/Stack';
+// import Fab from '@mui/material/Fab';
+// import AddIcon from '@mui/icons-material/Add';
+
+const TopicItem = ({ week, topics }) => {
+    return (
+        <View style={styles.topicItem}>
+            {/* <Text style={styles.weekText}>Week {week}</Text>
+            {topics.map((topic, index) => (
+                 <View key={index} style={styles.topic}> 
+                     <Text style={styles.topicText}>{topic}</Text> 
+                     Icon placeholder 
+                </View>
+             ))} 
+            Add topic button placeholder */}
+
+
+        </View>
+    );
+};
+
+const handleClick = () => {
+    console.info('You clicked the Chip.');
+};
+
+const handleDelete = () => {
+    console.info('You clicked the delete icon.');
+};
+
+
+function AddTopics({ navigation }) {
+    // const [topics, setTopics] = useState([
+    //     { week: 1, topics: ['User flow', 'Persona'] },
+    //     { week: 2, topics: ['Low fidelity wire-frames'] },
+    // ]);
+
+    const handleCreate = () => {
+        // Handle the create button press
+    };
+
+    return (
+        <SafeAreaView style={styles.container}>
+            <ScrollView showsVerticalScrollIndicator={true}>
+                <View style={styles.header}>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <Image source={require('./../../assets/icons/chevron-left.png')} style={styles.backIcon} />
+                    </TouchableOpacity>
+                    <Text style={styles.headerTitle}>Arrange or Add Topics</Text>
+                </View>
+
+                {/* {topics.map((item, index) => (
+                    <TopicItem key={index} week={item.week} topics={item.topics} />
+                ))} */}
+
+                <View style={styles.topicByWeek}>
+                    <Text style={styles.WeekLabel}>Week 1</Text>
+                    <View style={styles.topicBox} >
+                        {/* <Chip */}
+                        <Text
+                            style={styles.chip}
+                            onPress={handleClick}
+                            onClose={handleDelete}
+                        >
+                            User flow
+                        </Text>
+                        {/* </Chip> */}
+
+                        {/* <Chip */}
+                        <Text
+                            style={[styles.chip, styles.outlinedChip]}
+                            onPress={handleClick}
+                            onClose={handleDelete}
+                            mode="outlined"
+                        >
+                            Persona
+                        </Text>
+                        {/* </Chip> */}
+
+                        {/* <Fab color="primary" aria-label="add">
+                            <AddIcon />
+                        </Fab> */}
+                        <View style={styles.addSign}>
+                            <Text >+</Text>
+                        </View>
+                    </View>
+                </View>
+
+
+
+                <View style={styles.topicByWeek}>
+                    <Text style={styles.WeekLabel}>Week 2</Text>
+                    <View style={styles.topicBox} >
+                        {/* <Chip */}
+                        <Text
+                            style={styles.chip}
+                            onPress={handleClick}
+                            onClose={handleDelete}
+                        >
+                            Wireframe
+                        </Text>
+                        {/* </Chip> */}
+
+                        {/* <Chip */}
+                        <Text
+                            style={[styles.chip, styles.outlinedChip]}
+                            onPress={handleClick}
+                            onClose={handleDelete}
+                            mode="outlined"
+                        >
+                            User Story
+                        </Text>
+                        {/* </Chip> */}
+
+                        {/* <Fab color="primary" aria-label="add">
+                            <AddIcon />
+                        </Fab> */}
+                        <View style={styles.addSign}>
+                            <Text >+</Text>
+                        </View>
+                    </View>
+                </View>
+
+
+                <View style={styles.topicByWeek}>
+                    <Text style={styles.WeekLabel}>Week 3</Text>
+                    <View style={styles.topicBox} >
+                        {/* <Chip */}
+                        <Text
+                            style={styles.chip}
+                            onPress={handleClick}
+                            onClose={handleDelete}
+                        >
+                            Photoshop
+                        </Text>
+                        {/* </Chip> */}
+
+                        {/* <Chip */}
+                        <Text
+                            style={[styles.chip, styles.outlinedChip]}
+                            onPress={handleClick}
+                            onClose={handleDelete}
+                            mode="outlined"
+                        >
+                            Illustrator
+                        </Text>
+                        {/* </Chip> */}
+
+                        {/* <Fab color="primary" aria-label="add">
+                            <AddIcon />
+                        </Fab> */}
+                        <View style={styles.addSign}>
+                            <Text >+</Text>
+                        </View>
+                    </View>
+                </View>
+
+                
+                <View style={styles.topicByWeek}>
+                    <Text style={styles.WeekLabel}>Week 4</Text>
+                    <View style={styles.topicBox} >
+                        {/* <Chip */}
+                        <Text
+                            style={styles.chip}
+                            onPress={handleClick}
+                            onClose={handleDelete}
+                        >
+                            Figma
+                        </Text>
+                        {/* </Chip> */}
+
+                        {/* <Chip */}
+                        <Text
+                            style={[styles.chip, styles.outlinedChip]}
+                            onPress={handleClick}
+                            onClose={handleDelete}
+                            mode="outlined"
+                        >
+                            Creator
+                        </Text>
+                        {/* </Chip> */}
+
+                        {/* <Fab color="primary" aria-label="add">
+                            <AddIcon />
+                        </Fab> */}
+                        <View style={styles.addSign}>
+                            <Text >+</Text>
+                        </View>
+                    </View>
+                </View>
+
+
+            </ScrollView>
+
+            <View style={styles.buttonContainer}>
+                <TouchableOpacity style={[styles.button, styles.cancelButton]} onPress={() => navigation.goBack()}>
+                    <Text style={styles.cancelButtonText}>Cancel</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={[styles.button, styles.createButton]} onPress={handleCreate}>
+                    <Text style={styles.generateButtonText}>Create</Text>
+                </TouchableOpacity>
+            </View>
+        </SafeAreaView>
+    );
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        paddingTop: 20,
+    },
+    header: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingTop: 40,
+        paddingHorizontal: 20,
+    },
+    headerTitle: {
+        fontSize: SIZES.xLarge,
+        fontWeight: 'bold',
+    },
+    backIcon: {
+        width: 24,
+        height: 24,
+    },
+    topicItem: {
+        padding: 20,
+        borderBottomWidth: 1,
+        borderBottomColor: COLORS.lightGray,
+    },
+    weekText: {
+        fontWeight: 'bold',
+        marginBottom: 10,
+    },
+    topic: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 10,
+    },
+    topicText: {
+        fontSize: SIZES.medium,
+        marginRight: 10,
+    },
+
+    topicByWeek: {
+        flexDirection: 'column',
+        // alignItems: 'center',
+        marginVertical: 10,
+        marginHorizontal: 20,
+    },
+    topicBox: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        borderWidth: 1,
+        borderColor: COLORS.lightGray,
+        padding: 15,
+        borderRadius: 10,
+        height: 100,
+    },
+    WeekLabel: {
+        fontSize: SIZES.medium,
+        marginBottom: 10,
+    },
+    buttonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        paddingBottom: 20,
+        marginTop: 20,
+    },
+    button: {
+        paddingVertical: 15,
+        paddingHorizontal: 30,
+        borderRadius: 30,
+    },
+    cancelButton: {
+        backgroundColor: COLORS.lightGray,
+        borderWidth: 1,
+        borderColor: COLORS.button,
+        padding: 15,
+    },
+    createButton: {
+        backgroundColor: COLORS.button,
+    },
+    cancelButtonText: {
+        fontSize: SIZES.large,
+        color: COLORS.button,
+        textAlign: 'center',
+    },
+    generateButtonText: {
+        fontSize: SIZES.large,
+        color: COLORS.white,
+        textAlign: 'center',
+    },
+    chip: {
+        width: 120,
+        fontSize: SIZES.small,
+        marginRight: 10,
+        backgroundColor: COLORS.gray2,
+
+    },
+    outlinedChip: {
+        // styles for outlined chip variant
+        borderWidth: 1,
+        fontSize: SIZES.small,
+
+    },
+    addSign: {
+        fontSize: SIZES.large,
+        color: COLORS.white,
+        textAlign: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 20,
+        height: 20,
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: COLORS.primary,
+
+    },
+
+
+});
+
+export default AddTopics;
+

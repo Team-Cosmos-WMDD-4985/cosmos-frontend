@@ -14,7 +14,8 @@ import AddingTopicsForQuizGeneration from "./../components/quiz/AddingTopicsForQ
 import Dashboard from "./../components/dashboard/dashboard";
 import DashboardHeader from "./../common/header";
 import NavigationBar from "../screens/NavigationBar"
-
+import AddCourse from '../components/courses/AddCourse';
+import AddTopics from '../components/courses/AddTopics'
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -46,15 +47,10 @@ function AppStack() {
 
         />  */}
 
-        <Stack.Screen
-          name="Main"
-          component={NavigationBar}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Dashboard" component={Dashboard}
-          options={{ headerShown: false }}
-        />
+        <Stack.Screen name="Main" component={NavigationBar} options={{ headerShown: false }} />
+        <Stack.Screen name="Dashboard" component={Dashboard} options={{ headerShown: false }} />
+        <Stack.Screen name="AddCourse" component={AddCourse}  options={{ headerShown: false }} />
+        <Stack.Screen name="AddTopics" component={AddTopics}  options={{ headerShown: false }} />
 
 
       </Stack.Navigator>
