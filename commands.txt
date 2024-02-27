@@ -14,3 +14,5 @@ npm install @mui/material @mui/styled-engine-sc styled-components
 npm install react react-dom
 npm install @mui/icons-material
 npm install native-base
+npm install @react-navigation/native @react-navigation/drawer
+npm install react-native-gesture-handler react-native-reanimated

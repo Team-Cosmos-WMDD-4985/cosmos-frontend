@@ -1,11 +1,22 @@
 import { Center } from '@gluestack-ui/themed';
-import React from 'react';
+import { useEffect, React } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
-function HomeScreen({ navigation }) {
+function SplashScreen({ navigation }) {
+
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      navigation.navigate('Welcome');
+    }, 3000);
+
+    // Cleanup function to clear the timer if the component unmounts
+    return () => clearTimeout(timer);
+  }, [navigation]);
+
 
   const navigateToDashBoard = () => {
-    navigation.navigate('Dashboard'); 
+    navigation.navigate('Welcome');
   };
 
   return (
@@ -48,4 +59,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default HomeScreen;
+export default SplashScreen;

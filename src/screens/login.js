@@ -1,13 +1,9 @@
 import { StyleSheet, Text, View, Image, TextInput } from 'react-native'
-import React from 'react'
-import pattern from '../../assets/pattern.jpg'
+import { useEffect, React, useState } from 'react';
 import logo from '../../assets/logo.png'
 import { formGroup, head1, head2, input, label, link, link2 } from '../common/formcss'
 import { button1 } from '../common/button'
-import { useState } from 'react'
-
-
-
+import { COLORS, SIZES } from "../constants/theme";
 
 
 const Login = ({ navigation }) => {
@@ -15,20 +11,26 @@ const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      navigation.navigate('NavigationBar');
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [navigation]);
 
   const submitLogin = async () => {
-   const data = await axios.post('/login', { email, password })
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+    const data = await axios.post('/Login', { email, password })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
   return (
 
     <View style={styles.container}>
-      <Image style={styles.patternbg} source={pattern} />
       <View style={styles.container1}>
         <View style={styles.s1}>
           {/* <Image style={styles.logo} source={logo}></Image> */}
@@ -40,16 +42,18 @@ const Login = ({ navigation }) => {
           <Text style={head2}>Sign-In to Continue</Text>
           <View style={formGroup}>
             <Text style={label}>Email</Text>
-            <TextInput style={input} placeholder='Enter Your Email' onChangeText={(text) => setEmail(text)}  />
+            <TextInput style={input} placeholder='Enter Your Email' onChangeText={(text) => setEmail(text)} />
           </View>
           <View style={formGroup}>
             <Text style={label}>Password</Text>
-            <TextInput style={input} placeholder='Enter Your Password' onChangeText={(text) => setPassword(text)}/>
+            <TextInput style={input} placeholder='Enter Your Password' onChangeText={(text) => setPassword(text)} />
           </View>
           <View style={styles.fp}>
-          <Text style={link}>Forget Password</Text>
+            <Text style={link}>Forget Password</Text>
           </View>
-          <Text style={button1} onPress={submitLogin}>Login</Text>
+          {/* <Text style={button1} onPress={submitLogin}>Login</Text> */}
+          <Text style={button1} onPress={() => navigation.navigate('Dashboard')}>Login</Text>
+
           <Text style={link2}>Dont Have An Account? <Text style={link} onPress={() => navigation.navigate('Signup')}>Create an Account</Text></Text>
         </View>
       </View>
@@ -58,12 +62,13 @@ const Login = ({ navigation }) => {
   )
 }
 
-export default Login
+export default Login;
 
 const styles = StyleSheet.create({
   container: {
     width: "100%",
     height: "100%",
+    backgroundColor: COLORS.primary,
   },
 
   patternbg: {
@@ -83,7 +88,7 @@ const styles = StyleSheet.create({
   logo: {
     // width: "70%",
     height: 80,
-    resizeMode:'contain'
+    resizeMode: 'contain'
 
 
   },
@@ -112,11 +117,11 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 30,
     padding: 20
   },
-  fp:{
-    display:'flex',
-    alignItems:"flex-end",
-    marginHorizontal:5,
-    marginVertical:5
+  fp: {
+    display: 'flex',
+    alignItems: "flex-end",
+    marginHorizontal: 5,
+    marginVertical: 5
 
   }
   // formGroup: {

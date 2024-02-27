@@ -15,6 +15,7 @@ import course_active from '../assets/icons/course_active.png';
 import course_inactive from '../assets/icons/course_inactive.png';
 import quiz_active from '../assets/icons/quiz_active.png';
 import quiz_inactive from '../assets/icons/quiz_inactive.png';
+import checkcircle from '../assets/icons/checkcircle.png';
 
 
 export default {
@@ -34,4 +35,5 @@ export default {
   course_inactive,
   quiz_active,
   quiz_inactive,
+  checkcircle,
 };

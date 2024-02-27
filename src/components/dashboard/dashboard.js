@@ -1,26 +1,22 @@
 import { useState } from "react";
 import { View, Text, ScrollView, SafeAreaView, StyleSheet, Image } from "react-native";
-import {  icons, images } from "./../../constants";
-
+import { icons, images } from "./../../constants";
 import { SIZES, WEIGHT, COLORS } from "./../../constants/theme";
-
 import QuizList from "./../home/QuizList";
 import CourseList from "./../home/CourseList"
 
-const Home = () => {
-
+const Dashboard = () => {
     return (
         <SafeAreaView style={{
             flex: 1, backgroundColor: COLORS.lightWhite
         }} >
-
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View
                     style={{
                         flex: 1,
                         padding: SIZES.medium
-
-                    }}
+                        
+                   }}
                 >
                     <View style={styles.header}>
                         <Text style={styles.headerText}>Dashboard</Text>
@@ -33,7 +29,7 @@ const Home = () => {
 
             </ScrollView>
 
-        </SafeAreaView>
+        </SafeAreaView >
     )
 }
 const styles = StyleSheet.create({
@@ -55,4 +51,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default Home;
+export default Dashboard;
