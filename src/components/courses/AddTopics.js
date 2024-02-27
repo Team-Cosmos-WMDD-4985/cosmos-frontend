@@ -44,6 +44,7 @@ function AddTopics({ navigation }) {
         // Handle the create button press
     };
 
+    
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={true}>
