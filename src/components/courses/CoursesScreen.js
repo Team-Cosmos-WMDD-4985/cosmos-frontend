@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, SafeAreaView } from 'react-native';
 import { COLORS, icons, images, SIZES } from "./../../constants";
 
+
 function CoursesScreen({ navigation }) {
   const hasCourses = false;
 
@@ -23,9 +24,10 @@ function CoursesScreen({ navigation }) {
           <Text style={styles.noCoursesText}>You do not have any courses.</Text>
           <Text style={styles.noCoursesText}>Would you like to create a course now?</Text>
 
-          <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('CreateCourse')}>
+          <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('AddCourse')}>
             <Text style={styles.addButtonText}>+ Add Course</Text>
           </TouchableOpacity>
+
         </View>
       )}
 
@@ -37,6 +39,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    paddingTop: 20,
   },
   header: {
     flexDirection: 'row',
@@ -86,7 +89,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
     alignItems: 'flex-end',
     marginLeft: 100,
-  },  
+  },
   addButtonText: {
     fontSize: SIZES.large,
     color: '#fff',

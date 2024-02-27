@@ -5,4 +5,12 @@ npm install @react-navigation/native @react-navigation/bottom-tabs
 npm install react-native-vector-icons
 
 npm install @react-navigation/bottom-tabs
-
+npm install @react-native-community/datetimepicker --save
+npm expo install expo-image-picker
+npm install react-native-paper react-native-vector-icons
+npx react-native link react-native-vector-icons
+npm install @mui/material @emotion/react @emotion/styled
+npm install @mui/material @mui/styled-engine-sc styled-components
+npm install react react-dom
+npm install @mui/icons-material
+npm install native-base
