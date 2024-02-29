@@ -1,65 +1,49 @@
-import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
+import React from "react";
+import { View, Text, StyleSheet, SafeAreaView } from "react-native";
+import CourseCard from "../cards/CourseCard";
+import { COLORS, icons, images, SIZES,WEIGHT } from "../../constants";
 
-const AddingTopicsForQuizGeneration = () => {
-  const [topics, setTopics] = useState({
-    topic1: '',
-    topic2: '',
-    topic3: '',
-    topic4: '',
-    topic5: '',
 
-  });
-
-  const handleInputChange = (topic, value) => {
-    setTopics(prevTopics => ({
-      ...prevTopics,
-      [topic]: value,
-    }));
-  };
-
-  const createQuiz = () => {
-    // here you can write the Logic to handle quiz creation with the topics
-    console.log(topics);
-  };
+const AddingTopicsForQuizGeneration = ({ navigation }) => {
+  const courses = [
+    {
+      id: 1,
+      name: "Course 1",
+      topics: ["topic1", "topic2", "topic3", "topic4", "topic5"],
+      image: require("../../assets/images/course.jpg"),
+    },
+    {
+      id: 2,
+      name: "Course 2",
+      topics: ["topic11", "topic22", "topic33", "topic44", "topic55"],
+      image: require("../../assets/images/course.jpg"),
+    },
+    {
+      id: 3,
+      name: "Course 3",
+      topics: ["topic10", "topic20", "topic30", "topic40", "topic50"],
+      image: require("../../assets/images/course.jpg"),
+    },
+    {
+      id: 4,
+      name: "Course 4",
+      topics: ["topic111", "topic222", "topic333", "topic444", "topic555"],
+      image: require("../../assets/images/course.jpg"),
+    },
+    {
+      id: 5,
+      name: "Course 5",
+      topics: ["topic11", "topic21", "topic31", "topic41", "topic51"],
+      image: require("../../assets/images/course.jpg"),
+    },
+  ];
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scrollView}>
-        <View style={styles.inputGroup}>
-          <TextInput
-            style={styles.input}
-            onChangeText={(text) => handleInputChange('topic1', text)}
-            value={topics.topic1}
-            placeholder="topic1: Enter Topic"
-          />
-          <TextInput
-            style={styles.input}
-            onChangeText={(text) => handleInputChange('topic2', text)}
-            value={topics.topic2}
-            placeholder="topic2: Enter Topic"
-          />
-          <TextInput
-            style={styles.input}
-            onChangeText={(text) => handleInputChange('topic3', text)}
-            value={topics.topic3}
-            placeholder="topic3: Enter Topic"
-          />
-          <TextInput
-            style={styles.input}
-            onChangeText={(text) => handleInputChange('topic4', text)}
-            value={topics.topic4}
-            placeholder="topic4: Enter Topic"
-            />
-            <TextInput  
-            style={styles.input}
-            onChangeText={(text) => handleInputChange('topic5', text)}
-            value={topics.topic5}
-            placeholder="topic5: Enter Topic"
-            />
-        </View>
-        <Button title="Create Quiz" onPress={createQuiz} />
-      </ScrollView>
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>Quizzes</Text>
+      </View>
+      <CourseCard courses={courses} navigation={navigation} />
     </SafeAreaView>
   );
 };
@@ -67,20 +51,22 @@ const AddingTopicsForQuizGeneration = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    marginTop: 50,
+    backgroundColor: "#fff",
   },
-  scrollView: {
-    marginHorizontal: 20,
+  header: {
+    marginTop: 100,
+    marginBottom: 50,
+    justifyContent: "center",
+    alignItems: "center",
+   
+ 
   },
-  inputGroup: {
-    marginVertical: 20,
-  },
-  input: {
-    height: 40,
-    marginVertical: 10,
-    borderWidth: 1,
-    padding: 10,
+  headerTitle: {
+    fontSize: SIZES.xxLarge,
+    fontWeight: WEIGHT.bold,
+    color: COLORS.primary,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 
