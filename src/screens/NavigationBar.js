@@ -5,7 +5,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Image } from 'react-native';
 import { icons } from "../constants";
 
-
+import MultipleChoiceQue from '../components/quiz/MultipleChoiceQue';
+import CreateYourQuiz from '../components/quiz/CreateYourQuiz';
 import AddingTopicsForQuizGeneration from "../components/quiz/AddingTopicsForQuizGeneration";
 import Dashboard from "../components/dashboard/dashboard";
 import CoursesScreen from "../components/courses/CoursesScreen";

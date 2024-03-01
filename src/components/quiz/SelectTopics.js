@@ -31,7 +31,8 @@ const SelectTopics = ({ route, navigation }) => {
     const filteredTopics = selectedTopics
       .filter((topic) => topic.selected)
       .map((topic) => topic.name);
-    navigation.navigate("GenerateQuizByAi", { selectedTopics: filteredTopics });
+    navigation.navigate("CreateYourQuiz");
+    // navigation.navigate("GenerateQuizByAi", { selectedTopics: filteredTopics });
   };
 
   const handleOptionSelect = (option) => {
