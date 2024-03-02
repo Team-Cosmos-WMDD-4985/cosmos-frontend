@@ -8,7 +8,7 @@ import CourseList from "./../home/CourseList"
 const Dashboard = () => {
     return (
         <SafeAreaView style={{
-            flex: 1, backgroundColor: COLORS.lightWhite
+            flex: 1, backgroundColor: COLORS.lightGrey
         }} >
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View

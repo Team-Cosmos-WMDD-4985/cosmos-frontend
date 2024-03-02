@@ -354,7 +354,7 @@ const styles = StyleSheet.create({
         width: 120,
         fontSize: SIZES.small,
         marginRight: 10,
-        backgroundColor: COLORS.gray2,
+        backgroundColor: COLORS.darkGray,
 
     },
     outlinedChip: {
