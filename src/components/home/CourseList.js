@@ -26,12 +26,12 @@ const CourseList = () => {
             data={data}
             renderItem={( {item}) => {
               return (
-                <CourseCard key={Math.random()} item={item} />
+                <CourseCard item={item} />
               )
             }}
-            keyExtractor={item => item?.job_id}
+            keyExtractor={item => Math.random()}
             contentContainerStyle={{columnGap: SIZES.medium}}
-            horizontal
+            horizontal={true}
           />
          
         }

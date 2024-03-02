@@ -3,9 +3,8 @@ import React, { useState } from 'react'
 import pattern from '../../assets/pattern.jpg'
 import logo from '../../assets/logo.png'
 import { formGroup, head1, head2, input, label, link, link2 } from '../common/formcss'
-import { button1 } from '../common/button'
-import axios from 'axios'
-
+import { button1 } from '../common/button';
+import axiosService from "./../services/axios";
 
 const Signup = ({ navigation }) => {
 
@@ -15,26 +14,16 @@ const Signup = ({ navigation }) => {
   const [password, setPassword] = useState('');
 
 
-
-  
-
-
   const submitSignUp = async () => {
     try {
-      const response = await fetch("http://10.2.0.0/signup", {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ name, email, dob, password })
-      });
-  
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
+      let obj = {
+        name, 
+        email, 
+        password
       }
-  
-      const data = await response.json();
-      console.log('Signup successful:', data);
+      const response = await axiosService("POST", "auth/signup", false, {}, obj );
+      console.log("response is ", response.data);
+      navigation.navigate('Dashboard');
     } catch (error) {
       console.error('Error during signup:', error);
     }
@@ -58,10 +47,10 @@ const Signup = ({ navigation }) => {
             <Text style={label}>Email</Text>
             <TextInput style={input} placeholder='Enter Your Email' onChangeText={(text) => setEmail(text)}/>
           </View>
-          <View style={formGroup}>
+          {/* <View style={formGroup}>
             <Text style={label}>Date Of Birth</Text>
             <TextInput style={input} placeholder='Enter Your DOB' onChangeText={(text) => setDob(text)}/>
-          </View>
+          </View> */}
           <View style={formGroup}>
             <Text style={label}>Password</Text>
             <TextInput style={input} placeholder='Enter Your Password' onChangeText={(text) => setPassword(text)} />

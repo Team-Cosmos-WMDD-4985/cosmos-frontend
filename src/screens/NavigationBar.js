@@ -38,9 +38,9 @@ function NavigationBar() {
 
             })}
         >
-            <Tab.Screen name="Dashboard" component={Dashboard} />
-            <Tab.Screen name="Courses" component={CoursesScreen} />
-            <Tab.Screen name="quizzes" component={AddingTopicsForQuizGeneration} />
+            <Tab.Screen name="Dashboard" key={"tab-navigation-1"} component={Dashboard} />
+            <Tab.Screen name="Courses" key={"tab-navigation-2"} component={CoursesScreen} />
+            <Tab.Screen name="quizzes" key={"tab-navigation-3"} component={AddingTopicsForQuizGeneration} />
         </Tab.Navigator>
     );
 }
