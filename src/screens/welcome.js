@@ -19,7 +19,7 @@ const Welcome = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.container1}>
-        {/* <Image style={styles.logo} source={welcomeLogo} /> */}
+        <Image style={styles.logo} source={welcomeLogo} />
         {/* <Text style={styles.head}>Welcome To</Text> */}
         <View>
           <Text style={button1} onPress={() => navigation.navigate('Login')}>Login</Text>
