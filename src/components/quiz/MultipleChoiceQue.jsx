@@ -73,7 +73,7 @@ const MultipleChoiceQue = ({navigation}) => {
 
   const handleCancel = () => {
     setModalVisible(false);
-    navigation.navigate('Dashboard')
+    navigation.navigate('NavigationBar')
     console.log("Cancel Pressed");
   };
 

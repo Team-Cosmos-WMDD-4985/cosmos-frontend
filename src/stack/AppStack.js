@@ -25,6 +25,7 @@ import Login from '../screens/login';
 import SelectTopics from '../components/quiz/SelectTopics';
 import CourseCard from '../components/cards/CourseCard';
 import GenerateQuizByAi from '../components/quiz/GenerateQuizByAi';
+import OpenAI from '../components/chatbot/ChatUi';
 // import CreateYourQuiz from '../components/quiz/CreateYourQuiz';
 
 const Stack = createNativeStackNavigator();
@@ -50,6 +51,7 @@ function AppStack() {
         <Stack.Screen name="CourseCard" component={CourseCard} options={{ headerShown: false }} />
         <Stack.Screen name="GenerateQuizByAi" component={GenerateQuizByAi} options={{ headerShown: false }} />
         <Stack.Screen name="CreateYourQuiz" component={CreateYourQuiz} options={{ headerShown: false }} />
+        <Stack.Screen name="OpenAi" component={OpenAI} options={{ headerShown: true }} />
 
       </Stack.Navigator>
     </NavigationContainer>

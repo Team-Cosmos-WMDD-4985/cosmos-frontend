@@ -10,6 +10,7 @@ import CreateYourQuiz from '../components/quiz/CreateYourQuiz';
 import AddingTopicsForQuizGeneration from "../components/quiz/AddingTopicsForQuizGeneration";
 import Dashboard from "../components/dashboard/dashboard";
 import CoursesScreen from "../components/courses/CoursesScreen";
+import ChatUi from '../components/chatbot/ChatUi';
 
 // const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
