@@ -12,15 +12,15 @@ import { Image, TouchableOpacity } from 'react-native';
 
 // componenets
 import Welcome from '../screens/welcome';
-import Signup from './signup../screens/signup'
+import Signup from './../screens/signup';
 import AddingTopicsForQuizGeneration from "./../components/quiz/AddingTopicsForQuizGeneration";
 import NavigationBar from "../screens/NavigationBar";
 import Dashboard from "./../components/dashboard/dashboard";
 import AddCourse from '../components/courses/AddCourse';
 import AddTopics from '../components/courses/AddTopics';
 import SplashScreen from '../screens/SplashScreen';
-import Login from './Login../screens/login';
-import SelectTopics from './SelectTopics../components/quiz/SelectTopics';
+import Login from './../screens/Login';
+import SelectTopics from './../components/quiz/SelectTopics';
 import CourseCard from '../components/cards/CourseCard';
 import GenerateQuizByAi from './../components/quiz/GenerateQuizByAi';
 
