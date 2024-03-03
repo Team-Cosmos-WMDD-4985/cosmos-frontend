@@ -1,33 +1,61 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, StyleSheet, Button, Image, TouchableOpacity, Platform } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as ImagePicker from 'expo-image-picker';
+import * as DocumentPicker from 'expo-document-picker';
 import { COLORS, SIZES } from "./../../constants";
+import secoreStoreService from "../../services/secureStore";
 
 function AddCourse({ navigation }) {
+
     const [courseName, setCourseName] = useState('');
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
-    const [weeklyTopics, setWeeklyTopics] = useState(null);
-    const [coursePicture, setCoursePicture] = useState(null);
     const [showStartDatePicker, setShowStartDatePicker] = useState(false);
     const [showEndDatePicker, setShowEndDatePicker] = useState(false);
+    const [file, setFile] = useState();
+
+    useEffect(() => {
+        getToken()
+    }, [])
+
+    const getToken = async () => {
+        const myToken = await secoreStoreService.getValueFor('token');
+        console.log(myToken)
+    }
+
 
     const pickImage = async (setter) => {
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: true,
-            aspect: [4, 3],
-            quality: 1,
-        });
+        // let result = await ImagePicker.launchImageLibraryAsync({
+        //     mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        //     allowsEditing: true,
+        //     aspect: [4, 3],
+        //     quality: 1,
+        // });
 
-        if (!result.cancelled) {
-            setter(result.uri);
-        }
+        // if (!result.cancelled) {
+        //     setter(result.uri);
+        // }
+
+        let result = await DocumentPicker.getDocumentAsync({
+            type: "application/pdf"
+        })
+
+        console.log(result)
+
+        if (!result.canceled && result.assets && result.assets.length > 0) {
+            setFile(result.assets[0]);
+          }
+        // if (!result.cancelled) {
+        //     setter(result.uri);
+        // }
     };
 
     const handleGenerate = () => {
-        navigation.navigate('AddTopics');    };
+        console.log(courseName); 
+        console.log(startDate);
+        console.log(endDate); 
+     };
 
     return (
         <View style={styles.container}>
@@ -92,7 +120,7 @@ function AddCourse({ navigation }) {
 
                 {/* The upload Course Topics Section */}
                 <View>
-                    <Text style={styles.label}>Upload Course Weekly Topics</Text>
+                    <Text style={styles.label}>Upload Course pdf</Text>
                     <View style={styles.uploadButton}>
                         <TouchableOpacity style={styles.center} onPress={() => pickImage(setWeeklyTopics)}>
                             <Image source={require('./../../assets/icons/upload.png')} style={styles.icon} />
