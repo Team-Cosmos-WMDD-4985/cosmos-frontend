@@ -23,7 +23,7 @@ const Signup = ({ navigation }) => {
       }
       const response = await axiosService("POST", "auth/signup", false, {}, obj );
       console.log("response is ", response.data);
-      navigation.navigate('Dashboard');
+      navigation.navigate('NavigationBar');
     } catch (error) {
       console.error('Error during signup:', error);
     }

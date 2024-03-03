@@ -5,7 +5,7 @@ import { button1 } from '../common/button'
 import { COLORS, SIZES } from "../constants/theme";
 import AxiosService from "./../services/axios";
 import secoreStoreService from "./../services/secureStore";
-
+import logo from "./../../assets/logo.png"
 const Login = ({ navigation }) => {
 
   const [email, setEmail] = useState('');
@@ -28,9 +28,9 @@ const Login = ({ navigation }) => {
     <View style={styles.container}>
       <View style={styles.container1}>
         <View style={styles.s1}>
-          {/* <Image style={styles.logo} source={logo}></Image> */}
+          <Image style={styles.logo} source={logo}></Image>
           <Text style={styles.h1} onPress={() => navigation.navigate('Welcome')}>Welcome To My App</Text>
-          <Text style={styles.small}>My Guru</Text>
+          {/* <Text style={styles.small}>My Guru</Text> */}
         </View>
         <View style={styles.s2}>
           <Text style={head1}>Login</Text>
