@@ -5,10 +5,12 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Image } from 'react-native';
 import { icons } from "../constants";
 
-
+import MultipleChoiceQue from '../components/quiz/MultipleChoiceQue';
+import CreateYourQuiz from '../components/quiz/CreateYourQuiz';
 import AddingTopicsForQuizGeneration from "../components/quiz/AddingTopicsForQuizGeneration";
 import Dashboard from "../components/dashboard/dashboard";
 import CoursesScreen from "../components/courses/CoursesScreen";
+import ChatUi from '../components/chatbot/ChatUi';
 
 // const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -39,9 +41,9 @@ function NavigationBar() {
 
             })}
         >
-            <Tab.Screen name="Dashboard" component={Dashboard} />
-            <Tab.Screen name="Courses" component={CoursesScreen} />
-            <Tab.Screen name="quizzes" component={AddingTopicsForQuizGeneration} />
+            <Tab.Screen name="Dashboard" key={"tab-navigation-1"} component={Dashboard} />
+            <Tab.Screen name="Courses" key={"tab-navigation-2"} component={CoursesScreen} />
+            <Tab.Screen name="quizzes" key={"tab-navigation-3"} component={AddingTopicsForQuizGeneration} />
         </Tab.Navigator>
     );
 }

@@ -3,23 +3,33 @@ import { useEffect, React, useState } from 'react';
 import welcomeLogo from '../../assets/logo.png'
 import { button1 } from '../common/button'
 import { COLORS, SIZES } from "./../constants/theme";
-
+import AxiosApi from "./../services/axios";
 
 const Welcome = ({ navigation }) => {
 
   useEffect(() => {
+
+    // testConnection();
     const timer = setTimeout(() => {
-      navigation.navigate('Login');
+      // navigation.navigate('Login');
     }, 3000);
 
     return () => clearTimeout(timer);
   }, [navigation]);
 
+  const testConnection = async() => {
+    try {
+      const response = await AxiosApi("GET", "/test");
+
+    } catch(err){
+      console.log(err)
+    }  
+  }
 
   return (
     <View style={styles.container}>
       <View style={styles.container1}>
-        {/* <Image style={styles.logo} source={welcomeLogo} /> */}
+        <Image style={styles.logo} source={welcomeLogo} />
         {/* <Text style={styles.head}>Welcome To</Text> */}
         <View>
           <Text style={button1} onPress={() => navigation.navigate('Login')}>Login</Text>

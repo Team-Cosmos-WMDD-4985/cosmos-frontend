@@ -68,6 +68,21 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  addButton: {
+    backgroundColor: COLORS.button,
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    borderRadius: 30,
+    alignItems: 'flex-end',
+    marginLeft: 200,
+    marginRight:20,
+    marginBottom: 20,
+  },
+  addButtonText: {
+    fontSize: SIZES.large,
+    color: '#fff',
+    textAlign: 'center',
+  },
 });
 
 export default AddingTopicsForQuizGeneration;

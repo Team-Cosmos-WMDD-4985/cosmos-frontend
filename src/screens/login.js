@@ -1,28 +1,23 @@
 import { StyleSheet, Text, View, Image, TextInput } from 'react-native'
 import { useEffect, React, useState } from 'react';
-import logo from '../../assets/logo.png'
 import { formGroup, head1, head2, input, label, link, link2 } from '../common/formcss'
 import { button1 } from '../common/button'
 import { COLORS, SIZES } from "../constants/theme";
-
-
+import AxiosService from "./../services/axios";
+import secoreStoreService from "./../services/secureStore";
+import logo from "./../../assets/logo.png"
 const Login = ({ navigation }) => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      navigation.navigate('NavigationBar');
-    }, 3000);
-
-    return () => clearTimeout(timer);
-  }, [navigation]);
 
   const submitLogin = async () => {
-    const data = await axios.post('/Login', { email, password })
-      .then(function (response) {
-        console.log(response);
+    const data = await AxiosService( 'POST', 'auth/login',  false,  {}, { email, password },)
+      .then(async function (response) {
+        console.log(response.data);
+        await secoreStoreService.save("token", response.data.token);
+        navigation.navigate("NavigationBar")
       })
       .catch(function (error) {
         console.log(error);
@@ -33,9 +28,9 @@ const Login = ({ navigation }) => {
     <View style={styles.container}>
       <View style={styles.container1}>
         <View style={styles.s1}>
-          {/* <Image style={styles.logo} source={logo}></Image> */}
+          <Image style={styles.logo} source={logo}></Image>
           <Text style={styles.h1} onPress={() => navigation.navigate('Welcome')}>Welcome To My App</Text>
-          <Text style={styles.small}>My Guru</Text>
+          {/* <Text style={styles.small}>My Guru</Text> */}
         </View>
         <View style={styles.s2}>
           <Text style={head1}>Login</Text>
@@ -52,7 +47,7 @@ const Login = ({ navigation }) => {
             <Text style={link}>Forget Password</Text>
           </View>
           {/* <Text style={button1} onPress={submitLogin}>Login</Text> */}
-          <Text style={button1} onPress={() => navigation.navigate('Dashboard')}>Login</Text>
+          <Text style={button1} onPress={() => submitLogin()}>Login</Text>
 
           <Text style={link2}>Dont Have An Account? <Text style={link} onPress={() => navigation.navigate('Signup')}>Create an Account</Text></Text>
         </View>

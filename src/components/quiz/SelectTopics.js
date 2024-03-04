@@ -10,7 +10,7 @@ import {
   Modal,
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { COLORS, icons, images, SIZES,WEIGHT } from "../../constants";
+import { COLORS, icons, images, SIZES, WEIGHT } from "../../constants";
 
 const SelectTopics = ({ route, navigation }) => {
   const { topics } = route.params;
@@ -31,11 +31,12 @@ const SelectTopics = ({ route, navigation }) => {
     const filteredTopics = selectedTopics
       .filter((topic) => topic.selected)
       .map((topic) => topic.name);
-    navigation.navigate("GenerateQuizByAi", { selectedTopics: filteredTopics });
+    navigation.navigate("CreateYourQuiz");
+    // navigation.navigate("GenerateQuizByAi", { selectedTopics: filteredTopics });
   };
 
   const handleOptionSelect = (option) => {
-    setModalVisible(false); 
+    setModalVisible(false);
     if (option === 'Generate by AI') {
       goToGenerateByAi();
     } else {
@@ -63,31 +64,35 @@ const SelectTopics = ({ route, navigation }) => {
 
   return (
     <View style={styles.flexContainer}>
-      <ScrollView style={styles.container}>
-        <View style={styles.header}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Icon name="chevron-left" size={24} />
-          </TouchableOpacity>
-          <Text style={styles.headerTitle}>Prepare your Quiz</Text>
-          <View />
-        </View>
-        <Text style={styles.introText}>
-          Select your topics to create a quiz
-        </Text>
-        <FlatList
-          data={selectedTopics}
-          renderItem={renderTopicItem}
-          keyExtractor={(item, index) => `topic-${index}`}
-        />
-      </ScrollView>
+      {/* <ScrollView style={styles.container}> */}
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Icon name="chevron-left" size={24} />
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Prepare your Quiz</Text>
+        <View />
+      </View>
+      <Text style={styles.introText}>
+        Select your topics to create a quiz
+      </Text>
+      <FlatList
+        data={selectedTopics}
+        renderItem={renderTopicItem}
+        keyExtractor={(item, index) => `topic-${index}`}
+      />
+      {/* </ScrollView> */}
+      <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('OpenAi')}>
+        <Text style={styles.addButtonText}>Chat With AI</Text>
+      </TouchableOpacity>
       <TouchableOpacity
         style={styles.createQuizButton}
         onPress={() => setModalVisible(true)}
       >
         <Text style={styles.createQuizButtonText}>Create Quiz</Text>
       </TouchableOpacity>
+
       <Modal
-     
+
         animationType="slide"
         transparent={true}
         visible={modalVisible}
@@ -95,29 +100,29 @@ const SelectTopics = ({ route, navigation }) => {
           setModalVisible(!modalVisible);
         }}
       >
-       <View style={styles.centeredView}>
-  <View style={styles.modalView}>
-    <TouchableOpacity
-      style={styles.closeButton}
-      onPress={() => setModalVisible(false)}
-    >
-      <Icon name="close" style={styles.closeIcon} />
-    </TouchableOpacity>
-    <Text style={styles.modalText}>How do you want to create your quiz?</Text>
-    <TouchableOpacity
-      style={styles.optionButton}
-      onPress={() => handleOptionSelect('By yourself')}
-    >
-      <Text style={styles.optionButtonText}>By yourself</Text>
-    </TouchableOpacity>
-    <TouchableOpacity
-      style={styles.optionButton}
-      onPress={() => handleOptionSelect('Generate by AI')}
-    >
-      <Text style={styles.optionButtonText}>Generate by AI</Text>
-    </TouchableOpacity>
-  </View>
-</View>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={() => setModalVisible(false)}
+            >
+              <Icon name="close" style={styles.closeIcon} />
+            </TouchableOpacity>
+            <Text style={styles.modalText}>How do you want to create your quiz?</Text>
+            <TouchableOpacity
+              style={styles.optionButton}
+              onPress={() => handleOptionSelect('By yourself')}
+            >
+              <Text style={styles.optionButtonText}>By yourself</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.optionButton}
+              onPress={() => handleOptionSelect('Generate by AI')}
+            >
+              <Text style={styles.optionButtonText}>Generate by AI</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
 
       </Modal>
     </View>
@@ -131,7 +136,7 @@ const styles = StyleSheet.create({
   },
   container: {
     backgroundColor: "#fff",
-    marginTop:60
+    marginTop: 60
   },
   header: {
     flexDirection: "row",
@@ -141,7 +146,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: SIZES.large,
-    fontWeight:WEIGHT.bold,
+    // fontWeight: WEIGHT.bold,
     color: COLORS.primary,
   },
   introText: {
@@ -163,7 +168,7 @@ const styles = StyleSheet.create({
   },
   weekText: {
     marginRight: 10,
-    fontWeight: WEIGHT.bold,
+    // fontWeight: WEIGHT.bold,
   },
   topicText: {
     fontSize: SIZES.medium,
@@ -182,7 +187,7 @@ const styles = StyleSheet.create({
   createQuizButtonText: {
     color: "#FFFFFF",
     fontSize: SIZES.large,
-    fontWeight: WEIGHT.bold,
+    // fontWeight: WEIGHT.bold,
   },
   centeredView: {
     flex: 1,
@@ -192,19 +197,19 @@ const styles = StyleSheet.create({
   },
   modalView: {
     margin: 20,
-    
+
     backgroundColor: "white",
-    borderRadius: 10, 
+    borderRadius: 10,
     padding: 35,
     width: 368,
-    height:358,
-    borderRadius:32,
+    height: 358,
+    borderRadius: 32,
     border: "1px solid #000000",
     alignItems: "center",
     shadowColor: "#000",
-    justifyContent: 'space-around', 
-    paddingVertical: 35, 
-    paddingHorizontal: 35, 
+    justifyContent: 'space-around',
+    paddingVertical: 35,
+    paddingHorizontal: 35,
     shadowOffset: {
       width: 0,
       height: 2
@@ -230,34 +235,49 @@ const styles = StyleSheet.create({
     shadowRadius: 2.22,
   },
   optionButtonText: {
-    color: "#000000", 
-    fontWeight: WEIGHT.bold,
+    color: "#000000",
+    // fontWeight: WEIGHT.bold,
     textAlign: "center",
     fontSize: SIZES.large,
-    width:190,
-    height:25,
-    lineHeight:23.44,
-    size:SIZES.large,
+    width: 190,
+    height: 25,
+    lineHeight: 23.44,
+    // size: SIZES.large,
     textAlign: "center",
-   
+
   },
   modalText: {
-    width:283,
-    height:62,
+    width: 283,
+    height: 62,
     marginBottom: 5,
     textAlign: "center",
-    fontWeight: WEIGHT.bold, 
-    fontSize: SIZES.large, 
+    // fontWeight: WEIGHT.bold,
+    fontSize: SIZES.large,
   },
   closeButton: {
     position: 'absolute',
-    top: 10, 
-    right: 10, 
+    top: 10,
+    right: 10,
     backgroundColor: "#A1A1A1",
-    borderRadius: 50, 
+    borderRadius: 50,
   },
   closeIcon: {
-    fontSize: SIZES.xLarge, 
+    fontSize: SIZES.xLarge,
+  },
+  addButton: {
+    backgroundColor: COLORS.button,
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    borderRadius: 30,
+    alignItems: 'flex-end',
+    marginLeft: 200,
+    marginRight: 20,
+    marginBottom: 20,
+  },
+  addButtonText: {
+    fontSize: SIZES.large,
+    color: '#fff',
+    textAlign: 'center',
   },
 });
 

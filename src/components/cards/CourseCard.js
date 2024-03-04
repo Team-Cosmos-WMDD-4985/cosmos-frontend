@@ -18,19 +18,19 @@ const CourseCard = ({ courses,navigation }) => {
       };
   return (
     <ScrollView>
-    <Card containerStyle={styles.card}>
-      <Card.Title style={styles.title}>Your Courses</Card.Title>
-      {courses.map((course) => (
-        <TouchableOpacity
-          key={course.id}
-          style={styles.courseContainer}
-          onPress={() =>  handlePress(course.topics)}
-        >
-          <Image source={course.image} style={styles.image} />
-          <Text>{course.name}</Text>
-        </TouchableOpacity>
-      ))}
-    </Card>
+      <Card containerStyle={styles.card}>
+        <Card.Title style={styles.title}>Your Courses</Card.Title>
+        {courses.map((course) => (
+          <TouchableOpacity
+            key={course.id}
+            style={styles.courseContainer}
+            onPress={() =>  handlePress(course.topics)}
+          >
+            <Image source={course.image} style={styles.image} />
+            <Text>{course.name}</Text>
+          </TouchableOpacity>
+        ))}
+      </Card>
   </ScrollView>
   );
 };
