@@ -8,6 +8,8 @@ import share from "../assets/icons/share.png";
 import location from "../assets/icons/location.png";
 import chevronLeft from '../assets/icons/chevron-left.png';
 import chevronRight from '../assets/icons/chevron-right.png';
+import calendar from '../assets/icons/calendar.png'
+import upload from '../assets/icons/upload.png'
 //Tabs icons:
 import dashboard_active from '../assets/icons/dashboard_active.png';
 import dashboard_inactive from '../assets/icons/dashboard_inactive.png';
@@ -36,4 +38,6 @@ export default {
   quiz_active,
   quiz_inactive,
   checkcircle,
+  calendar,
+  upload
 };

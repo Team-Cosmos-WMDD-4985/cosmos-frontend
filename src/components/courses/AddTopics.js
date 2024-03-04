@@ -326,28 +326,27 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     cancelButton: {
-        backgroundColor: COLORS.lightGray,
         borderWidth: 1,
-        borderColor: COLORS.button,
+        borderColor: COLORS.midGray,
         paddingVertical: 15,
         paddingHorizontal: 30,
         borderRadius: 30,
         marginRight: 10,
     },
     createButton: {
-        backgroundColor: COLORS.button,
+        backgroundColor: COLORS.primary,
         paddingVertical: 15,
         paddingHorizontal: 30,
         borderRadius: 30,
     },
     cancelButtonText: {
         fontSize: SIZES.large,
-        color: COLORS.button,
+        color: COLORS.primary,
         textAlign: 'center',
     },
     generateButtonText: {
         fontSize: SIZES.large,
-        color: COLORS.white,
+        color: COLORS.midTeal,
         textAlign: 'center',
     },
     chip: {

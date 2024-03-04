@@ -9,7 +9,7 @@ const COLORS = {
   lightTeal: "#D7FFF3",
   midTeal: "#7DFDE4",
   teal: "#B5F1DF",
-   button: "#C14E00",
+  //  button: "#C14E00",
 };
 
 const FONT = {

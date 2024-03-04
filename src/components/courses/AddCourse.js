@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, Button, Image, TouchableOpacity, Platform } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as ImagePicker from 'expo-image-picker';
-import { COLORS, SIZES } from "./../../constants";
+import { COLORS, SIZES, images, icons } from "./../../constants";
 
 function AddCourse({ navigation }) {
     const [courseName, setCourseName] = useState('');
@@ -27,7 +27,8 @@ function AddCourse({ navigation }) {
     };
 
     const handleGenerate = () => {
-        navigation.navigate('AddTopics');    };
+        navigation.navigate('AddTopics');
+    };
 
     return (
         <View style={styles.container}>
@@ -35,7 +36,7 @@ function AddCourse({ navigation }) {
             {/*  Add Course Header*/}
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <Image source={require('./../../assets/icons/chevron-left.png')} style={styles.backIcon} />
+                    <Image source={icons.chevronLeft} style={styles.backIcon} />
                 </TouchableOpacity>
                 <Text style={styles.headerTitle}>Course Details</Text>
                 <View />
@@ -72,7 +73,7 @@ function AddCourse({ navigation }) {
                                 }}
                             />
                         )}
-                        <Image source={require('./../../assets/icons/calendar.png')} style={styles.icon} />
+                        <Image source={icons.calendar} style={styles.icon} />
                         <TouchableOpacity onPress={() => setShowEndDatePicker(true)}>
                             <Text style={styles.label}>End</Text>
                         </TouchableOpacity>
@@ -95,7 +96,7 @@ function AddCourse({ navigation }) {
                     <Text style={styles.label}>Upload Course Weekly Topics</Text>
                     <View style={styles.uploadButton}>
                         <TouchableOpacity style={styles.center} onPress={() => pickImage(setWeeklyTopics)}>
-                            <Image source={require('./../../assets/icons/upload.png')} style={styles.icon} />
+                            <Image source={icons.upload} style={styles.icon} />
                             <Text style={styles.link}>Click here to browse</Text>
                         </TouchableOpacity>
                     </View>
@@ -106,7 +107,7 @@ function AddCourse({ navigation }) {
                     <Text style={styles.label}>Upload Course Picture</Text>
                     <View style={styles.uploadButton}>
                         <TouchableOpacity style={styles.center} onPress={() => pickImage(setCoursePicture)}>
-                            <Image source={require('./../../assets/icons/upload.png')} style={styles.icon} />
+                            <Image source={icons.upload} style={styles.icon} />
                             <Text style={styles.link}>Click here to browse</Text>
                         </TouchableOpacity>
                     </View>
@@ -189,6 +190,10 @@ const styles = StyleSheet.create({
         width: 24,
         height: 24,
     },
+    icon: {
+        width: 24,
+        height: 24,
+    },
     center: {
         alignItems: 'center',
     },
@@ -205,20 +210,20 @@ const styles = StyleSheet.create({
     cancelButton: {
         backgroundColor: COLORS.lightGray,
         borderWidth: 1,
-        borderColor: COLORS.button,
+        borderColor: COLORS.midGray,
         padding: 15,
     },
     generateButton: {
-        backgroundColor: COLORS.button,
+        backgroundColor: COLORS.primary,
     },
     cancelButtonText: {
         fontSize: SIZES.large,
-        color: COLORS.button,
+        color: COLORS.midGray,
         textAlign: 'center',
     },
     generateButtonText: {
         fontSize: SIZES.large,
-        color: COLORS.white,
+        color: COLORS.midTeal,
         textAlign: 'center',
     },
 });

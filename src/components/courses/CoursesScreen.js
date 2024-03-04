@@ -9,10 +9,10 @@ function CoursesScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.headerTitle}>Courses</Text>
-          <Image source={images.profile} style={styles.profileImage} />
-        </View>
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>Courses</Text>
+        <Image source={images.profile} style={styles.profileImage} />
+      </View>
       <Text style={styles.greeting}>Hi, Kristen</Text>
 
       {hasCourses ? (
@@ -31,7 +31,7 @@ function CoursesScreen({ navigation }) {
               onPress={() => navigation.navigate('AddCourse')}
             >
               <Text style={[styles.linkStyle, linkPressed && styles.linkPressedStyle]}>
-                create a course
+                {" create a course "}
               </Text>
             </TouchableOpacity>
             now?</Text>
