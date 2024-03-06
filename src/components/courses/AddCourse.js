@@ -3,7 +3,7 @@ import { View, Text, TextInput, StyleSheet, Button, Image, TouchableOpacity, Pla
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as ImagePicker from 'expo-image-picker';
 import * as DocumentPicker from 'expo-document-picker';
-import { COLORS, SIZES } from "./../../constants";
+import { COLORS, SIZES, icons } from "./../../constants";
 import secoreStoreService from "../../services/secureStore";
 
 function AddCourse({ navigation }) {
@@ -25,37 +25,37 @@ function AddCourse({ navigation }) {
     }
 
 
-    const pickImage = async (setter) => {
-        // let result = await ImagePicker.launchImageLibraryAsync({
-        //     mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        //     allowsEditing: true,
-        //     aspect: [4, 3],
-        //     quality: 1,
-        // });
+    // const pickImage = async (setter) => {
+    //     let result = await ImagePicker.launchImageLibraryAsync({
+    //         mediaTypes: ImagePicker.MediaTypeOptions.Images,
+    //     allowsEditing: true,
+    //     aspect: [4, 3],
+    //     quality: 1,
+    // });
 
-        // if (!result.cancelled) {
-        //     setter(result.uri);
-        // }
+    // if (!result.cancelled) {
+    //     setter(result.uri);
+    // }
 
-        let result = await DocumentPicker.getDocumentAsync({
-            type: "application/pdf"
-        })
+    // let result = await DocumentPicker.getDocumentAsync({
+    //     type: "application/pdf"
+    // })
 
-        console.log(result)
+    // console.log(result)
 
-        if (!result.canceled && result.assets && result.assets.length > 0) {
-            setFile(result.assets[0]);
-          }
-        // if (!result.cancelled) {
-        //     setter(result.uri);
-        // }
-    };
+    // if (!result.canceled && result.assets && result.assets.length > 0) {
+    //     setFile(result.assets[0]);
+    // }
+    // if (!result.cancelled) {
+    //     setter(result.uri);
+    // }
+    // };
 
     const handleGenerate = () => {
-        console.log(courseName); 
+        console.log(courseName);
         console.log(startDate);
-        console.log(endDate); 
-     };
+        console.log(endDate);
+    };
 
     return (
         <View style={styles.container}>
@@ -152,8 +152,8 @@ function AddCourse({ navigation }) {
             </View>
         </View>
     );
-}
 
+}
 const styles = StyleSheet.create({
     container: {
         flex: 1,

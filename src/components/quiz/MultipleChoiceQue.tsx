@@ -1,8 +1,9 @@
 import React, { useRef, useState } from 'react';
 import { View, Text, StyleSheet, Button, Dimensions, TextInput, ScrollView, Modal, Image, TouchableOpacity } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
-import { icons, images } from "./../../constants";
-import { COLORS, SIZES } from "./../../constants";
+import { icons, images } from "../../constants";
+import { COLORS, SIZES } from "../../constants";
+import { NavigationProp } from '@react-navigation/native';
 
 const { width } = Dimensions.get('window');
 
@@ -58,7 +59,7 @@ const MultipleChoiceQue = ({navigation}) => {
             ))}
           </View>
         ) : (
-          <TextInput style={styles.textInput} placeholder="Enter your answer..." />
+          <TextInput style={styles.answerTextInput} placeholder="Enter your answer..." />
         )}
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 20 }}>
           <View style={{ backgroundColor: "#A1A1A1", width: 100, height: 50, alignItems: "center", justifyContent: "center", borderRadius: 5 }}><Button color="black" title="Previous" onPress={handlePrevious} disabled={currentIndex === 0} /></View>
@@ -133,8 +134,8 @@ const MultipleChoiceQue = ({navigation}) => {
 
       </View>
       <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 10, marginBottom:30,  gap:50  }}>
-        <View style={{ backgroundColor: "white",borderColor:"black", width: 100, justifyContent: "center", width:150, borderRadius:10 }}><Button color="black" title="Download PDF" onPress={handleCancel} /></View>
-        <View style={{ backgroundColor: "#A1A1A1", width: 100, justifyContent: "center", width:150, borderRadius:5, borderRadius:10 }}><Button color="black" title="Save Quiz" onPress={handleConfirm}  /></View>
+        <View style={{ backgroundColor: "white",borderColor:"black", justifyContent: "center", width : 150, borderRadius:10 }}><Button color="black" title="Download PDF" onPress={handleCancel} /></View>
+        <View style={{ backgroundColor: "#A1A1A1", justifyContent: "center", width:150, borderRadius:10 }}><Button color="black" title="Save Quiz" onPress={handleConfirm}  /></View>
       </View>
     </ScrollView>
   );
@@ -211,6 +212,12 @@ const styles = StyleSheet.create({
     elevation: 5
   },
   modalText: {
+    marginBottom: 10,
+    marginTop: 10,
+    fontSize: SIZES.medium,
+    textAlign: "center"
+  },
+  answerTextInput: {
     marginBottom: 10,
     marginTop: 10,
     fontSize: SIZES.medium,
