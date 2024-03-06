@@ -1,7 +1,7 @@
 import React from "react";
-import { View, Text, StyleSheet, SafeAreaView } from "react-native";
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from "react-native";
 import CourseCard from "../cards/CourseCard";
-import { COLORS, icons, images, SIZES,WEIGHT } from "../../constants";
+import { COLORS, icons, images, SIZES, WEIGHT } from "../../constants";
 
 
 const AddingTopicsForQuizGeneration = ({ navigation }) => {
@@ -58,8 +58,8 @@ const styles = StyleSheet.create({
     marginBottom: 50,
     justifyContent: "center",
     alignItems: "center",
-   
- 
+
+
   },
   headerTitle: {
     fontSize: SIZES.xxLarge,
