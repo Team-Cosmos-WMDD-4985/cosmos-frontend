@@ -1,15 +1,32 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { View, Text, TouchableOpacity, FlatList } from 'react-native'
+import { useFocusEffect } from '@react-navigation/native';
 
 import styles from './CourseList.style';
 import { COLORS, SIZES } from '../../constants';
 
 import CourseCard from "../../common/cards/CourseCard";
-
+import AxiosService from "./../../services/axios";
 
 const CourseList = () => {
 
+
+  
+
   const data = [ {}, {}, {}]
+  const [ courseList, setCourseList ] = useState([])
+
+  useEffect(() => {
+    getCourses();
+  }, [])
+
+  const getCourses = async () => {
+    const response = await AxiosService("GET", "courses", true);
+    console.log(response.data);
+    if(response.data && response.data.success) {
+      setCourseList(response.data.data.courses)
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -23,8 +40,8 @@ const CourseList = () => {
       <View style={styles.cardsContainer}>
         {  
           <FlatList
-            data={data}
-            renderItem={( {item}) => {
+            data={courseList}
+            renderItem={({item}) => {
               return (
                 <CourseCard item={item} />
               )

@@ -5,14 +5,17 @@ import styles from './CourseCard.style'
 // import { checkImageURL } from "../../../../utils/index";
 import { icons } from "./../../constants"
 
-const CourseCard = ( { } ) => {
+const CourseCard = ( { item } ) => {
 
-  const item = {
-    employer_logo : "https://t4.ftcdn.net/jpg/05/05/61/73/360_F_505617309_NN1CW7diNmGXJfMicpY9eXHKV4sqzO5H.jpg",
-    courseName: "Project Management",
-    job_title: "React developer",
-    courseDate: "Jan 6 - Apr 6, 2024"
+  const getDateFormat = (date) => {
+    let dateObj = new Date(date);
+    const month = dateObj.getUTCMonth() + 1; 
+    const day = dateObj.getUTCDate();
+    const year = dateObj.getUTCFullYear();
+    return `${month}-${day}-${year}`
   }
+
+  
   return (
     <TouchableOpacity
       style={styles.container()}
@@ -33,7 +36,7 @@ const CourseCard = ( { } ) => {
       </View>
 
       <View> 
-          <Text style={styles.courseDate} numberOfLines={1} > {item.courseDate}</Text>
+          <Text style={styles.courseDate} numberOfLines={1} > { getDateFormat(item.startDate) } to { getDateFormat(item.endDate) } </Text>
       </View>
 
     </TouchableOpacity>

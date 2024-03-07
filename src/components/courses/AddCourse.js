@@ -5,6 +5,9 @@ import * as ImagePicker from 'expo-image-picker';
 import * as DocumentPicker from 'expo-document-picker';
 import { COLORS, SIZES } from "./../../constants";
 import secoreStoreService from "../../services/secureStore";
+// import DocumentPicker from 'react-native-document-picker';
+import AxiosService from "./../../services/axios";
+import axios from "axios";
 
 function AddCourse({ navigation }) {
 
@@ -26,35 +29,83 @@ function AddCourse({ navigation }) {
 
 
     const pickImage = async (setter) => {
-        // let result = await ImagePicker.launchImageLibraryAsync({
-        //     mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        //     allowsEditing: true,
-        //     aspect: [4, 3],
-        //     quality: 1,
-        // });
-
-        // if (!result.cancelled) {
-        //     setter(result.uri);
-        // }
-
-        let result = await DocumentPicker.getDocumentAsync({
-            type: "application/pdf"
-        })
-
-        console.log(result)
-
-        if (!result.canceled && result.assets && result.assets.length > 0) {
-            setFile(result.assets[0]);
-          }
-        // if (!result.cancelled) {
-        //     setter(result.uri);
-        // }
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+        });
     };
 
-    const handleGenerate = () => {
+    const uploadPdf = async () => {
+
+        try {
+            let res = await DocumentPicker.getDocumentAsync({
+                type: "application/pdf"
+            });
+
+            const file = res.assets[0];
+            const pdfUpload = {
+                name: file.name.split(".")[0],
+                uri: file.uri,
+                type: file.mimeType,
+                size: file.size
+            }
+            setFile(pdfUpload);
+        } catch (err) {
+            if(DocumentPicker.isCancel(err)){
+                console.log("User cancelled")
+            } else {
+                console.log(err)
+            }
+        }
+       
+
+        // console.log(result)
+
+        // if (!result.canceled && result.assets && result.assets.length > 0) {
+        //     setFile(result.assets[0]);
+        //   }
+    }
+
+    const handleGenerate = async () => {
         console.log(courseName); 
         console.log(startDate);
         console.log(endDate); 
+
+        const toSend = {
+            file: file,
+            name: courseName,
+            startDate: startDate,
+            endDate: endDate
+        }
+        console.log(toSend)
+        let formdata = new FormData();
+        formdata.append('file',  file);
+        formdata.append("name", courseName);
+        formdata.append("startDate", startDate.toString() );
+        formdata.append("endDate", endDate.toString());
+
+        try {
+
+            // const response = await axios.post(" https://60bb-207-35-73-116.ngrok-free.app/addCourse", formdata, {
+            //     headers: {
+            //         "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWU0MGEzNjY0MzQ0ODFiNTA4YTI0YWQiLCJpYXQiOjE3MDk3MTUxNzN9.Xwp5xZF6dR-VoqjAUq2hAhLuE0ARQGI-p88kUrFoug8",
+            //         "Content-Type": `multipart/form-data`
+            //     }
+            // })
+
+            const response = await AxiosService("POST", "addCourse", true, {}, formdata, { "Content-Type": `multipart/form-data` } )
+
+            console.log(response.data);
+            console.log(response.data.data);
+            navigation.navigate("AddTopics", response.data.data)
+
+        } catch (err) {
+            console.log(err)
+        }
+        
+
      };
 
     return (
@@ -86,8 +137,11 @@ function AddCourse({ navigation }) {
                 <View >
                     <Text style={styles.label}>Course Length</Text>
                     <View style={styles.datePickerRow}>
-                        <TouchableOpacity onPress={() => setShowStartDatePicker(true)} >
-                            <Text style={styles.label}>Start</Text>
+                        <TouchableOpacity onPress={() => setShowStartDatePicker(Platform.OS === 'ios')} >
+                            {
+                                startDate != null ? (<Text style={styles.label}>{startDate.toDateString()}</Text>) :  (<Text style={styles.label}>Start</Text>)
+                            }
+                           
                         </TouchableOpacity>
                         {showStartDatePicker && (
                             <DateTimePicker
@@ -101,8 +155,10 @@ function AddCourse({ navigation }) {
                             />
                         )}
                         <Image source={require('./../../assets/icons/calendar.png')} style={styles.icon} />
-                        <TouchableOpacity onPress={() => setShowEndDatePicker(true)}>
-                            <Text style={styles.label}>End</Text>
+                        <TouchableOpacity onPress={() => setShowEndDatePicker(Platform.OS === 'ios')}>
+                            {
+                                endDate != null ? (<Text style={styles.label}>{endDate.toDateString()}</Text>) :  (<Text style={styles.label}>End</Text>)
+                            }
                         </TouchableOpacity>
                         {showEndDatePicker && (
                             <DateTimePicker
@@ -111,7 +167,7 @@ function AddCourse({ navigation }) {
                                 display="default"
                                 onChange={(event, selectedDate) => {
                                     setShowEndDatePicker(Platform.OS === 'ios');
-                                    setEndDate(selectedDate || endDate);
+                                    setEndDate(selectedDate|| endDate);
                                 }}
                             />
                         )}
@@ -122,7 +178,7 @@ function AddCourse({ navigation }) {
                 <View>
                     <Text style={styles.label}>Upload Course pdf</Text>
                     <View style={styles.uploadButton}>
-                        <TouchableOpacity style={styles.center} onPress={() => pickImage(setWeeklyTopics)}>
+                        <TouchableOpacity style={styles.center} onPress={() => uploadPdf()}>
                             <Image source={require('./../../assets/icons/upload.png')} style={styles.icon} />
                             <Text style={styles.link}>Click here to browse</Text>
                         </TouchableOpacity>
@@ -133,7 +189,7 @@ function AddCourse({ navigation }) {
                 <View>
                     <Text style={styles.label}>Upload Course Picture</Text>
                     <View style={styles.uploadButton}>
-                        <TouchableOpacity style={styles.center} onPress={() => pickImage(setCoursePicture)}>
+                        <TouchableOpacity style={styles.center} onPress={() => pickImage()}>
                             <Image source={require('./../../assets/icons/upload.png')} style={styles.icon} />
                             <Text style={styles.link}>Click here to browse</Text>
                         </TouchableOpacity>
