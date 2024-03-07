@@ -22,7 +22,7 @@ module.exports ={
         margin: 5
       },
       input: {
-        backgroundColor: "lightgrey",
+        backgroundColor: "#EFEFEF",
         borderRadius: 20,
         paddingHorizontal: 10,
         paddingVertical:10,
@@ -34,7 +34,7 @@ module.exports ={
         fontSize:15
       },
       link2:{
-        color:'midGray',
+        color:'#74757B',
         textAlign:"center",
         marginVertical:10
       }

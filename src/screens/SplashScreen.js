@@ -6,23 +6,23 @@ import { COLORS, icons, images, SIZES } from "./../constants";
 function SplashScreen({ navigation }) {
 
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      navigation.navigate('Welcome');
-    }, 3000);
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     navigation.navigate('Welcome');
+  //   }, 3000);
 
-    // Cleanup function to clear the timer if the component unmounts
-    return () => clearTimeout(timer);
-  }, [navigation]);
+  //   // Cleanup function to clear the timer if the component unmounts
+  //   return () => clearTimeout(timer);
+  // }, [navigation]);
 
 
-  const navigateToDashBoard = () => {
-    navigation.navigate('Welcome');
+  const navigateToNext = () => {
+    navigation.navigate('Feature1');
   };
 
   return (
     <ImageBackground source={images.splash} style={styles.container}>
-      <TouchableOpacity onPress={navigateToDashBoard}>
+      <TouchableOpacity onPress={navigateToNext}>
         <Image source={images.logo} style={styles.logo} />
       </TouchableOpacity>
       <View style={styles.titleStyle}>
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
 
   titleStyle: {
     position: 'absolute',
-    bottom: 20,
+    bottom: 80,
     left: 0,
     right: 0,
   }

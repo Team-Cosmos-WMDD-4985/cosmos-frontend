@@ -14,6 +14,7 @@ function AddCourse({ navigation }) {
     const [showStartDatePicker, setShowStartDatePicker] = useState(false);
     const [showEndDatePicker, setShowEndDatePicker] = useState(false);
     const [file, setFile] = useState();
+    const [coursePicture, setCoursePicture] = useState(null);
 
     useEffect(() => {
         getToken()
@@ -28,28 +29,47 @@ function AddCourse({ navigation }) {
     // const pickImage = async (setter) => {
     //     let result = await ImagePicker.launchImageLibraryAsync({
     //         mediaTypes: ImagePicker.MediaTypeOptions.Images,
-    //     allowsEditing: true,
-    //     aspect: [4, 3],
-    //     quality: 1,
-    // });
+    //         allowsEditing: true,
+    //         aspect: [4, 3],
+    //         quality: 1,
+    //     });
 
-    // if (!result.cancelled) {
-    //     setter(result.uri);
-    // }
+    //     if (!result.cancelled) {
+    //         setter(result.uri);
+    //     }
 
-    // let result = await DocumentPicker.getDocumentAsync({
-    //     type: "application/pdf"
-    // })
+    //     // let result = await DocumentPicker.getDocumentAsync({
+    //     //     type: "application/pdf"
+    //     // })
 
-    // console.log(result)
+    //     console.log(result)
 
-    // if (!result.canceled && result.assets && result.assets.length > 0) {
-    //     setFile(result.assets[0]);
-    // }
-    // if (!result.cancelled) {
-    //     setter(result.uri);
-    // }
+    //     if (!result.canceled && result.assets && result.assets.length > 0) {
+    //         setFile(result.assets[0]);
+    //     }
+    //     if (!result.cancelled) {
+    //         setter(result.uri);
+    //     }
     // };
+
+    const pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+        });
+
+        console.log(result);
+
+        if (!result.canceled) {
+            setCoursePicture(result.uri);
+        }
+    };
+
+
+
+
 
     const handleGenerate = () => {
         console.log(courseName);
@@ -120,9 +140,12 @@ function AddCourse({ navigation }) {
 
                 {/* The upload Course Topics Section */}
                 <View>
-                    <Text style={styles.label}>Upload Course Weekly Topics</Text>
+                    <Text style={styles.label}>Upload Course Picture</Text>
                     <View style={styles.uploadButton}>
-                        <TouchableOpacity style={styles.center} onPress={() => pickImage(setWeeklyTopics)}>
+                        {/* <TouchableOpacity style={styles.center} onPress={() => pickImage(setWeeklyTopics)}> */}
+                        {/* <TouchableOpacity style={styles.center}> */}
+                        <TouchableOpacity style={styles.center} onPress={pickImage}>
+
                             <Image source={icons.upload} style={styles.icon} />
                             <Text style={styles.link}>Click here to browse</Text>
                         </TouchableOpacity>
@@ -131,9 +154,11 @@ function AddCourse({ navigation }) {
 
                 {/* The upload Course Topics Section */}
                 <View>
-                    <Text style={styles.label}>Upload Course Picture</Text>
+                    <Text style={styles.label}>Upload Course Weekly Topics</Text>
                     <View style={styles.uploadButton}>
-                        <TouchableOpacity style={styles.center} onPress={() => pickImage(setCoursePicture)}>
+                        {/* <TouchableOpacity style={styles.center} onPress={() => pickImage(setCoursePicture)}> */}
+                        {/* <TouchableOpacity style={styles.center} > */}
+                        <TouchableOpacity style={styles.center} onPress={pickImage}>
                             <Image source={icons.upload} style={styles.icon} />
                             <Text style={styles.link}>Click here to browse</Text>
                         </TouchableOpacity>
@@ -145,12 +170,16 @@ function AddCourse({ navigation }) {
                     <TouchableOpacity style={[styles.button, styles.cancelButton]} onPress={() => navigation.goBack()}>
                         <Text style={styles.cancelButtonText}>Cancel</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.button, styles.generateButton]} onPress={handleGenerate}>
+                    <TouchableOpacity style={[styles.button, styles.generateButton]}
+                        onPress={() => {
+                            handleGenerate();
+                            navigation.navigate('AddTopics')
+                        }}>
                         <Text style={styles.generateButtonText}>Generate</Text>
                     </TouchableOpacity>
                 </View>
             </View>
-        </View>
+        </View >
     );
 
 }

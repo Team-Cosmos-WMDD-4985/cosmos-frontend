@@ -20,3 +20,5 @@ npm install react-native-snap-carousel
 npm install deprecated-react-native-prop-types
 npm install @react-native-community/datetimepicker --save
 npm config set strict-ssl false
+npx expo install @expo/webpack-config@^19.0.0
+npm install @react-native-community/checkbox --save

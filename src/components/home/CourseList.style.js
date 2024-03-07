@@ -13,20 +13,16 @@ const styles = StyleSheet.create({
     marginTop: SIZES.small,
   },
   headerTitle: {
-    fontSize: SIZES.large,
-    fontFamily: FONT.medium,
-    color: COLORS.primary,
-    lineHeight: 28,
-    fontWeight: "700"
-  },
-  headerBtn: {
     fontSize: SIZES.medium,
-    fontFamily: FONT.medium,
-    color: COLORS.gray,
+    // fontFamily: FONT.medium,
+    color: COLORS.secondary,
+    // lineHeight: 28,
+    fontWeight: "700"
   },
   cardsContainer: {
     marginTop: SIZES.medium,
     gap: SIZES.small,
+    height:240,
   },
 });
 

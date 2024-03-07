@@ -101,7 +101,7 @@ function AddTopics({ navigation }) {
                     <TouchableOpacity onPress={() => navigation.goBack()}>
                         <Image source={icons.chevronLeft} style={styles.backIcon} />
                     </TouchableOpacity>
-                    <Text style={styles.headerTitle}>Arrange or Add Topics</Text>
+                    <Text style={styles.headerTitle}>Manage Topics</Text>
                 </View>
 
                 {/* {topics.map((item, index) => (
@@ -111,32 +111,35 @@ function AddTopics({ navigation }) {
                 <View style={styles.topicByWeek}>
                     <Text style={styles.WeekLabel}>Week 1</Text>
                     <View style={styles.topicBox} >
-                        {/* <Chip */}
-                        <Text
-                            style={styles.chip}
-                            onPress={handleClick}
-                            onClose={handleDelete}
-                        >
-                            User flow
-                        </Text>
-                        {/* </Chip> */}
+                        <View style={styles.chip}>
+                            <Text
+                                style={styles.chipText}
+                                onPress={handleClick}
+                                onClose={handleDelete}
+                            >
+                                User flow
 
-                        {/* <Chip */}
-                        <Text
-                            style={[styles.chip, styles.outlinedChip]}
-                            onPress={handleClick}
-                            onClose={handleDelete}
-                            mode="outlined"
-                        >
-                            Persona
-                        </Text>
-                        {/* </Chip> */}
+                            </Text>
+                            <View style={styles.deleteSign}>
+                                <Text style={styles.SignText} >X</Text>
+                            </View>
+                        </View>
 
-                        {/* <Fab color="primary" aria-label="add">
-                            <AddIcon />
-                        </Fab> */}
+                        <View style={styles.chip}>
+                            <Text
+                                style={styles.chipText}
+                                onPress={handleClick}
+                                onClose={handleDelete}
+                            >
+                                User Persona
+
+                            </Text>
+                            <View style={styles.deleteSign}>
+                                <Text style={styles.SignText} >X</Text>
+                            </View>
+                        </View>
                         <View style={styles.addSign}>
-                            <Text >+</Text>
+                            <Text style={styles.SignText} >+</Text>
                         </View>
                     </View>
                 </View>
@@ -146,32 +149,34 @@ function AddTopics({ navigation }) {
                 <View style={styles.topicByWeek}>
                     <Text style={styles.WeekLabel}>Week 2</Text>
                     <View style={styles.topicBox} >
-                        {/* <Chip */}
-                        <Text
-                            style={styles.chip}
-                            onPress={handleClick}
-                            onClose={handleDelete}
-                        >
-                            Wireframe
-                        </Text>
-                        {/* </Chip> */}
+                        <View style={styles.chip}>
+                            <Text
+                                style={styles.chipText}
+                                onPress={handleClick}
+                                onClose={handleDelete}
+                            >
+                                Wireframe
+                            </Text>
+                            <View style={styles.deleteSign}>
+                                <Text style={styles.SignText} >X</Text>
+                            </View>
+                        </View>
 
-                        {/* <Chip */}
-                        <Text
-                            style={[styles.chip, styles.outlinedChip]}
-                            onPress={handleClick}
-                            onClose={handleDelete}
-                            mode="outlined"
-                        >
-                            User Story
-                        </Text>
-                        {/* </Chip> */}
+                        <View style={styles.chip}>
+                            <Text
+                                style={styles.chipText}
+                                onPress={handleClick}
+                                onClose={handleDelete}
+                            >
+                                User Story
 
-                        {/* <Fab color="primary" aria-label="add">
-                            <AddIcon />
-                        </Fab> */}
+                            </Text>
+                            <View style={styles.deleteSign}>
+                                <Text style={styles.SignText} >X</Text>
+                            </View>
+                        </View>
                         <View style={styles.addSign}>
-                            <Text >+</Text>
+                            <Text style={styles.SignText} >+</Text>
                         </View>
                     </View>
                 </View>
@@ -180,32 +185,34 @@ function AddTopics({ navigation }) {
                 <View style={styles.topicByWeek}>
                     <Text style={styles.WeekLabel}>Week 3</Text>
                     <View style={styles.topicBox} >
-                        {/* <Chip */}
-                        <Text
-                            style={styles.chip}
-                            onPress={handleClick}
-                            onClose={handleDelete}
-                        >
-                            Photoshop
-                        </Text>
-                        {/* </Chip> */}
+                        <View style={styles.chip}>
+                            <Text
+                                style={styles.chipText}
+                                onPress={handleClick}
+                                onClose={handleDelete}
+                            >
+                                Photoshop
 
-                        {/* <Chip */}
-                        <Text
-                            style={[styles.chip, styles.outlinedChip]}
-                            onPress={handleClick}
-                            onClose={handleDelete}
-                            mode="outlined"
-                        >
-                            Illustrator
-                        </Text>
-                        {/* </Chip> */}
+                            </Text>
+                            <View style={styles.deleteSign}>
+                                <Text style={styles.SignText} >X</Text>
+                            </View>
+                        </View>
 
-                        {/* <Fab color="primary" aria-label="add">
-                            <AddIcon />
-                        </Fab> */}
+                        <View style={styles.chip}>
+                            <Text
+                                style={styles.chipText}
+                                onPress={handleClick}
+                                onClose={handleDelete}
+                            >
+                                Illustrator
+                            </Text>
+                            <View style={styles.deleteSign}>
+                                <Text style={styles.SignText} >X</Text>
+                            </View>
+                        </View>
                         <View style={styles.addSign}>
-                            <Text >+</Text>
+                            <Text style={styles.SignText} >+</Text>
                         </View>
                     </View>
                 </View>
@@ -214,35 +221,37 @@ function AddTopics({ navigation }) {
                 <View style={styles.topicByWeek}>
                     <Text style={styles.WeekLabel}>Week 4</Text>
                     <View style={styles.topicBox} >
-                        {/* <Chip */}
-                        <Text
-                            style={styles.chip}
-                            onPress={handleClick}
-                            onClose={handleDelete}
-                        >
-                            Figma
-                        </Text>
-                        {/* </Chip> */}
+                        <View style={styles.chip}>
+                            <Text
+                                style={styles.chipText}
+                                onPress={handleClick}
+                                onClose={handleDelete}
+                            >
+                                Figma
 
-                        {/* <Chip */}
-                        <Text
-                            style={[styles.chip, styles.outlinedChip]}
-                            onPress={handleClick}
-                            onClose={handleDelete}
-                            mode="outlined"
-                        >
-                            Creator
-                        </Text>
-                        {/* </Chip> */}
+                            </Text>
+                            <View style={styles.deleteSign}>
+                                <Text style={styles.SignText} >X</Text>
+                            </View>
+                        </View>
 
-                        {/* <Fab color="primary" aria-label="add">
-                            <AddIcon />
-                        </Fab> */}
+                        <View style={styles.chip}>
+                            <Text
+                                style={styles.chipText}
+                                onPress={handleClick}
+                                onClose={handleDelete}
+                            >
+                                Creator
+                            </Text>
+                            <View style={styles.deleteSign}>
+                                <Text style={styles.SignText} >X</Text>
+                            </View>
+                        </View>
                         <View style={styles.addSign}>
-                            <Text >+</Text>
+                            <Text style={styles.SignText} >+</Text>
                         </View>
                     </View>
-                </View>
+                </View> 
 
 
             </ScrollView>
@@ -267,14 +276,15 @@ const styles = StyleSheet.create({
     },
     header: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
         alignItems: 'center',
         paddingTop: 40,
         paddingHorizontal: 20,
+        marginBottom: 20,
     },
     headerTitle: {
         fontSize: SIZES.xLarge,
         fontWeight: 'bold',
+        marginLeft: 10,
     },
     backIcon: {
         width: 24,
@@ -306,11 +316,12 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
     },
     topicBox: {
+        display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'flex-start',
         borderWidth: 1,
-        borderColor: COLORS.lightGray,
+        borderColor: COLORS.darkGray,
         padding: 15,
         borderRadius: 10,
         height: 100,
@@ -350,21 +361,26 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     chip: {
+        display: 'flex',
+        flexDirection: 'row',
         width: 120,
+        height: 30,
+        marginRight: 10,
+        borderWidth: 1,
+        borderRadius: 15,
+        justifyContent: 'space-around',
+        alignItems: 'center'
+    }
+    ,
+    chipText: {
         fontSize: SIZES.small,
         marginRight: 10,
-        backgroundColor: COLORS.darkGray,
-
+        borderColor: COLORS.darkGray,
     },
-    outlinedChip: {
-        // styles for outlined chip variant
-        borderWidth: 1,
-        fontSize: SIZES.small,
 
-    },
-    addSign: {
-        fontSize: SIZES.large,
-        color: COLORS.white,
+    deleteSign: {
+        display: 'flex',
+        flexDirection: 'column',
         textAlign: 'center',
         justifyContent: 'center',
         alignItems: 'center',
@@ -372,7 +388,32 @@ const styles = StyleSheet.create({
         height: 20,
         borderRadius: 10,
         borderWidth: 1,
-        borderColor: COLORS.primary,
+        backgroundColor: COLORS.primary,
+
+    },
+    addSign: {
+        position: 'absolute',
+        bottom: 10,
+        left: '50%',
+        display: 'flex',
+        flexDirection: 'column',
+        textAlign: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 20,
+        height: 20,
+        borderRadius: 10,
+        borderWidth: 1,
+        backgroundColor: COLORS.primary,
+    },
+    SignText: {
+        fontSize: SIZES.small,
+        color: COLORS.midTeal,
+        display: 'flex',
+        flexDirection: 'column',
+        textAlign: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     centeredView: {
         flex: 1,
@@ -392,7 +433,10 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.75,
         shadowRadius: 3.84,
-        elevation: 5
+        elevation: 5,
+        borderColor: COLORS.midTeal,
+        borderWidth: 3,
+
     },
 
     modalText: {
@@ -402,8 +446,8 @@ const styles = StyleSheet.create({
         textAlign: "center"
     },
     checkcirclestyle: {
-        width: 40,
-        height: 40,
+        width: 80,
+        height: 80,
     },
     overlay: {
         ...StyleSheet.absoluteFillObject,
