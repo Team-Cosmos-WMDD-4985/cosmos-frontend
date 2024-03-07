@@ -10,37 +10,21 @@ import { icons, images } from "./../../constants";
 // import Fab from '@mui/material/Fab';
 // import AddIcon from '@mui/icons-material/Add';
 
-const TopicItem = ({ week, topics }) => {
-    return (
-        <View style={styles.topicItem}>
-            {/* <Text style={styles.weekText}>Week {week}</Text>
-            {topics.map((topic, index) => (
-                 <View key={index} style={styles.topic}> 
-                     <Text style={styles.topicText}>{topic}</Text> 
-                     Icon placeholder 
-                </View>
-             ))} 
-            Add topic button placeholder */}
 
 
-        </View>
-    );
-};
+function AddTopics({ navigation, route }) {
 
-const handleClick = () => {
-    console.info('You clicked the Chip.');
-};
+    console.log("params are ",route.params);
+    const handleClick = () => {
+        console.info('You clicked the Chip.');
+    };
+    
+    const handleDelete = () => {
+        console.info('You clicked the delete icon.');
+    };
 
-const handleDelete = () => {
-    console.info('You clicked the delete icon.');
-};
 
-
-function AddTopics({ navigation }) {
-    // const [topics, setTopics] = useState([
-    //     { week: 1, topics: ['User flow', 'Persona'] },
-    //     { week: 2, topics: ['Low fidelity wire-frames'] },
-    // ]);
+    const [schedule, setSchedule] = useState(route.params)
     const [modalVisible, setModalVisible] = useState(false);
 
 
@@ -56,7 +40,7 @@ function AddTopics({ navigation }) {
     const handleConfirm = () => {
         setModalVisible(false);
         console.log("Confirm Pressed");
-        // Place your code here to create the course
+        navigation.navigate("NavigationBar")
     };
 
 
@@ -104,146 +88,32 @@ function AddTopics({ navigation }) {
                     <Text style={styles.headerTitle}>Arrange or Add Topics</Text>
                 </View>
 
-                {/* {topics.map((item, index) => (
-                    <TopicItem key={index} week={item.week} topics={item.topics} />
-                ))} */}
-
-                <View style={styles.topicByWeek}>
-                    <Text style={styles.WeekLabel}>Week 1</Text>
-                    <View style={styles.topicBox} >
-                        {/* <Chip */}
-                        <Text
-                            style={styles.chip}
-                            onPress={handleClick}
-                            onClose={handleDelete}
-                        >
-                            User flow
-                        </Text>
-                        {/* </Chip> */}
-
-                        {/* <Chip */}
-                        <Text
-                            style={[styles.chip, styles.outlinedChip]}
-                            onPress={handleClick}
-                            onClose={handleDelete}
-                            mode="outlined"
-                        >
-                            Persona
-                        </Text>
-                        {/* </Chip> */}
-
-                        {/* <Fab color="primary" aria-label="add">
-                            <AddIcon />
-                        </Fab> */}
-                        <View style={styles.addSign}>
-                            <Text >+</Text>
-                        </View>
-                    </View>
-                </View>
-
-
-
-                <View style={styles.topicByWeek}>
-                    <Text style={styles.WeekLabel}>Week 2</Text>
-                    <View style={styles.topicBox} >
-                        {/* <Chip */}
-                        <Text
-                            style={styles.chip}
-                            onPress={handleClick}
-                            onClose={handleDelete}
-                        >
-                            Wireframe
-                        </Text>
-                        {/* </Chip> */}
-
-                        {/* <Chip */}
-                        <Text
-                            style={[styles.chip, styles.outlinedChip]}
-                            onPress={handleClick}
-                            onClose={handleDelete}
-                            mode="outlined"
-                        >
-                            User Story
-                        </Text>
-                        {/* </Chip> */}
-
-                        {/* <Fab color="primary" aria-label="add">
-                            <AddIcon />
-                        </Fab> */}
-                        <View style={styles.addSign}>
-                            <Text >+</Text>
-                        </View>
-                    </View>
-                </View>
-
-
-                <View style={styles.topicByWeek}>
-                    <Text style={styles.WeekLabel}>Week 3</Text>
-                    <View style={styles.topicBox} >
-                        {/* <Chip */}
-                        <Text
-                            style={styles.chip}
-                            onPress={handleClick}
-                            onClose={handleDelete}
-                        >
-                            Photoshop
-                        </Text>
-                        {/* </Chip> */}
-
-                        {/* <Chip */}
-                        <Text
-                            style={[styles.chip, styles.outlinedChip]}
-                            onPress={handleClick}
-                            onClose={handleDelete}
-                            mode="outlined"
-                        >
-                            Illustrator
-                        </Text>
-                        {/* </Chip> */}
-
-                        {/* <Fab color="primary" aria-label="add">
-                            <AddIcon />
-                        </Fab> */}
-                        <View style={styles.addSign}>
-                            <Text >+</Text>
-                        </View>
-                    </View>
-                </View>
-
-
-                <View style={styles.topicByWeek}>
-                    <Text style={styles.WeekLabel}>Week 4</Text>
-                    <View style={styles.topicBox} >
-                        {/* <Chip */}
-                        <Text
-                            style={styles.chip}
-                            onPress={handleClick}
-                            onClose={handleDelete}
-                        >
-                            Figma
-                        </Text>
-                        {/* </Chip> */}
-
-                        {/* <Chip */}
-                        <Text
-                            style={[styles.chip, styles.outlinedChip]}
-                            onPress={handleClick}
-                            onClose={handleDelete}
-                            mode="outlined"
-                        >
-                            Creator
-                        </Text>
-                        {/* </Chip> */}
-
-                        {/* <Fab color="primary" aria-label="add">
-                            <AddIcon />
-                        </Fab> */}
-                        <View style={styles.addSign}>
-                            <Text >+</Text>
-                        </View>
-                    </View>
-                </View>
-
+                {
+                    schedule.length > 0 ? (
+                        schedule.map((week, index) => (
+                            <View style={styles.topicByWeek} key={`week-schedule-${index}`}>
+                                <Text style={styles.WeekLabel}>Week {week.weekName}</Text>
+                                <View style={styles.topicBox} >
+                                    {
+                                       week.topics.map((item, innerIndex) => (
+                                        <Text
+                                            key={`text-${innerIndex}`}
+                                            style={styles.chip}
+                                            onPress={handleClick}
+                                            onClose={handleDelete}
+                                        >
+                                            { item }
+                                        </Text>
+                                       ))
+                                    }
+                                    <View style={styles.addSign}>
+                                        <Text >+</Text>
+                                    </View>
+                                </View>
+                            </View>
+                        ))
+                    ) : (<Text>No schedule found</Text>)
+                }
 
             </ScrollView>
 
@@ -301,19 +171,19 @@ const styles = StyleSheet.create({
 
     topicByWeek: {
         flexDirection: 'column',
-        // alignItems: 'center',
         marginVertical: 10,
         marginHorizontal: 20,
     },
     topicBox: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'flex-start',
+        justifyContent: "center",
         borderWidth: 1,
+        flexWrap: "wrap",
+        gap: 14,
         borderColor: COLORS.lightGray,
         padding: 15,
         borderRadius: 10,
-        height: 100,
     },
     WeekLabel: {
         fontSize: SIZES.medium,
@@ -354,11 +224,13 @@ const styles = StyleSheet.create({
         width: 120,
         fontSize: SIZES.small,
         marginRight: 10,
+        padding: 5,
         backgroundColor: COLORS.gray2,
+        borderRadius: 8,
+        textAlign: "center"
 
     },
     outlinedChip: {
-        // styles for outlined chip variant
         borderWidth: 1,
         fontSize: SIZES.small,
 
