@@ -13,6 +13,8 @@ import { Card } from "react-native-elements";
 
 const CourseCard = ({ courses,navigation }) => {
 
+  console.log(courses)
+
     const handlePress = (topics) => {
         navigation.navigate('SelectTopics', { topics });
       };
