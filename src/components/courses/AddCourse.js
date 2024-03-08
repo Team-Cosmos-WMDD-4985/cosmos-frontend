@@ -3,7 +3,7 @@ import { View, Text, TextInput, StyleSheet, Button, Image, TouchableOpacity, Pla
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as ImagePicker from 'expo-image-picker';
 import * as DocumentPicker from 'expo-document-picker';
-import { COLORS, SIZES, icons } from "./../../constants";
+import { COLORS, SIZES, icons, SHADOWS } from "./../../constants";
 import secoreStoreService from "../../services/secureStore";
 // import DocumentPicker from 'react-native-document-picker';
 import AxiosService from "./../../services/axios";
@@ -16,7 +16,7 @@ function AddCourse({ navigation }) {
     const [endDate, setEndDate] = useState(new Date());
     const [showStartDatePicker, setShowStartDatePicker] = useState(false);
     const [showEndDatePicker, setShowEndDatePicker] = useState(false);
-    const [file, setFile] = useState();
+    const [file, setFile] = useState({ name: "tutorialPdf" });
 
     useEffect(() => {
         getToken()
@@ -71,13 +71,13 @@ function AddCourse({ navigation }) {
             }
             setFile(pdfUpload);
         } catch (err) {
-            if(DocumentPicker.isCancel(err)){
+            if (DocumentPicker.isCancel(err)) {
                 console.log("User cancelled")
             } else {
                 console.log(err)
             }
         }
-       
+
 
         // console.log(result)
 
@@ -87,9 +87,9 @@ function AddCourse({ navigation }) {
     }
 
     const handleGenerate = async () => {
-        console.log(courseName); 
+        console.log(courseName);
         console.log(startDate);
-        console.log(endDate); 
+        console.log(endDate);
 
         const toSend = {
             file: file,
@@ -99,13 +99,13 @@ function AddCourse({ navigation }) {
         }
         console.log(toSend)
         let formdata = new FormData();
-        formdata.append('file',  file);
+        formdata.append('file', file);
         formdata.append("name", courseName);
-        formdata.append("startDate", startDate.toString() );
+        formdata.append("startDate", startDate.toString());
         formdata.append("endDate", endDate.toString())
 
         try {
-            const response = await AxiosService("POST", "addCourse", true, {}, formdata, { "Content-Type": `multipart/form-data` } )
+            const response = await AxiosService("POST", "addCourse", true, {}, formdata, { "Content-Type": `multipart/form-data` })
             console.log(response.data)
             navigation.navigate("AddTopics", response.data.data);
             // if (response.data.success) { // Ensure the response is successful before navigation
@@ -115,9 +115,13 @@ function AddCourse({ navigation }) {
         } catch (err) {
             console.log(err)
         }
-        
 
-     };
+
+    };
+
+    const deleteFile = async () => {
+        setFile(null);
+    }
 
     return (
         <View style={styles.container}>
@@ -150,9 +154,9 @@ function AddCourse({ navigation }) {
                     <View style={styles.datePickerRow}>
                         <TouchableOpacity onPress={() => setShowStartDatePicker(Platform.OS === 'ios')} >
                             {
-                                startDate != null ? (<Text style={styles.label}>{startDate.toDateString()}</Text>) :  (<Text style={styles.label}>Start</Text>)
+                                startDate != null ? (<Text style={styles.label}>{startDate.toDateString()}</Text>) : (<Text style={styles.label}>Start</Text>)
                             }
-                           
+
                         </TouchableOpacity>
                         {showStartDatePicker && (
                             <DateTimePicker
@@ -168,7 +172,7 @@ function AddCourse({ navigation }) {
                         <Image source={require('./../../assets/icons/calendar.png')} style={styles.icon} />
                         <TouchableOpacity onPress={() => setShowEndDatePicker(Platform.OS === 'ios')}>
                             {
-                                endDate != null ? (<Text style={styles.label}>{endDate.toDateString()}</Text>) :  (<Text style={styles.label}>End</Text>)
+                                endDate != null ? (<Text style={styles.label}>{endDate.toDateString()}</Text>) : (<Text style={styles.label}>End</Text>)
                             }
                         </TouchableOpacity>
                         {showEndDatePicker && (
@@ -178,7 +182,7 @@ function AddCourse({ navigation }) {
                                 display="default"
                                 onChange={(event, selectedDate) => {
                                     setShowEndDatePicker(Platform.OS === 'ios');
-                                    setEndDate(selectedDate|| endDate);
+                                    setEndDate(selectedDate || endDate);
                                 }}
                             />
                         )}
@@ -188,12 +192,28 @@ function AddCourse({ navigation }) {
                 {/* The upload Course Topics Section */}
                 <View>
                     <Text style={styles.label}>Upload Course pdf</Text>
-                    <View style={styles.uploadButton}>
-                        <TouchableOpacity style={styles.center} onPress={() => uploadPdf()}>
-                            <Image source={require('./../../assets/icons/upload.png')} style={styles.icon} />
-                            <Text style={styles.link}>Click here to browse</Text>
-                        </TouchableOpacity>
-                    </View>
+
+                    {
+                        file ? (<View style={styles.fileContainer}>
+                                    <View style={styles.fileInner}>
+                                        <Image source={icons.pdf} style={styles.pdfIcon} />
+                                        <Text> {file.name}</Text>
+                                    </View>
+                                    <TouchableOpacity onPress={deleteFile}>
+                                        <Image source={icons.deleteIcon} style={styles.pdfIcon} />
+                                    </TouchableOpacity>
+                                    
+                        </View>) : (
+                            <View style={styles.uploadButton}>
+                                <TouchableOpacity style={styles.center} onPress={() => uploadPdf()}>
+                                    <Image source={require('./../../assets/icons/upload.png')} style={styles.icon} />
+                                    <Text style={styles.link}>Click here to browse</Text>
+                                </TouchableOpacity>
+                            </View>
+                        )
+                    }
+
+
                 </View>
 
                 {/* The upload Course Topics Section */}
@@ -225,6 +245,29 @@ function AddCourse({ navigation }) {
 
 }
 const styles = StyleSheet.create({
+    fileContainer: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent:"space-between",
+        height: 50,
+        borderRadius: 5,
+        borderWidth: 1,
+        padding: 15,
+        borderRadius: 10,
+        marginBottom: 20,
+        borderStyle: "dotted",
+    }, 
+    fileInner: {
+        display: "flex",
+        flexDirection: "row",
+        gap: 10,
+        alignItems: "center",
+    },
+    pdfIcon: {
+        width: 30,
+        height: 30
+    },
     container: {
         flex: 1,
         backgroundColor: '#fff',
