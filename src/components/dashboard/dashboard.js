@@ -8,15 +8,15 @@ import CourseList from "./../home/CourseList"
 const Dashboard = () => {
     return (
         <SafeAreaView style={{
-            flex: 1, backgroundColor: COLORS.lightWhite
+            flex: 1,
+            //  backgroundColor: COLORS.lightGrey
         }} >
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View
                     style={{
                         flex: 1,
                         padding: SIZES.medium
-                        
-                   }}
+                    }}
                 >
                     <View style={styles.header}>
                         <Text style={styles.headerText}>Dashboard</Text>
@@ -28,7 +28,6 @@ const Dashboard = () => {
                 </View>
 
             </ScrollView>
-
         </SafeAreaView >
     )
 }

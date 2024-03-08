@@ -4,7 +4,8 @@ import { COLORS, FONT, SHADOWS, SIZES } from "../../constants";
 
 const styles = StyleSheet.create({
   container: () => ({
-    width: 240,
+    width: 250,
+    height: 240,
     // padding: SIZES.xLarge,
     backgroundColor: "#FFF",
     borderRadius: SIZES.medium,
@@ -12,13 +13,14 @@ const styles = StyleSheet.create({
     ...SHADOWS.medium,
     shadowColor: COLORS.white,
   }),
-  logoContainer:  {
+  logoContainer: {
     width: "100%",
-    height:180,
+    height: 120,
     backgroundColor: COLORS.primary,
     borderRadius: SIZES.medium,
     justifyContent: "center",
     alignItems: "center",
+
   },
   logoImage: {
     width: 50,
@@ -26,32 +28,45 @@ const styles = StyleSheet.create({
   },
   courseDate: {
     fontSize: SIZES.medium,
-    fontFamily: FONT.regular,
-    color: "#B3AEC6",
-    marginTop: SIZES.small / 1.5,
+    // fontFamily: FONT.regular,
+    color: COLORS.midGray,
+    // marginTop: SIZES.xSmall,
+    padding: 10,
   },
   infoContainer: {
-    marginTop: SIZES.large,
-    display:"flex",
-    justifyContent: "space-between",
-    flexDirection: "row"
+    height: 120,
+    marginTop: SIZES.xSmall,
+    display: "flex",
+    justifyContent: "space-around",
+    flexDirection: "column"
   },
   iconStyle: {
     width: 24,
     height: 24
-  },  
+  },
+  firstLine: {
+    display: "flex",
+    justifyContent: "space-around",
+    flexDirection: "row"
+  },
   courseName: ({
     fontSize: SIZES.large,
     fontFamily: FONT.medium,
-    color:  COLORS.primary,
-    lineHeight: 30
+    color: COLORS.primary,
+    // lineHeight: SIZES.small
   }),
-  infoWrapper: {
-    flexDirection: "row",
-    marginTop: 5,
-    justifyContent: "flex-start",
-    alignItems: "center",
+  weekStyle: {
+    display: 'flex',
+    color: COLORS.midGray,
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+    
   },
+  weekText: {
+    padding: 10,
+    color: COLORS.midGray,
+    fontSize: SIZES.small,
+   },
   publisher: (selectedJob) => ({
     fontSize: SIZES.medium - 2,
     fontFamily: FONT.bold,
@@ -62,6 +77,9 @@ const styles = StyleSheet.create({
     fontFamily: FONT.regular,
     color: "#B3AEC6",
   },
+  courseStyle: {
+    width: '100%',
+  }
 });
 
 export default styles;

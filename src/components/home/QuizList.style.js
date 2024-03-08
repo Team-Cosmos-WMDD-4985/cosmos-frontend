@@ -5,6 +5,8 @@ import { FONT, SIZES, COLORS } from "../../constants";
 const styles = StyleSheet.create({
   container: {
     marginTop: SIZES.xLarge,
+    // height: 250,
+
   },
   header: {
     flexDirection: "row",
@@ -12,18 +14,23 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   headerTitle: {
-    fontSize: SIZES.xLarge,
+    fontSize: SIZES.medium,
     fontFamily: FONT.medium,
-    color: COLORS.primary,
+    color: COLORS.secondary,
+    fontWeight: "bold",
 
   },
   headerBtn: {
     fontSize: SIZES.medium,
     fontFamily: FONT.medium,
-    color: COLORS.gray,
+    color: COLORS.secondary,
+  },
+  cardsScrollContainer: {
+    maxHeight: 240,
   },
   cardsContainer: {
     marginTop: SIZES.medium,
+    // height:240,
   },
 });
 

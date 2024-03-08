@@ -91,7 +91,6 @@ const SelectTopics = ({ route, navigation }) => {
       >
         <Text style={styles.createQuizButtonText}>Create Quiz</Text>
       </TouchableOpacity>
-
       <Modal
 
         animationType="slide"
