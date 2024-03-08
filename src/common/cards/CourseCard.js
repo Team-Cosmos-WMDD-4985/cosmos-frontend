@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Image } from 'react-native'
 
 import styles from './CourseCard.style'
 // import { checkImageURL } from "../../../../utils/index";
-import { icons } from "./../../constants"
+import { icons, images } from "./../../constants"
 
 const CourseCard = ( { item } ) => {
 
@@ -21,18 +21,27 @@ const CourseCard = ( { item } ) => {
       style={styles.container()}
     >
       <View style={styles.logoContainer}>
-        {/* This container is for logo or image */}
+        <Image
+          source={images.course1}
+          style={styles.courseStyle}
+        />
       </View>
 
       <View style={styles.infoContainer}>
-        <Text style={styles.courseName} numberOfLines={1}>
-          {`${item.courseName}`}
-        </Text>
+        <View style={styles.firstLine}>
+          <Text style={styles.courseName} numberOfLines={1}>
+            {`${item.courseName}`}
+          </Text>
+          <Image
+            source={icons.chevronRight}
+            style={styles.iconStyle}
+          />
+        </View>
+        <Text style={styles.courseDate} numberOfLines={1} > {item.courseDate}</Text>
+        <View style={styles.weekStyle}>
+          <Text style={styles.weekText} numberOfLines={1} >12 Weeks</Text>
+        </View>
 
-        <Image
-          source={icons.chevronRight}
-          style={styles.iconStyle}
-        />
       </View>
 
       <View> 

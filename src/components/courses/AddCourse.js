@@ -3,7 +3,7 @@ import { View, Text, TextInput, StyleSheet, Button, Image, TouchableOpacity, Pla
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as ImagePicker from 'expo-image-picker';
 import * as DocumentPicker from 'expo-document-picker';
-import { COLORS, SIZES } from "./../../constants";
+import { COLORS, SIZES, icons } from "./../../constants";
 import secoreStoreService from "../../services/secureStore";
 // import DocumentPicker from 'react-native-document-picker';
 import AxiosService from "./../../services/axios";
@@ -28,7 +28,25 @@ function AddCourse({ navigation }) {
     }
 
 
-    const pickImage = async (setter) => {
+    //     if (!result.cancelled) {
+    //         setter(result.uri);
+    //     }
+
+    //     // let result = await DocumentPicker.getDocumentAsync({
+    //     //     type: "application/pdf"
+    //     // })
+
+    //     console.log(result)
+
+    //     if (!result.canceled && result.assets && result.assets.length > 0) {
+    //         setFile(result.assets[0]);
+    //     }
+    //     if (!result.cancelled) {
+    //         setter(result.uri);
+    //     }
+    // };
+
+    const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
@@ -84,22 +102,15 @@ function AddCourse({ navigation }) {
         formdata.append('file',  file);
         formdata.append("name", courseName);
         formdata.append("startDate", startDate.toString() );
-        formdata.append("endDate", endDate.toString());
+        formdata.append("endDate", endDate.toString())
 
         try {
-
-            // const response = await axios.post(" https://60bb-207-35-73-116.ngrok-free.app/addCourse", formdata, {
-            //     headers: {
-            //         "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWU0MGEzNjY0MzQ0ODFiNTA4YTI0YWQiLCJpYXQiOjE3MDk3MTUxNzN9.Xwp5xZF6dR-VoqjAUq2hAhLuE0ARQGI-p88kUrFoug8",
-            //         "Content-Type": `multipart/form-data`
-            //     }
-            // })
-
             const response = await AxiosService("POST", "addCourse", true, {}, formdata, { "Content-Type": `multipart/form-data` } )
-
-            console.log(response.data);
-            console.log(response.data.data);
-            navigation.navigate("AddTopics", response.data.data)
+            console.log(response.data)
+            navigation.navigate("AddTopics", response.data.data);
+            // if (response.data.success) { // Ensure the response is successful before navigation
+            //     navigation.navigate("AddTopics", response.data.data);
+            // }
 
         } catch (err) {
             console.log(err)
@@ -114,7 +125,7 @@ function AddCourse({ navigation }) {
             {/*  Add Course Header*/}
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <Image source={require('./../../assets/icons/chevron-left.png')} style={styles.backIcon} />
+                    <Image source={icons.chevronLeft} style={styles.backIcon} />
                 </TouchableOpacity>
                 <Text style={styles.headerTitle}>Course Details</Text>
                 <View />
@@ -187,7 +198,7 @@ function AddCourse({ navigation }) {
 
                 {/* The upload Course Topics Section */}
                 <View>
-                    <Text style={styles.label}>Upload Course Picture</Text>
+                    <Text style={styles.label}>Upload Course Weekly Topics</Text>
                     <View style={styles.uploadButton}>
                         <TouchableOpacity style={styles.center} onPress={() => pickImage()}>
                             <Image source={require('./../../assets/icons/upload.png')} style={styles.icon} />
@@ -201,15 +212,18 @@ function AddCourse({ navigation }) {
                     <TouchableOpacity style={[styles.button, styles.cancelButton]} onPress={() => navigation.goBack()}>
                         <Text style={styles.cancelButtonText}>Cancel</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.button, styles.generateButton]} onPress={handleGenerate}>
+                    <TouchableOpacity style={[styles.button, styles.generateButton]}
+                        onPress={() => {
+                            handleGenerate();
+                        }}>
                         <Text style={styles.generateButtonText}>Generate</Text>
                     </TouchableOpacity>
                 </View>
             </View>
-        </View>
+        </View >
     );
-}
 
+}
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -273,6 +287,10 @@ const styles = StyleSheet.create({
         width: 24,
         height: 24,
     },
+    icon: {
+        width: 24,
+        height: 24,
+    },
     center: {
         alignItems: 'center',
     },
@@ -289,20 +307,20 @@ const styles = StyleSheet.create({
     cancelButton: {
         backgroundColor: COLORS.lightGray,
         borderWidth: 1,
-        borderColor: COLORS.button,
+        borderColor: COLORS.midGray,
         padding: 15,
     },
     generateButton: {
-        backgroundColor: COLORS.button,
+        backgroundColor: COLORS.primary,
     },
     cancelButtonText: {
         fontSize: SIZES.large,
-        color: COLORS.button,
+        color: COLORS.midGray,
         textAlign: 'center',
     },
     generateButtonText: {
         fontSize: SIZES.large,
-        color: COLORS.white,
+        color: COLORS.midTeal,
         textAlign: 'center',
     },
 });

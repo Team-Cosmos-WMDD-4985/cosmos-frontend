@@ -32,13 +32,10 @@ const CourseList = () => {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Courses</Text>
-        {/* <TouchableOpacity> 
-          <Text style={styles.headerBtn}> Show all </Text> 
-          </TouchableOpacity> */}
       </View>
-      
+
       <View style={styles.cardsContainer}>
-        {  
+        {
           <FlatList
             data={courseList}
             renderItem={({item}) => {
@@ -50,7 +47,7 @@ const CourseList = () => {
             contentContainerStyle={{columnGap: SIZES.medium}}
             horizontal={true}
           />
-         
+
         }
       </View>
     </View>

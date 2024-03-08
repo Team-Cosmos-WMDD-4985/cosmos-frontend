@@ -3,9 +3,6 @@ npm install @gluestack-ui/themed
 npm install axios
 npm install @react-navigation/native @react-navigation/bottom-tabs
 npm install react-native-vector-icons
-
-npm install @react-navigation/bottom-tabs
-npm install @react-native-community/datetimepicker --save
 npm expo install expo-image-picker
 npm install react-native-paper react-native-vector-icons
 npx react-native link react-native-vector-icons
@@ -16,3 +13,12 @@ npm install @mui/icons-material
 npm install native-base
 npm install @react-navigation/native @react-navigation/drawer
 npm install react-native-gesture-handler react-native-reanimated
+npm install @react-navigation/native-stack
+npm install @react-navigation/native react-native-screens react-native-safe-area-context
+npm install @react-navigation/bottom-tabs
+npm install react-native-snap-carousel
+npm install deprecated-react-native-prop-types
+npm install @react-native-community/datetimepicker --save
+npm config set strict-ssl false
+npx expo install @expo/webpack-config@^19.0.0
+npm install @react-native-community/checkbox --save

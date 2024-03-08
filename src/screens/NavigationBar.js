@@ -11,6 +11,7 @@ import AddingTopicsForQuizGeneration from "../components/quiz/AddingTopicsForQui
 import Dashboard from "../components/dashboard/dashboard";
 import CoursesScreen from "../components/courses/CoursesScreen";
 import ChatUi from '../components/chatbot/ChatUi';
+import { SIZES, WEIGHT, COLORS } from "./../constants/theme";
 
 // const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -33,12 +34,12 @@ function NavigationBar() {
 
                     return <Image source={iconName} style={{ width: 80, height: 80 }} resizeMode="contain" />;
                 },
-                tabBarActiveTintColor: 'tomato',
-                tabBarInactiveTintColor: 'gray',
-                tabBarStyle: { height: 100 },
-                tabBarShowLabel: false, 
+                tabBarStyle: {
+                    height: 100, 
+                    // backgroundColor: COLORS.lightGrey,
+                },
+                tabBarShowLabel: false,
                 headerShown: false,
-
             })}
         >
             <Tab.Screen name="Dashboard" key={"tab-navigation-1"} component={Dashboard} />
