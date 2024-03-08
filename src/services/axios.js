@@ -5,10 +5,10 @@ import secoreStoreService from "./secureStore";
 const url = "https://cosmos-backend-6bue.onrender.com"
 export default async function useApi(type, endpoint, tokenRequired = true , params = {}, body = {}, headers = {}) {
 
-    console.log("Type ", type)
-    console.log("endpoint ", endpoint)
-    console.log("params ", params)
-    console.log("body ", body);
+    // console.log("Type ", type)
+    // console.log("endpoint ", endpoint)
+    // console.log("params ", params)
+    // console.log("body ", body);
     if(tokenRequired) {
         const myToken = await secoreStoreService.getValueFor('token');
         headers["authorization"] = myToken

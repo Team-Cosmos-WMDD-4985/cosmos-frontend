@@ -29,7 +29,7 @@ const CourseCard = ({ courses,navigation }) => {
             onPress={() =>  handlePress(course.topics)}
           >
             <Image source={course.image} style={styles.image} />
-            <Text>{course.name}</Text>
+            <Text>{course.courseName}</Text>
           </TouchableOpacity>
         ))}
       </Card>
