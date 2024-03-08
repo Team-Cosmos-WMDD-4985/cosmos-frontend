@@ -3,8 +3,8 @@ import secoreStoreService from "./secureStore";
 
 // Live url
 // const url = "https://ec2-54-70-7-254.us-west-2.compute.amazonaws.com/api"
-const url = "http://ec2-54-70-7-254.us-west-2.compute.amazonaws.com/api"
-// const url = "https://60c9-209-87-29-242.ngrok-free.app";
+// const url = "http://ec2-54-70-7-254.us-west-2.compute.amazonaws.com/api"
+const url = "https://6ed4-2001-569-52f6-b300-29b9-658d-b0cb-817.ngrok-free.app";
 // const url = "https://cosmos-backend-6bue.onrender.com"
 export default async function useApi(type, endpoint, tokenRequired = true , params = {}, body = {}, headers = {}) {
 

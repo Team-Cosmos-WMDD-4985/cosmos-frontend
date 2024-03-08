@@ -13,8 +13,8 @@ import { Card } from "react-native-elements";
 
 const CourseCard = ({ courses,navigation }) => {
 
-    const handlePress = (topics) => {
-        navigation.navigate('SelectTopics', { topics });
+    const handlePress = (topics, courseId) => {
+        navigation.navigate('SelectTopics', { topics, courseId });
       };
   return (
     <ScrollView>
@@ -24,10 +24,10 @@ const CourseCard = ({ courses,navigation }) => {
           <TouchableOpacity
             key={course.id}
             style={styles.courseContainer}
-            onPress={() =>  handlePress(course.topics)}
+            onPress={() =>  handlePress(course.topics, course._id)}
           >
             <Image source={course.image} style={styles.image} />
-            <Text>{course.name}</Text>
+            <Text>{course.courseName}</Text>
           </TouchableOpacity>
         ))}
       </Card>
