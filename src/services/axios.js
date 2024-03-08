@@ -1,23 +1,24 @@
 import axios from "axios"
 import secoreStoreService from "./secureStore";
 
-export default async function useApi(type, endpoint, tokenRequired = true , params = {}, body = {} ) {
+// Live url
+// const url = "https://ec2-54-70-7-254.us-west-2.compute.amazonaws.com/api"
+const url = "http://ec2-54-70-7-254.us-west-2.compute.amazonaws.com/api"
+// const url = "https://60c9-209-87-29-242.ngrok-free.app";
+// const url = "https://cosmos-backend-6bue.onrender.com"
+export default async function useApi(type, endpoint, tokenRequired = true , params = {}, body = {}, headers = {}) {
 
     console.log("Type ", type)
     console.log("endpoint ", endpoint)
     console.log("params ", params)
     console.log("body ", body);
-
-    let headers = {};
     if(tokenRequired) {
-        const myToken = secoreStoreService.getValueFor('token');
-        headers = {
-            "token" : myToken
-        }
+        const myToken = await secoreStoreService.getValueFor('token');
+        headers["authorization"] = myToken
     }
     const options = {
         method: type,
-        url: `https://cosmos-backend-6bue.onrender.com/${endpoint}`,
+        url: `${url}/${endpoint}`,
         data : body,
         headers: {
             ...headers
@@ -25,13 +26,17 @@ export default async function useApi(type, endpoint, tokenRequired = true , para
     };
 
     try {
+        console.log(options);
         const response = await axios.request(options);
         return response;
 
     } catch (err) {
-        // console.log(err)
+        console.log(JSON.stringify(err))
         console.log("Error message:", err.message); // Log error message for debugging
         console.log("Error response:", err.response.data); // Log error response for debugging
+        return {
+            success: false
+        }
     } finally {
 
     }

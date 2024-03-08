@@ -36,15 +36,8 @@ function AppStack() {
   return (
 
     <NavigationContainer>
-      {/* <Stack.Navigator initialRouteName="NavigationBar"> */}
-      <Stack.Navigator initialRouteName="SplashScreen">
-
-        <Stack.Screen name="SplashScreen" component={SplashScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Feature1" component={Feature1} options={{ headerShown: false }} />
-        <Stack.Screen name="Feature2" component={Feature2} options={{ headerShown: false }} />
-        <Stack.Screen name="Feature3" component={Feature3} options={{ headerShown: false }} />
-        <Stack.Screen name="Feature4" component={Feature4} options={{ headerShown: false }} />
-
+      <Stack.Navigator initialRouteName="NavigationBar">
+      <Stack.Screen name="SplashScreen" component={SplashScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Welcome" component={Welcome} options={{ headerShown: false }} />
         <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
         <Stack.Screen name="Signup" component={Signup} options={{ headerShown: false }} />

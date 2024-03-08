@@ -60,28 +60,31 @@ const SelectTopics = ({ route, navigation }) => {
         <Text style={styles.topicText}>{item.name}</Text>
       </View>
     </TouchableOpacity>
-    
+
   );
 
   return (
     <View style={styles.flexContainer}>
-      <ScrollView style={styles.container}>
-        <View style={styles.header}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Icon name="chevron-left" size={24} />
-          </TouchableOpacity>
-          <Text style={styles.headerTitle}>Prepare your Quiz</Text>
-          <View />
-        </View>
-        <Text style={styles.introText}>
-          Select your topics to create a quiz
-        </Text>
-        <FlatList
-          data={selectedTopics}
-          renderItem={renderTopicItem}
-          keyExtractor={(item, index) => `topic-${index}`}
-        />
-      </ScrollView>
+      {/* <ScrollView style={styles.container}> */}
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Icon name="chevron-left" size={24} />
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Prepare your Quiz</Text>
+        <View />
+      </View>
+      <Text style={styles.introText}>
+        Select your topics to create a quiz
+      </Text>
+      <FlatList
+        data={selectedTopics}
+        renderItem={renderTopicItem}
+        keyExtractor={(item, index) => `topic-${index}`}
+      />
+      {/* </ScrollView> */}
+      <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('OpenAi')}>
+        <Text style={styles.addButtonText}>Chat With AI</Text>
+      </TouchableOpacity>
       <TouchableOpacity
         style={styles.createQuizButton}
         onPress={() => setModalVisible(true)}
@@ -222,7 +225,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     elevation: 2,
     marginTop: 1,
-   
+
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -260,6 +263,21 @@ const styles = StyleSheet.create({
   },
   closeIcon: {
     fontSize: SIZES.xLarge,
+  },
+  addButton: {
+    backgroundColor: COLORS.button,
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    borderRadius: 30,
+    alignItems: 'flex-end',
+    marginLeft: 200,
+    marginRight: 20,
+    marginBottom: 20,
+  },
+  addButtonText: {
+    fontSize: SIZES.large,
+    color: '#fff',
+    textAlign: 'center',
   },
 });
 

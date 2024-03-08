@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from "react-native";
 import CourseCard from "../cards/CourseCard";
-import { COLORS, icons, images, SIZES, WEIGHT } from "../../constants";
+import { COLORS , SIZES, WEIGHT } from "../../constants";
 
 
 const AddingTopicsForQuizGeneration = ({ navigation }) => {
@@ -40,8 +40,8 @@ const AddingTopicsForQuizGeneration = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Quizzes</Text>
+      <View >
+        <Text> Quizzes </Text>
       </View>
       <CourseCard courses={courses} navigation={navigation} />
     </SafeAreaView>

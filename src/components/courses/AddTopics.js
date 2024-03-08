@@ -10,37 +10,21 @@ import { icons, images } from "./../../constants";
 // import Fab from '@mui/material/Fab';
 // import AddIcon from '@mui/icons-material/Add';
 
-const TopicItem = ({ week, topics }) => {
-    return (
-        <View style={styles.topicItem}>
-            {/* <Text style={styles.weekText}>Week {week}</Text>
-            {topics.map((topic, index) => (
-                 <View key={index} style={styles.topic}> 
-                     <Text style={styles.topicText}>{topic}</Text> 
-                     Icon placeholder 
-                </View>
-             ))} 
-            Add topic button placeholder */}
 
 
-        </View>
-    );
-};
+function AddTopics({ navigation, route }) {
 
-const handleClick = () => {
-    console.info('You clicked the Chip.');
-};
+    console.log("params are ",route.params);
+    const handleClick = () => {
+        console.info('You clicked the Chip.');
+    };
+    
+    const handleDelete = () => {
+        console.info('You clicked the delete icon.');
+    };
 
-const handleDelete = () => {
-    console.info('You clicked the delete icon.');
-};
 
-
-function AddTopics({ navigation }) {
-    // const [topics, setTopics] = useState([
-    //     { week: 1, topics: ['User flow', 'Persona'] },
-    //     { week: 2, topics: ['Low fidelity wire-frames'] },
-    // ]);
+    const [schedule, setSchedule] = useState(route.params)
     const [modalVisible, setModalVisible] = useState(false);
 
 
@@ -56,7 +40,7 @@ function AddTopics({ navigation }) {
     const handleConfirm = () => {
         setModalVisible(false);
         console.log("Confirm Pressed");
-        // Place your code here to create the course
+        navigation.navigate("NavigationBar")
     };
 
 
@@ -104,155 +88,32 @@ function AddTopics({ navigation }) {
                     <Text style={styles.headerTitle}>Manage Topics</Text>
                 </View>
 
-                {/* {topics.map((item, index) => (
-                    <TopicItem key={index} week={item.week} topics={item.topics} />
-                ))} */}
-
-                <View style={styles.topicByWeek}>
-                    <Text style={styles.WeekLabel}>Week 1</Text>
-                    <View style={styles.topicBox} >
-                        <View style={styles.chip}>
-                            <Text
-                                style={styles.chipText}
-                                onPress={handleClick}
-                                onClose={handleDelete}
-                            >
-                                User flow
-
-                            </Text>
-                            <View style={styles.deleteSign}>
-                                <Text style={styles.SignText} >X</Text>
+                {
+                    schedule.length > 0 ? (
+                        schedule.map((week, index) => (
+                            <View style={styles.topicByWeek} key={`week-schedule-${index}`}>
+                                <Text style={styles.WeekLabel}>Week {week.weekName}</Text>
+                                <View style={styles.topicBox} >
+                                    {
+                                       week.topics.map((item, innerIndex) => (
+                                        <Text
+                                            key={`text-${innerIndex}`}
+                                            style={styles.chip}
+                                            onPress={handleClick}
+                                            onClose={handleDelete}
+                                        >
+                                            { item }
+                                        </Text>
+                                       ))
+                                    }
+                                    <View style={styles.addSign}>
+                                        <Text >+</Text>
+                                    </View>
+                                </View>
                             </View>
-                        </View>
-
-                        <View style={styles.chip}>
-                            <Text
-                                style={styles.chipText}
-                                onPress={handleClick}
-                                onClose={handleDelete}
-                            >
-                                User Persona
-
-                            </Text>
-                            <View style={styles.deleteSign}>
-                                <Text style={styles.SignText} >X</Text>
-                            </View>
-                        </View>
-                        <View style={styles.addSign}>
-                            <Text style={styles.SignText} >+</Text>
-                        </View>
-                    </View>
-                </View>
-
-
-
-                <View style={styles.topicByWeek}>
-                    <Text style={styles.WeekLabel}>Week 2</Text>
-                    <View style={styles.topicBox} >
-                        <View style={styles.chip}>
-                            <Text
-                                style={styles.chipText}
-                                onPress={handleClick}
-                                onClose={handleDelete}
-                            >
-                                Wireframe
-                            </Text>
-                            <View style={styles.deleteSign}>
-                                <Text style={styles.SignText} >X</Text>
-                            </View>
-                        </View>
-
-                        <View style={styles.chip}>
-                            <Text
-                                style={styles.chipText}
-                                onPress={handleClick}
-                                onClose={handleDelete}
-                            >
-                                User Story
-
-                            </Text>
-                            <View style={styles.deleteSign}>
-                                <Text style={styles.SignText} >X</Text>
-                            </View>
-                        </View>
-                        <View style={styles.addSign}>
-                            <Text style={styles.SignText} >+</Text>
-                        </View>
-                    </View>
-                </View>
-
-
-                <View style={styles.topicByWeek}>
-                    <Text style={styles.WeekLabel}>Week 3</Text>
-                    <View style={styles.topicBox} >
-                        <View style={styles.chip}>
-                            <Text
-                                style={styles.chipText}
-                                onPress={handleClick}
-                                onClose={handleDelete}
-                            >
-                                Photoshop
-
-                            </Text>
-                            <View style={styles.deleteSign}>
-                                <Text style={styles.SignText} >X</Text>
-                            </View>
-                        </View>
-
-                        <View style={styles.chip}>
-                            <Text
-                                style={styles.chipText}
-                                onPress={handleClick}
-                                onClose={handleDelete}
-                            >
-                                Illustrator
-                            </Text>
-                            <View style={styles.deleteSign}>
-                                <Text style={styles.SignText} >X</Text>
-                            </View>
-                        </View>
-                        <View style={styles.addSign}>
-                            <Text style={styles.SignText} >+</Text>
-                        </View>
-                    </View>
-                </View>
-
-
-                <View style={styles.topicByWeek}>
-                    <Text style={styles.WeekLabel}>Week 4</Text>
-                    <View style={styles.topicBox} >
-                        <View style={styles.chip}>
-                            <Text
-                                style={styles.chipText}
-                                onPress={handleClick}
-                                onClose={handleDelete}
-                            >
-                                Figma
-
-                            </Text>
-                            <View style={styles.deleteSign}>
-                                <Text style={styles.SignText} >X</Text>
-                            </View>
-                        </View>
-
-                        <View style={styles.chip}>
-                            <Text
-                                style={styles.chipText}
-                                onPress={handleClick}
-                                onClose={handleDelete}
-                            >
-                                Creator
-                            </Text>
-                            <View style={styles.deleteSign}>
-                                <Text style={styles.SignText} >X</Text>
-                            </View>
-                        </View>
-                        <View style={styles.addSign}>
-                            <Text style={styles.SignText} >+</Text>
-                        </View>
-                    </View>
-                </View> 
-
+                        ))
+                    ) : (<Text>No schedule found</Text>)
+                }
 
             </ScrollView>
 
@@ -311,7 +172,6 @@ const styles = StyleSheet.create({
 
     topicByWeek: {
         flexDirection: 'column',
-        // alignItems: 'center',
         marginVertical: 10,
         marginHorizontal: 20,
     },
@@ -319,12 +179,13 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'flex-start',
+        justifyContent: "center",
         borderWidth: 1,
+        flexWrap: "wrap",
+        gap: 14,
         borderColor: COLORS.darkGray,
         padding: 15,
         borderRadius: 10,
-        height: 100,
     },
     WeekLabel: {
         fontSize: SIZES.medium,
@@ -363,7 +224,8 @@ const styles = StyleSheet.create({
     chip: {
         display: 'flex',
         flexDirection: 'row',
-        width: 120,
+        // width: 120,
+        padding: 5,
         height: 30,
         marginRight: 10,
         borderWidth: 1,
@@ -392,9 +254,9 @@ const styles = StyleSheet.create({
 
     },
     addSign: {
-        position: 'absolute',
+        // position: 'absolute',
         bottom: 10,
-        left: '50%',
+        // left: '50%',
         display: 'flex',
         flexDirection: 'column',
         textAlign: 'center',

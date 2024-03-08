@@ -11,6 +11,7 @@ import { Input } from 'react-native-elements';
 // import CheckBox from '@react-native-community/checkbox';
 
 
+import logo from "./../../assets/logo.png"
 const Login = ({ navigation }) => {
 
   const [email, setEmail] = useState('');
@@ -19,7 +20,7 @@ const Login = ({ navigation }) => {
 
 
   const submitLogin = async () => {
-    const data = await AxiosService('POST', 'auth/login', false, {}, { email, password },)
+    const data = await AxiosService( 'POST', 'auth/login',  false,  {}, { email, password },)
       .then(async function (response) {
         console.log(response.data);
         await secoreStoreService.save("token", response.data.token);
@@ -59,6 +60,8 @@ const Login = ({ navigation }) => {
             </View> */}
             <Text style={styles.loginLinks}>Forget Password</Text>
           </View>
+          {/* <Text style={button1} onPress={submitLogin}>Login</Text> */}
+          <Text style={button1} onPress={() => submitLogin()}>Login</Text>
 
           <TouchableOpacity style={styles.loginButton} onPress={() => navigation.navigate('NavigationBar')}>
             <Text style={styles.loginText}>Login</Text>

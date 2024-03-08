@@ -5,6 +5,9 @@ import * as ImagePicker from 'expo-image-picker';
 import * as DocumentPicker from 'expo-document-picker';
 import { COLORS, SIZES, icons } from "./../../constants";
 import secoreStoreService from "../../services/secureStore";
+// import DocumentPicker from 'react-native-document-picker';
+import AxiosService from "./../../services/axios";
+import axios from "axios";
 
 function AddCourse({ navigation }) {
 
@@ -14,7 +17,6 @@ function AddCourse({ navigation }) {
     const [showStartDatePicker, setShowStartDatePicker] = useState(false);
     const [showEndDatePicker, setShowEndDatePicker] = useState(false);
     const [file, setFile] = useState();
-    const [coursePicture, setCoursePicture] = useState(null);
 
     useEffect(() => {
         getToken()
@@ -25,14 +27,6 @@ function AddCourse({ navigation }) {
         console.log(myToken)
     }
 
-
-    // const pickImage = async (setter) => {
-    //     let result = await ImagePicker.launchImageLibraryAsync({
-    //         mediaTypes: ImagePicker.MediaTypeOptions.Images,
-    //         allowsEditing: true,
-    //         aspect: [4, 3],
-    //         quality: 1,
-    //     });
 
     //     if (!result.cancelled) {
     //         setter(result.uri);
@@ -59,23 +53,71 @@ function AddCourse({ navigation }) {
             aspect: [4, 3],
             quality: 1,
         });
+    };
 
-        console.log(result);
+    const uploadPdf = async () => {
 
-        if (!result.canceled) {
-            setCoursePicture(result.uri);
+        try {
+            let res = await DocumentPicker.getDocumentAsync({
+                type: "application/pdf"
+            });
+
+            const file = res.assets[0];
+            const pdfUpload = {
+                name: file.name.split(".")[0],
+                uri: file.uri,
+                type: file.mimeType,
+                size: file.size
+            }
+            setFile(pdfUpload);
+        } catch (err) {
+            if(DocumentPicker.isCancel(err)){
+                console.log("User cancelled")
+            } else {
+                console.log(err)
+            }
         }
-    };
+       
 
+        // console.log(result)
 
+        // if (!result.canceled && result.assets && result.assets.length > 0) {
+        //     setFile(result.assets[0]);
+        //   }
+    }
 
-
-
-    const handleGenerate = () => {
-        console.log(courseName);
+    const handleGenerate = async () => {
+        console.log(courseName); 
         console.log(startDate);
-        console.log(endDate);
-    };
+        console.log(endDate); 
+
+        const toSend = {
+            file: file,
+            name: courseName,
+            startDate: startDate,
+            endDate: endDate
+        }
+        console.log(toSend)
+        let formdata = new FormData();
+        formdata.append('file',  file);
+        formdata.append("name", courseName);
+        formdata.append("startDate", startDate.toString() );
+        formdata.append("endDate", endDate.toString())
+
+        try {
+            const response = await AxiosService("POST", "addCourse", true, {}, formdata, { "Content-Type": `multipart/form-data` } )
+            console.log(response.data)
+            navigation.navigate("AddTopics", response.data.data);
+            // if (response.data.success) { // Ensure the response is successful before navigation
+            //     navigation.navigate("AddTopics", response.data.data);
+            // }
+
+        } catch (err) {
+            console.log(err)
+        }
+        
+
+     };
 
     return (
         <View style={styles.container}>
@@ -106,8 +148,11 @@ function AddCourse({ navigation }) {
                 <View >
                     <Text style={styles.label}>Course Length</Text>
                     <View style={styles.datePickerRow}>
-                        <TouchableOpacity onPress={() => setShowStartDatePicker(true)} >
-                            <Text style={styles.label}>Start</Text>
+                        <TouchableOpacity onPress={() => setShowStartDatePicker(Platform.OS === 'ios')} >
+                            {
+                                startDate != null ? (<Text style={styles.label}>{startDate.toDateString()}</Text>) :  (<Text style={styles.label}>Start</Text>)
+                            }
+                           
                         </TouchableOpacity>
                         {showStartDatePicker && (
                             <DateTimePicker
@@ -120,9 +165,11 @@ function AddCourse({ navigation }) {
                                 }}
                             />
                         )}
-                        <Image source={icons.calendar} style={styles.icon} />
-                        <TouchableOpacity onPress={() => setShowEndDatePicker(true)}>
-                            <Text style={styles.label}>End</Text>
+                        <Image source={require('./../../assets/icons/calendar.png')} style={styles.icon} />
+                        <TouchableOpacity onPress={() => setShowEndDatePicker(Platform.OS === 'ios')}>
+                            {
+                                endDate != null ? (<Text style={styles.label}>{endDate.toDateString()}</Text>) :  (<Text style={styles.label}>End</Text>)
+                            }
                         </TouchableOpacity>
                         {showEndDatePicker && (
                             <DateTimePicker
@@ -131,7 +178,7 @@ function AddCourse({ navigation }) {
                                 display="default"
                                 onChange={(event, selectedDate) => {
                                     setShowEndDatePicker(Platform.OS === 'ios');
-                                    setEndDate(selectedDate || endDate);
+                                    setEndDate(selectedDate|| endDate);
                                 }}
                             />
                         )}
@@ -140,13 +187,10 @@ function AddCourse({ navigation }) {
 
                 {/* The upload Course Topics Section */}
                 <View>
-                    <Text style={styles.label}>Upload Course Picture</Text>
+                    <Text style={styles.label}>Upload Course pdf</Text>
                     <View style={styles.uploadButton}>
-                        {/* <TouchableOpacity style={styles.center} onPress={() => pickImage(setWeeklyTopics)}> */}
-                        {/* <TouchableOpacity style={styles.center}> */}
-                        <TouchableOpacity style={styles.center} onPress={pickImage}>
-
-                            <Image source={icons.upload} style={styles.icon} />
+                        <TouchableOpacity style={styles.center} onPress={() => uploadPdf()}>
+                            <Image source={require('./../../assets/icons/upload.png')} style={styles.icon} />
                             <Text style={styles.link}>Click here to browse</Text>
                         </TouchableOpacity>
                     </View>
@@ -156,10 +200,8 @@ function AddCourse({ navigation }) {
                 <View>
                     <Text style={styles.label}>Upload Course Weekly Topics</Text>
                     <View style={styles.uploadButton}>
-                        {/* <TouchableOpacity style={styles.center} onPress={() => pickImage(setCoursePicture)}> */}
-                        {/* <TouchableOpacity style={styles.center} > */}
-                        <TouchableOpacity style={styles.center} onPress={pickImage}>
-                            <Image source={icons.upload} style={styles.icon} />
+                        <TouchableOpacity style={styles.center} onPress={() => pickImage()}>
+                            <Image source={require('./../../assets/icons/upload.png')} style={styles.icon} />
                             <Text style={styles.link}>Click here to browse</Text>
                         </TouchableOpacity>
                     </View>
@@ -173,7 +215,6 @@ function AddCourse({ navigation }) {
                     <TouchableOpacity style={[styles.button, styles.generateButton]}
                         onPress={() => {
                             handleGenerate();
-                            navigation.navigate('AddTopics')
                         }}>
                         <Text style={styles.generateButtonText}>Generate</Text>
                     </TouchableOpacity>
