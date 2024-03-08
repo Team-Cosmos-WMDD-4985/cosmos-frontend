@@ -11,11 +11,13 @@ import { COLORS, icons, images, SIZES,WEIGHT } from "../../constants";
 
 import { Card } from "react-native-elements";
 
-const CourseCard = ({ courses,navigation }) => {
+const CourseCard = ({ courses, navigation }) => {
+  console.log(courses);
 
-    const handlePress = (topics) => {
-        navigation.navigate('SelectTopics', { topics });
-      };
+   
+    const handlePress = (topics, courseId) => {
+      navigation.navigate("SelectTopics", { topics, courseId });
+    };
   return (
     <ScrollView>
       <Card containerStyle={styles.card}>
@@ -24,7 +26,7 @@ const CourseCard = ({ courses,navigation }) => {
           <TouchableOpacity
             key={course.id}
             style={styles.courseContainer}
-            onPress={() =>  handlePress(course.topics)}
+            onPress={() =>  handlePress(course.topics, course._id)}
           >
             <Image source={course.image} style={styles.image} />
             <Text>{course.name}</Text>

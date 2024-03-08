@@ -5,6 +5,8 @@ import * as ImagePicker from 'expo-image-picker';
 import * as DocumentPicker from 'expo-document-picker';
 import { COLORS, SIZES } from "./../../constants";
 import secoreStoreService from "../../services/secureStore";
+import AxiosService from "./../../services/axios";
+import axios from "axios";
 
 function AddCourse({ navigation }) {
 
