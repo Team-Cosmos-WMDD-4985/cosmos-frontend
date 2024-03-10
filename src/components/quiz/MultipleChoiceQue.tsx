@@ -63,7 +63,7 @@ const MultipleChoiceQue = ({navigation}) => {
           <TextInput style={styles.answerTextInput} placeholder="Enter your answer..." />
         )}
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 20 }}>
-          <View style={{ backgroundColor: "#A1A1A1", width: 100, height: 50, alignItems: "center", justifyContent: "center", borderRadius: 5 }}><Button color="black" title="Previous" onPress={handlePrevious} disabled={currentIndex === 0} /></View>
+          <View style={{ backgroundColor: "#A1A1A1", width: 100, height: 50, alignItems: "center", justifyContent: "center", borderRadius: 5 }}><Button  color="black" title="Previous" onPress={handlePrevious} disabled={currentIndex === 0} /></View>
           <View style={{ backgroundColor: "#A1A1A1", width: 100, alignItems: "center", justifyContent: "center", borderRadius: 5 }}><Button color="black" title="Next" onPress={handleNext} disabled={currentIndex === question.length - 1} /></View>
         </View>
       </View>

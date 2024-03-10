@@ -53,7 +53,7 @@ const CreateYourQuiz = ({ route, navigation }) => {
                         style={styles.input}
                         placeholder="Enter quiz name"
                         value={name}
-                        onChangeText={setName} // Directly update name state on text change
+                        onChangeText={setName} 
                     />
                 </View>
                 <View style={styles.inputContainer}>
@@ -141,17 +141,17 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         height: 40,
-        marginTop: 10, // Added margin for spacing between buttons
+        marginTop: 10,
     },
     buttonText: {
         color: '#fff',
-        fontSize: 18,
+        fontSize: 14,
         fontWeight: 'bold',
     },
     buttonDiv: {
         flexDirection: "row",
-        justifyContent: "space-between", // Adjusted for evenly space buttons
-        marginTop: 10, // Added margin for spacing
+        justifyContent: "space-between", 
+        marginTop: 10, 
     },
     selectedButton: {
         backgroundColor: 'tomato', // Highlight for selected button

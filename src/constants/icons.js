@@ -18,8 +18,9 @@ import course_inactive from '../assets/icons/course_inactive.png';
 import quiz_active from '../assets/icons/quiz_active.png';
 import quiz_inactive from '../assets/icons/quiz_inactive.png';
 import checkcircle from '../assets/icons/checkcircle.png';
-import logo from '../assets/icons/logo.png'
-
+import logo from '../assets/icons/logo.png';
+import pdf from "../assets/icons/pdf_icon.png";
+import deleteIcon from "./../assets/icons/delete.png"
 
 export default {
   heart,
@@ -41,5 +42,7 @@ export default {
   checkcircle,
   calendar,
   upload,
-  logo
+  logo,
+  pdf,
+  deleteIcon
 };
