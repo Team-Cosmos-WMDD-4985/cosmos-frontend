@@ -13,6 +13,12 @@ import { Card } from "react-native-elements";
 
 const CourseCard = ({ courses,navigation }) => {
 
+  console.log(courses)
+
+  console.log(courses)
+
+  console.log(courses)
+
     const handlePress = (topics, courseId) => {
         navigation.navigate('SelectTopics', { topics, courseId });
       };
@@ -28,6 +34,7 @@ const CourseCard = ({ courses,navigation }) => {
           >
             <Image source={course.image} style={styles.image} />
             <Text>{course.courseName}</Text>
+            {/* <Text>{course.courseName}</Text> */}
           </TouchableOpacity>
         ))}
       </Card>

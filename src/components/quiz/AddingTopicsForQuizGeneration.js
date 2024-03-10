@@ -1,8 +1,9 @@
 import React from "react";
 import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from "react-native";
 import CourseCard from "../cards/CourseCard";
-import { COLORS , SIZES, WEIGHT } from "../../constants";
 import AxiosService from "./../../services/axios";
+import { COLORS , SIZES, WEIGHT } from "../../constants";
+// import AxiosService from "./../../services/axios";
 import { useState, useEffect } from "react";
 
 
