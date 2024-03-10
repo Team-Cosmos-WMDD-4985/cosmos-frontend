@@ -3,15 +3,15 @@ import secoreStoreService from "./secureStore";
 
 // Live url
 // const url = "https://ec2-54-70-7-254.us-west-2.compute.amazonaws.com/api"
-const url = "http://ec2-54-70-7-254.us-west-2.compute.amazonaws.com/api"
-// const url = "https://60c9-209-87-29-242.ngrok-free.app";
+// const url = "http://ec2-54-70-7-254.us-west-2.compute.amazonaws.com/api"
+const url = "https://96e1-2001-569-52f6-b300-f43a-ff32-6873-d2f.ngrok-free.app";
 // const url = "https://cosmos-backend-6bue.onrender.com"
 export default async function useApi(type, endpoint, tokenRequired = true , params = {}, body = {}, headers = {}) {
 
-    console.log("Type ", type)
-    console.log("endpoint ", endpoint)
-    console.log("params ", params)
-    console.log("body ", body);
+    // console.log("Type ", type)
+    // console.log("endpoint ", endpoint)
+    // console.log("params ", params)
+    // console.log("body ", body);
     if(tokenRequired) {
         const myToken = await secoreStoreService.getValueFor('token');
         headers["authorization"] = myToken
