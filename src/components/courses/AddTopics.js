@@ -14,7 +14,6 @@ import { icons, images } from "./../../constants";
 
 function AddTopics({ navigation, route }) {
 
-    console.log("params are ",route.params);
     const handleClick = () => {
         console.info('You clicked the Chip.');
     };
@@ -34,12 +33,10 @@ function AddTopics({ navigation, route }) {
 
     const handleCancel = () => {
         setModalVisible(false);
-        console.log("Cancel Pressed");
     };
 
     const handleConfirm = () => {
         setModalVisible(false);
-        console.log("Confirm Pressed");
         navigation.navigate("NavigationBar")
     };
 

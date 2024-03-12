@@ -22,7 +22,6 @@ const Login = ({ navigation }) => {
   const submitLogin = async () => {
     const data = await AxiosService( 'POST', 'auth/login',  false,  {}, { email, password },)
       .then(async function (response) {
-        console.log(response.data);
         await secoreStoreService.save("token", response.data.token);
         navigation.navigate("NavigationBar")
       })
@@ -60,10 +59,8 @@ const Login = ({ navigation }) => {
             </View> */}
             <Text style={styles.loginLinks}>Forget Password</Text>
           </View>
-          {/* <Text style={button1} onPress={submitLogin}>Login</Text> */}
-          <Text style={button1} onPress={() => submitLogin()}>Login</Text>
 
-          <TouchableOpacity style={styles.loginButton} onPress={() => navigation.navigate('NavigationBar')}>
+          <TouchableOpacity style={styles.loginButton} onPress={() => submitLogin()}>
             <Text style={styles.loginText}>Login</Text>
           </TouchableOpacity>
 
