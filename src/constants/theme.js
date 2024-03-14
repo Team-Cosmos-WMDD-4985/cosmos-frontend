@@ -3,7 +3,7 @@ const COLORS = {
   secondary: "#307177",
   accent: "#2DFFE5",
   white: "#FFFFFF",
-  lightGrey: "#EFEFEF", 
+  lightGrey: "#EFEFEF",
   midGray: "#74757B",
   darkGray: "#505568",
   lightTeal: "#D7FFF3",
@@ -19,8 +19,8 @@ const FONT = {
 };
 
 const WEIGHT = {
-  bold: 700
-}
+  bold: 700,
+};
 
 const SIZES = {
   xSmall: 10,
@@ -30,7 +30,6 @@ const SIZES = {
   xLarge: 24,
   xxLarge: 32,
 };
-
 
 const SHADOWS = {
   small: {

@@ -1,17 +1,14 @@
-
 import React, { useState } from "react";
 import {
-  ScrollView,
   View,
   Text,
   TouchableOpacity,
   StyleSheet,
   FlatList,
-  Modal,
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { COLORS, icons, images, SIZES, WEIGHT } from "../../constants";
-import AxiosService from "../../services/axios";
+
+import { COLORS, SIZES } from "../../constants";
 
 const SelectTopics = ({ route, navigation }) => {
   const { topics, courseId } = route.params;
@@ -19,17 +16,8 @@ const SelectTopics = ({ route, navigation }) => {
   const [selectedTopics, setSelectedTopics] = useState(
     topics.map((topic) => ({ name: topic, selected: false }))
   );
-  const [modalVisible, setModalVisible] = useState(false);
 
   const toggleTopic = (index) => {
-    
-    console.log(selectedTopics);
-    selectedTopics.forEach((topic) => {
-      if (topic.selected) {
-        console.log(topic.name);
-
-      }
-    });
     setSelectedTopics((currentSelectedTopics) =>
       currentSelectedTopics.map((t, i) =>
         i === index ? { ...t, selected: !t.selected } : t
@@ -37,61 +25,30 @@ const SelectTopics = ({ route, navigation }) => {
     );
   };
 
-  const goToGenerateByAi = async () => {
-    const selTopics = [];
-    for (let i = 0; i < selectedTopics.length; i++) {
-      let topic = selectedTopics[i];
-      if (topic.selected) {
-        selTopics.push(topic.name);
-        // console.log(topic.name);
-      }
-    }
-
-    console.log("====================")
-    // console.log(selTopics);
-    navigation.navigate("CreateYourQuiz", {topics: selTopics ,courseId: courseId});
-    const response = await createQuiz(selTopics);
-    
-    // navigation.navigate("GenerateQuizByAi", { selectedTopics: filteredTopics });
-  };
-
-  const handleOptionSelect = (option) => {
-    setModalVisible(false);
-    if (option == 2) {
-      goToGenerateByAi();
-    } else {
-     
-    }
-  };
-  //create post request to send selected topics to backend
-  const createQuiz = async (selTopics) => {
-    // console.log("Selected topics", selTopics);
-    // const response = await AxiosService(
-    //   "POST",
-    //   "sendTopics",
-    //   true,
-    //   {},
-    //   { topics: selTopics, courseId }
-    // );
-    // // console.log(response.data);
-    // if (response.data && response.data.success) {
-    //   console.log("Quiz created successfully");
-    // }
+  const createQuiz = () => {
+    const selTopics = selectedTopics
+      .filter((topic) => topic.selected)
+      .map((topic) => topic.name);
+    navigation.navigate("CreateYourQuiz", {
+      topics: selTopics,
+      courseId: courseId,
+    });
   };
 
   const renderTopicItem = ({ item, index }) => (
+    
     <TouchableOpacity
       style={[styles.topicItem, item.selected ? styles.topicItemSelected : {}]}
       onPress={() => toggleTopic(index)}
     >
       <Icon
-        name={item.selected ? "checkbox-outline" : "checkbox-blank-outline"}
+        name={item.selected ? "checkbox-marked" : "checkbox-blank"}
         size={24}
         color="#000"
         style={styles.checkboxIcon}
       />
       <View style={styles.textContainer}>
-        {/* <Text style={styles.weekText}>{`Week ${index + 1}:`}</Text> */}
+        <Text style={styles.weekText}>{`Week ${index + 1}:`}</Text>
         <Text style={styles.topicText}>{item.name}</Text>
       </View>
     </TouchableOpacity>
@@ -99,68 +56,27 @@ const SelectTopics = ({ route, navigation }) => {
 
   return (
     <View style={styles.flexContainer}>
-      {/* <ScrollView style={styles.container}> */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Icon name="chevron-left" size={24} />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Prepare your Quiz</Text>
-        <View />
-      </View>
-      <Text style={styles.introText}>Select your topics to create a quiz</Text>
       <FlatList
         data={selectedTopics}
         renderItem={renderTopicItem}
         keyExtractor={(item, index) => `topic-${index}`}
+        style={styles.container}
+        
       />
-      {/* </ScrollView> */}
-      <TouchableOpacity
-        style={styles.addButton}
-        onPress={() => navigation.navigate("OpenAi")}
-      >
-        <Text style={styles.addButtonText}>Chat With AI</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.createQuizButton}
-        onPress={() => setModalVisible(true)}
-      >
-        <Text style={styles.createQuizButtonText}>Create Quiz</Text>
-      </TouchableOpacity>
-
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <TouchableOpacity
-              style={styles.closeButton}
-              onPress={() => setModalVisible(false)}
-            >
-              <Icon name="close" style={styles.closeIcon} />
-            </TouchableOpacity>
-            <Text style={styles.modalText}>
-              How do you want to create your quiz?
-            </Text>
-            <TouchableOpacity
-              style={styles.optionButton}
-              onPress={() => handleOptionSelect(1)}
-            >
-              <Text style={styles.optionButtonText}>By yourself</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.optionButton}
-              onPress={() => handleOptionSelect(2)}
-            >
-              <Text style={styles.optionButtonText}>Generate by AI</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          style={[styles.button, styles.cancelButton]}
+          onPress={() => navigation.goBack()}
+        >
+          <Text style={styles.cancelButtonText}>Cancel</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.button, styles.generateButton]}
+          onPress={createQuiz}
+        >
+          <Text style={styles.generateButtonText}>Create</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -169,42 +85,32 @@ const styles = StyleSheet.create({
   flexContainer: {
     flex: 1,
     backgroundColor: "#fff",
+    // marginTop: 20,
+    paddingHorizontal: 20,
   },
   container: {
-    backgroundColor: "#fff",
-    marginTop: 60,
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    padding: 10,
-  },
-  headerTitle: {
-    fontSize: SIZES.large,
-    // fontWeight: WEIGHT.bold,
-    color: COLORS.primary,
-  },
-  introText: {
-    textAlign: "center",
-    padding: 10,
-  },
+    paddingTop:20
+      },
   topicItem: {
     flexDirection: "row",
     alignItems: "center",
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ddd",
+    borderWidth: 1,
+    borderColor: COLORS.gray,
+    paddingVertical: 10,
+    marginBottom: 20,
+    fontSize: SIZES.medium,
+    borderRadius: 30,
+    paddingHorizontal: 10,
+   
   },
   topicItemSelected: {
-    backgroundColor: "#D9D9D9",
+    backgroundColor: COLORS.lightTeal,
   },
   checkboxIcon: {
     marginRight: 10,
   },
   weekText: {
     marginRight: 10,
-    // fontWeight: WEIGHT.bold,
   },
   topicText: {
     fontSize: SIZES.medium,
@@ -214,104 +120,34 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  createQuizButton: {
-    backgroundColor: "#FFA500",
-    padding: 15,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  createQuizButtonText: {
-    color: "#FFFFFF",
-    fontSize: SIZES.large,
-    // fontWeight: WEIGHT.bold,
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-  },
-  modalView: {
-    margin: 20,
-
-    backgroundColor: "white",
-    borderRadius: 10,
-    padding: 35,
-    width: 368,
-    height: 358,
-    borderRadius: 32,
-    border: "1px solid #000000",
-    alignItems: "center",
-    shadowColor: "#000",
+  buttonContainer: {
+    flexDirection: "row",
     justifyContent: "space-around",
-    paddingVertical: 35,
-    paddingHorizontal: 35,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
+    marginTop: 20,
+    marginBottom: 70,
   },
-  optionButton: {
-    backgroundColor: "#A1A1A1",
-    borderRadius: 20,
+  button: {
     paddingVertical: 10,
-    paddingHorizontal: 20,
-    elevation: 2,
-    marginTop: 1,
-
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.22,
-    shadowRadius: 2.22,
-  },
-  optionButtonText: {
-    color: "#000000",
-    // fontWeight: WEIGHT.bold,
-    textAlign: "center",
-    fontSize: SIZES.large,
-    width: 190,
-    height: 25,
-    lineHeight: 23.44,
-    // size: SIZES.large,
-    textAlign: "center",
-  },
-  modalText: {
-    width: 283,
-    height: 62,
-    marginBottom: 5,
-    textAlign: "center",
-    // fontWeight: WEIGHT.bold,
-    fontSize: SIZES.large,
-  },
-  closeButton: {
-    position: "absolute",
-    top: 10,
-    right: 10,
-    backgroundColor: "#A1A1A1",
-    borderRadius: 50,
-  },
-  closeIcon: {
-    fontSize: SIZES.xLarge,
-  },
-  addButton: {
-    backgroundColor: COLORS.button,
-    paddingVertical: 15,
     paddingHorizontal: 30,
-    borderRadius: 30,
-    alignItems: "flex-end",
-    marginLeft: 200,
-    marginRight: 20,
-    marginBottom: 20,
+    borderRadius: 20,
   },
-  addButtonText: {
+  cancelButton: {
+    backgroundColor: COLORS.white,
+    borderWidth: 1,
+    borderColor: COLORS.midGray,
+    padding: 15,
+  },
+  generateButton: {
+    backgroundColor: COLORS.primary,
+  },
+  cancelButtonText: {
     fontSize: SIZES.large,
-    color: "#fff",
+    color: COLORS.midGray,
+    textAlign: "center",
+  },
+  generateButtonText: {
+    fontSize: SIZES.large,
+    color: COLORS.midTeal,
     textAlign: "center",
   },
 });
