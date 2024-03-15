@@ -12,12 +12,12 @@ const CreateYourQuiz = ({ route, navigation }) => {
 
 
 
-    console.log(name)
-    console.log(courseId)
-    console.log(type)
-    console.log(topics)
-    console.log(difficulty)
-    console.log(numQuestions)
+    // console.log(name)
+    // console.log(courseId)
+    // console.log(type)
+    // console.log(topics)
+    // console.log(difficulty)
+    // console.log(numQuestions)
     const handleTypeSelection = (selectedType) => {
         setType(selectedType);
     };
@@ -27,7 +27,7 @@ const CreateYourQuiz = ({ route, navigation }) => {
     };
 
     const sendQuizInfo = async () => {
-        navigation.navigate('MultipleChoiceQue')
+        console.log("Inside sendQuizInfo");
         try {
             const response = await AxiosService(
                 "POST",
@@ -36,12 +36,14 @@ const CreateYourQuiz = ({ route, navigation }) => {
                 {},
                 { topics, courseId, name, type, difficulty, numQuestions }
             );
-            
+            console.log("Send Quiz Info Response:", response.data);
+            if(response.data.success) {
+                navigation.navigate("MultipleChoiceQue", {quiz: response.data.data})
+            }
         } catch (err) {
-            console.log(err)
+            console.error("Error sending quiz info:", err); 
         }
-        
-    }
+    };
 
     return (
         <View style={styles.container}>
