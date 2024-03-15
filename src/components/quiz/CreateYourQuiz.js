@@ -93,9 +93,9 @@ const CreateYourQuiz = ({ route, navigation }) => {
                     />
                     <Text style={styles.helperText}>Maximum of 30 questions</Text>
                 </View>
-                <TouchableOpacity style={styles.button} onPress={() => { /* Handle Generate Quiz */ }}>
+                <TouchableOpacity style={styles.button} onPress={() => sendQuizInfo()}>
                     {/* <Text style={styles.buttonText} onPress={() => navigation.navigate('MultipleChoiceQue')}>Generate Quiz</Text> */}
-                    <Text style={styles.buttonText} onPress={() => sendQuizInfo()}>Generate Quiz</Text>
+                    <Text style={styles.buttonText} >Generate Quiz</Text>
                 </TouchableOpacity>
             </View>
         </View>
