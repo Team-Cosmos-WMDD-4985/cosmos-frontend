@@ -1,25 +1,29 @@
 import { StyleSheet } from "react-native";
+import { Dimensions } from 'react-native';
 
 import { COLORS, FONT, SHADOWS, SIZES } from "../../constants";
+const screenHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
   container: () => ({
     width: 250,
-    height: 240,
-    // padding: SIZES.xLarge,
+    height: screenHeight * 0.25, // 25% of the screen height
     backgroundColor: "#FFF",
     borderRadius: SIZES.medium,
     justifyContent: "space-between",
     ...SHADOWS.medium,
     shadowColor: COLORS.white,
+    borderRadius: 20,
+
   }),
   logoContainer: {
     width: "100%",
-    height: 120,
+    height: screenHeight * 0.125, // 12.5% of the screen height
     backgroundColor: COLORS.primary,
     borderRadius: SIZES.medium,
     justifyContent: "center",
     alignItems: "center",
+    borderRadius: 20,
 
   },
   logoImage: {
@@ -28,17 +32,18 @@ const styles = StyleSheet.create({
   },
   courseDate: {
     fontSize: SIZES.medium,
-    // fontFamily: FONT.regular,
     color: COLORS.midGray,
-    // marginTop: SIZES.xSmall,
-    padding: 10,
+    marginTop: 10,
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
   },
   infoContainer: {
-    height: 120,
+    height: screenHeight * 0.125, // 12.5% of the screen height
     marginTop: SIZES.xSmall,
     display: "flex",
     justifyContent: "space-around",
-    flexDirection: "column"
+    flexDirection: "column",
+    padding: 10,
   },
   iconStyle: {
     width: 24,
@@ -46,27 +51,28 @@ const styles = StyleSheet.create({
   },
   firstLine: {
     display: "flex",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
     flexDirection: "row"
   },
   courseName: ({
     fontSize: SIZES.large,
     fontFamily: FONT.medium,
     color: COLORS.primary,
-    // lineHeight: SIZES.small
+    fontWeight: 'bold',
   }),
   weekStyle: {
     display: 'flex',
     color: COLORS.midGray,
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
-    
+
   },
   weekText: {
     padding: 10,
+    fontSize: SIZES.small,
     color: COLORS.midGray,
     fontSize: SIZES.small,
-   },
+  },
   publisher: (selectedJob) => ({
     fontSize: SIZES.medium - 2,
     fontFamily: FONT.bold,
@@ -79,6 +85,11 @@ const styles = StyleSheet.create({
   },
   courseStyle: {
     width: '100%',
+    height: screenHeight * 0.125, // 12.5% of the screen height
+    borderRadius: 20,
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
+
   }
 });
 

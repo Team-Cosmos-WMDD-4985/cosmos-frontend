@@ -10,9 +10,6 @@ import AxiosService from "./../../services/axios";
 
 const CourseList = () => {
 
-
-  
-
   const data = [ {}, {}, {}]
   const [ courseList, setCourseList ] = useState([])
 
@@ -38,12 +35,12 @@ const CourseList = () => {
         {
           <FlatList
             data={courseList}
-            renderItem={({item}) => {
+            renderItem={({ item, index }) => {
               return (
-                <CourseCard item={item} />
+                <CourseCard item={item} index={index} /> 
               )
             }}
-            keyExtractor={item => Math.random()}
+            keyExtractor={(item, index) => String(index)} // Use index as a key
             contentContainerStyle={{columnGap: SIZES.medium}}
             horizontal={true}
           />
