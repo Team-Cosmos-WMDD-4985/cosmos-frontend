@@ -11,7 +11,7 @@ const QuizList = () => {
 
   useEffect(() => {
     getQuizes();
-  })
+  }, [])
 
   const getQuizes = async () => {
     const response = await AxiosService("GET", "getQuizByUser", true);

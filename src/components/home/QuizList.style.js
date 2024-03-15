@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     color: COLORS.secondary,
   },
   cardsScrollContainer: {
-    maxHeight: 240,
+    // maxHeight: 240,
   },
   cardsContainer: {
     marginTop: SIZES.medium,

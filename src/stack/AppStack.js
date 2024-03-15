@@ -24,10 +24,6 @@ import GenerateQuizByAi from '../components/quiz/GenerateQuizByAi';
 import OpenAI from '../components/chatbot/ChatUi';
 // import CheckAnswer from '../components/quiz/GetAnswer'
 // import CreateYourQuiz from '../components/quiz/CreateYourQuiz';
-import Feature2 from '../components/features/Feature2';
-import Feature3 from '../components/features/Feature3';
-import Feature4 from '../components/features/Feature4';
-import Feature1 from '../components/features/Feature1';
 import getAnswer from '../components/quiz/GetAnswers';
 
 const Stack = createNativeStackNavigator();
