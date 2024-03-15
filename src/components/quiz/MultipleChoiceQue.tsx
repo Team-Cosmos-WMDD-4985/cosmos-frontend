@@ -1,74 +1,75 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Button, Dimensions, TextInput, ScrollView, Modal, Image, TouchableOpacity } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import { icons, images } from "../../constants";
 import { COLORS, SIZES } from "../../constants";
 import { NavigationProp } from '@react-navigation/native';
+import AxiosService from '../../services/axios.js'
 
 const { width } = Dimensions.get('window');
 
-const MultipleChoiceQue = ({navigation}) => {
+const MultipleChoiceQue = ({route, navigation}) => {
+  const { quiz } = route.params
   const carouselRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [color, SetColor] = useState("");
+  // const [quiz, SetQuiz] = useState();
   
 
+console.log(`routes: ${route.params.quiz.questions.length}`)
+ 
 
 
-  const question = [
-    { title: 'question 1', question: "Q.Which of the following best defines branding?", options: ['A.The process of designing a logo for a company.', 'B.The process of designing a logo for a company.', 'C.The process of designing a logo for a company.', 'D.The process of designing a logo for a company.'] },
-    { title: 'question 2', question: "Where do you live?", options: ['A.The process of designing a logo for a company.', 'B.The process of designing a logo for a company.', 'C.The process of designing a logo for a company.', 'D.The process of designing a logo for a company.'] },
-    { title: 'question 3', question: "What's your name?", options: ['A.The process of designing a logo for a company.', 'B.The process of designing a logo for a company.', 'C.The process of designing a logo for a company.', 'D.The process of designing a logo for a company.'] },
-    { title: 'question 5', question: "What's dad name?", true: ['True', 'False'] },
-    { title: 'question 6', question: "What's dad name?", options: ['Red', 'Blue', 'Green', 'blue'] },
-    { title: 'question 7', question: "What's dad name?", options: ['Red', 'Blue', 'Green', 'blue'] },
-    { title: 'question 8', question: "What's dad name?", options: ['Red', 'Blue', 'Green', 'blue'] },
-  ];
+
+  // const question = [
+  //   { title: 'question 1', question: "Q.Which of the following best defines branding?", options: ['A.The process of designing a logo for a company.', 'B.The process of designing a logo for a company.', 'C.The process of designing a logo for a company.', 'D.The process of designing a logo for a company.'] },
+  //   { title: 'question 2', question: "Where do you live?", options: ['A.The process of designing a logo for a company.', 'B.The process of designing a logo for a company.', 'C.The process of designing a logo for a company.', 'D.The process of designing a logo for a company.'] },
+  //   { title: 'question 3', question: "What's your name?", options: ['A.The process of designing a logo for a company.', 'B.The process of designing a logo for a company.', 'C.The process of designing a logo for a company.', 'D.The process of designing a logo for a company.'] },
+  //   { title: 'question 5', question: "What's dad name?", true: ['True', 'False'] },
+  //   { title: 'question 6', question: "What's dad name?", options: ['Red', 'Blue', 'Green', 'blue'] },
+  //   { title: 'question 7', question: "What's dad name?", options: ['Red', 'Blue', 'Green', 'blue'] },
+  //   { title: 'question 8', question: "What's dad name?", options: ['Red', 'Blue', 'Green', 'blue'] },
+  // ];
 
   const handleNext = () => {
-    if (currentIndex < question.length - 1) {
-      carouselRef.current.snapToNext();
-      setCurrentIndex(prevIndex => prevIndex + 1);
-    }
+    carouselRef.current.snapToNext();
   };
 
   const handlePrevious = () => {
-    if (currentIndex > 0) {
-      carouselRef.current.snapToPrev();
-      setCurrentIndex(prevIndex => prevIndex - 1);
-    }
+    carouselRef.current.snapToPrev();
   };
 
   const onCheckAns = () => {
     SetColor("red")
-    
+    navigation.navigate('getAnswer', { quiz: quiz });
   }
 
   console.log(color);
+console.log("this is quiz",quiz)
 
 
-
-  const renderItem = ({ item, index }) => {
-    return (
-      <View key={index} style={styles.carouselItem}>
-        <Text style={{ textAlign: 'center', marginBottom: 40, marginTop: 10, fontWeight: 'bold', fontSize: 17 }}>{item.title}/30</Text>
-        <Text style={{ textAlign: 'left', marginLeft: 10, fontWeight: 'bold', fontSize: 18, marginBottom: 17 }}>{item.question}</Text>
-        {item.options ? (
-          <View>
-            {item.options.map((option, optionIndex) => (
-              <View key={optionIndex} style={{ backgroundColor: "lightgrey", margin: 10, borderRadius: 5, }}><Button key={optionIndex} title={option} color="black" /></View>
-            ))}
-          </View>
-        ) : (
-          <TextInput style={styles.answerTextInput} placeholder="Enter your answer..." />
-        )}
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 20 }}>
-          <View style={{ backgroundColor: "#A1A1A1", width: 100, height: 50, alignItems: "center", justifyContent: "center", borderRadius: 5 }}><Button  color="black" title="Previous" onPress={handlePrevious} disabled={currentIndex === 0} /></View>
-          <View style={{ backgroundColor: "#A1A1A1", width: 100, alignItems: "center", justifyContent: "center", borderRadius: 5 }}><Button color="black" title="Next" onPress={handleNext} disabled={currentIndex === question.length - 1} /></View>
+const renderItem = ({ item, index }) => {
+  return (
+    <View key={index} style={styles.carouselItem}>
+      <Text style={{ textAlign: 'center', marginBottom: 40, marginTop: 10, fontWeight: 'bold', fontSize: 17 }}>Question {index + 1}</Text>
+      <Text style={{ textAlign: 'left', marginLeft: 10, fontWeight: 'bold', fontSize: 18, marginBottom: 17 }}>{item.question}</Text>
+      {item.options.map((option, optionIndex) => (
+        <View key={optionIndex} style={{ backgroundColor: "lightgrey", margin: 10, borderRadius: 5 }}>
+          <Button title={option.optionValue} color="black" />
+        </View>
+      ))}
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 20 }}>
+        <View style={{ backgroundColor: "#A1A1A1", width: 100, height: 50, alignItems: "center", justifyContent: "center", borderRadius: 5 }}>
+          <Button color="black" title="Previous" onPress={handlePrevious}/>
+        </View>
+        <View style={{ backgroundColor: "#A1A1A1", width: 100, alignItems: "center", justifyContent: "center", borderRadius: 5 }}>
+          <Button color="black" title="Next" onPress={handleNext}  />
         </View>
       </View>
-    );
-  };
+    </View>
+  );
+};
+
 
 
   const [modalVisible, setModalVisible] = useState(false)
@@ -124,12 +125,12 @@ const MultipleChoiceQue = ({navigation}) => {
           <Carousel
             ref={carouselRef}
             layout="default"
-            data={question}
+            data={quiz.questions}
             renderItem={renderItem}
             sliderWidth={width}
             itemWidth={width}
-            loop
-            onSnapToItem={index => setCurrentIndex(index)}
+            // loop
+            // onSnapToItem={index => setCurrentIndex(index)}
           />
         </View>
 

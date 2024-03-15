@@ -22,11 +22,13 @@ import SelectTopics from '../components/quiz/SelectTopics';
 import CourseCard from '../components/cards/CourseCard';
 import GenerateQuizByAi from '../components/quiz/GenerateQuizByAi';
 import OpenAI from '../components/chatbot/ChatUi';
+// import CheckAnswer from '../components/quiz/GetAnswer'
 // import CreateYourQuiz from '../components/quiz/CreateYourQuiz';
 import Feature2 from '../components/features/Feature2';
 import Feature3 from '../components/features/Feature3';
 import Feature4 from '../components/features/Feature4';
 import Feature1 from '../components/features/Feature1';
+import getAnswer from '../components/quiz/GetAnswers';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -36,7 +38,7 @@ function AppStack() {
   return (
 
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
+      <Stack.Navigator initialRouteName="NavigationBar">
       <Stack.Screen name="SplashScreen" component={SplashScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Welcome" component={Welcome} options={{ headerShown: false }} />
         <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
@@ -52,6 +54,7 @@ function AppStack() {
         <Stack.Screen name="GenerateQuizByAi" component={GenerateQuizByAi} options={{ headerShown: false }} />
         <Stack.Screen name="CreateYourQuiz" component={CreateYourQuiz} options={{ headerShown: false }} />
         <Stack.Screen name="OpenAi" component={OpenAI} options={{ headerShown: true }} />
+        <Stack.Screen name="getAnswer" component={getAnswer} options={{ headerShown: true }} />
 
       </Stack.Navigator>
     </NavigationContainer>

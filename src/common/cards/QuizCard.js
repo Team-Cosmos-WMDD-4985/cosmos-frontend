@@ -6,7 +6,7 @@ import { images } from '../../constants';
 
 // import { checkImageURL } from "../../../../utils/index";
 
-const QuizCard = ( { } ) => {
+const QuizCard = ( { quiz } ) => {
 
   const job = {
     employer_logo : "https://t4.ftcdn.net/jpg/05/05/61/73/360_F_505617309_NN1CW7diNmGXJfMicpY9eXHKV4sqzO5H.jpg",
@@ -26,14 +26,13 @@ const QuizCard = ( { } ) => {
           style={styles.logoImage}
         />
       </TouchableOpacity>
-      {/* <Text style={styles.companyName} numberOfLines={1} > {item.employer_name}</Text> */}
 
       <View style={styles.textContainer}>
         <Text style={styles.jobName} numberOfLines={1}>
-          {`${job.job_title}`}
+          {`${quiz.quizName}`}
         </Text>
 
-        <Text style={styles.jobType}>{job.job_employment_type}</Text>
+        <Text style={styles.jobType}>{quiz.totalQuestion}</Text>
       </View>
 
     </TouchableOpacity>

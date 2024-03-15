@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Button, Image, TouchableOpacity, Platform } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Button, Image, TouchableOpacity, Platform, ActivityIndicator } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as ImagePicker from 'expo-image-picker';
 import * as DocumentPicker from 'expo-document-picker';
 import { COLORS, SIZES, icons, SHADOWS } from "./../../constants";
 import secoreStoreService from "../../services/secureStore";
-// import DocumentPicker from 'react-native-document-picker';
 import AxiosService from "./../../services/axios";
-import axios from "axios";
 
 function AddCourse({ navigation }) {
 
@@ -16,7 +14,8 @@ function AddCourse({ navigation }) {
     const [endDate, setEndDate] = useState(new Date());
     const [showStartDatePicker, setShowStartDatePicker] = useState(false);
     const [showEndDatePicker, setShowEndDatePicker] = useState(false);
-    const [file, setFile] = useState({ name: "tutorialPdf" });
+    const [file, setFile] = useState(null);
+    const [showLoader, setShowLoader] = useState(false);
 
     useEffect(() => {
         getToken()
@@ -24,7 +23,6 @@ function AddCourse({ navigation }) {
 
     const getToken = async () => {
         const myToken = await secoreStoreService.getValueFor('token');
-        console.log(myToken)
     }
 
 
@@ -36,7 +34,6 @@ function AddCourse({ navigation }) {
     //     //     type: "application/pdf"
     //     // })
 
-    //     console.log(result)
 
     //     if (!result.canceled && result.assets && result.assets.length > 0) {
     //         setFile(result.assets[0]);
@@ -87,17 +84,13 @@ function AddCourse({ navigation }) {
     }
 
     const handleGenerate = async () => {
-        console.log(courseName);
-        console.log(startDate);
-        console.log(endDate);
-
+        setShowLoader(true);
         const toSend = {
             file: file,
             name: courseName,
             startDate: startDate,
             endDate: endDate
         }
-        console.log(toSend)
         let formdata = new FormData();
         formdata.append('file', file);
         formdata.append("name", courseName);
@@ -106,14 +99,15 @@ function AddCourse({ navigation }) {
 
         try {
             const response = await AxiosService("POST", "addCourse", true, {}, formdata, { "Content-Type": `multipart/form-data` })
-            console.log(response.data)
             navigation.navigate("AddTopics", response.data.data);
+            showLoader(false)
             // if (response.data.success) { // Ensure the response is successful before navigation
             //     navigation.navigate("AddTopics", response.data.data);
             // }
 
         } catch (err) {
             console.log(err)
+            showLoader(false)
         }
 
 
@@ -125,7 +119,13 @@ function AddCourse({ navigation }) {
 
     return (
         <View style={styles.container}>
-
+        
+        {
+            showLoader && <View style={styles.loaderContainer}>
+                            <ActivityIndicator size="large" color={COLORS.midTeal} />
+                        </View>
+        }
+        
             {/*  Add Course Header*/}
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -218,7 +218,7 @@ function AddCourse({ navigation }) {
 
                 {/* The upload Course Topics Section */}
                 <View>
-                    <Text style={styles.label}>Upload Course Weekly Topics</Text>
+                    <Text style={styles.label}>Upload Course Image</Text>
                     <View style={styles.uploadButton}>
                         <TouchableOpacity style={styles.center} onPress={() => pickImage()}>
                             <Image source={require('./../../assets/icons/upload.png')} style={styles.icon} />
@@ -245,6 +245,14 @@ function AddCourse({ navigation }) {
 
 }
 const styles = StyleSheet.create({
+    loaderContainer: {
+        zIndex: 999,
+        position: "absolute",
+        height: "100%",
+        width: "100%",
+        justifyContent: 'space-around',
+        backgroundColor: 'rgba(0, 0, 0, 0.6)',
+      },
     fileContainer: {
         display: "flex",
         flexDirection: "row",
@@ -271,7 +279,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        paddingTop: 20,
     },
     header: {
         flexDirection: 'row',
