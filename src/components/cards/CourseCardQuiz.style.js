@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
   }),
   weekStyle: {
     display: 'flex',
+    flexDirection: 'row',
     color: COLORS.midGray,
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
@@ -91,7 +92,17 @@ const styles = StyleSheet.create({
     fontSize: SIZES.medium - 2,
     fontFamily: FONT.regular,
     color: "#B3AEC6",
+  
+  },
+  courseStyle: {
+    borderTopLeftRadius: SIZES.medium,
+    borderTopRightRadius: SIZES.medium,
+    width: '100%',
   }
+  // courseStyle: {
+  //   width: "100%",
+  
+  // }
 });
 
 export default styles;

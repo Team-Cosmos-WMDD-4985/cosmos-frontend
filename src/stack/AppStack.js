@@ -4,6 +4,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useNavigation } from "@react-navigation/native";
 import { Image, TouchableOpacity , View, Text} from "react-native";
+import { StyleSheet } from 'react-native';
+
+
 
 
 // componenets
@@ -106,6 +109,7 @@ function AppStack() {
       <Image
         source={images.profile}
         style={{ width: 40, height: 40, borderRadius: 20, marginRight: 20 }}
+
       />
     ),
   })}
@@ -157,5 +161,8 @@ function AppStack() {
     </NavigationContainer>
   );
 }
+
+
+
 
 export default AppStack;
