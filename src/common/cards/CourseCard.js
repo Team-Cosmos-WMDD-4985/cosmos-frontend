@@ -1,8 +1,6 @@
 import React from 'react'
 import { View, Text, TouchableOpacity, Image } from 'react-native'
-
 import styles from './CourseCard.style'
-// import { checkImageURL } from "../../../../utils/index";
 import { icons, images } from "./../../constants"
 
 const CourseCard = ({ item, index }) => {

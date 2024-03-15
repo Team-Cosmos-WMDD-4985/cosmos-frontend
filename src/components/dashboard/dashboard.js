@@ -27,6 +27,7 @@ const Dashboard = () => {
         <SafeAreaView style={{
             flex: 1,
             marginTop: 20,
+            backgroundColor: COLORS.lightGrey,
         }} >
             <View style={{ flex: 1, padding: SIZES.medium }}>
                 <View style={styles.header}>
@@ -37,11 +38,7 @@ const Dashboard = () => {
                     <Image source={images.profile} style={styles.profileImage} />
                 </View>
                 <CourseList />
-                <View style={styles.quizContainer}>
-                    <ScrollView showsVerticalScrollIndicator={false}>
-                        <QuizList />
-                    </ScrollView>
-                </View>
+                <QuizList />
             </View>
         </SafeAreaView >
     )
@@ -54,13 +51,13 @@ const styles = StyleSheet.create({
         paddingTop: 20,
     },
     headerText: {
-        fontSize: SIZES.medium,
+        fontSize: SIZES.large,
         fontWeight: 'bold',
         color: COLORS.primary,
-        marginTop:8,
+        marginTop: 8,
     },
     profileImage: {
-        width: 64, 
+        width: 64,
         height: 64,
         // borderRadius: 20,
     },
