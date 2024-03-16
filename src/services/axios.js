@@ -4,10 +4,7 @@ import secoreStoreService from "./secureStore";
 // Live url
 // const url = "https://ec2-54-70-7-254.us-west-2.compute.amazonaws.com/api"
 // const url = "http://ec2-54-70-7-254.us-west-2.compute.amazonaws.com/api"
-// const url = "https://a37e-2604-3d08-6977-5400-c2c-4add-83fd-183c.ngrok-free.app";
-
-const url = "https://2bc8-2604-3d08-6d7f-68b0-7874-3916-9a6-b3b8.ngrok-free.app";
-
+const url = "https://46f0-2001-569-52f6-b300-198c-8614-a5a8-8f0.ngrok-free.app";
 // const url = "https://cosmos-backend-6bue.onrender.com"
 export default async function useApi(type, endpoint, tokenRequired = true , params = {}, body = {}, headers = {}) {
 
@@ -34,8 +31,8 @@ export default async function useApi(type, endpoint, tokenRequired = true , para
 
     } catch (err) {
         console.log(JSON.stringify(err))
-        console.log("Error message:", err.message); // Log error message for debugging
-        console.log("Error response:", err.response.data); // Log error response for debugging
+        console.log("Error message:", err.message);
+        console.log("Error response:", err.response.data);
         return {
             success: false
         }

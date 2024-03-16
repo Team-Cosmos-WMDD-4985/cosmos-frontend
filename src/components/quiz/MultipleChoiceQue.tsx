@@ -51,24 +51,27 @@ console.log("this is quiz",quiz)
 const renderItem = ({ item, index }) => {
   return (
     <View key={index} style={styles.carouselItem}>
-      <Text style={{ textAlign: 'center', marginBottom: 40, marginTop: 10, fontWeight: 'bold', fontSize: 17 }}>Question {index + 1}</Text>
-      <Text style={{ textAlign: 'left', marginLeft: 10, fontWeight: 'bold', fontSize: 18, marginBottom: 17 }}>{item.question}</Text>
+      <View style={styles.questionDiv}>
+        <Text style={{ textAlign: 'left', marginTop: 5, fontWeight: 'bold', fontSize: 17, color: "white" }}>Question {index + 1}</Text>
+        <Text style={{ textAlign: 'left', fontSize: 13, marginBottom: 17, color: "white" }}>{item.question}</Text>
+      </View>
       {item.options.map((option, optionIndex) => (
-        <View key={optionIndex} style={{ backgroundColor: "lightgrey", margin: 10, borderRadius: 5 }}>
-          <Button title={option.optionValue} color="black" />
+        <View key={optionIndex} style={styles.options}>
+          <Text>{option.optionValue}</Text>
         </View>
       ))}
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 20 }}>
-        <View style={{ backgroundColor: "#A1A1A1", width: 100, height: 50, alignItems: "center", justifyContent: "center", borderRadius: 5 }}>
-          <Button color="black" title="Previous" onPress={handlePrevious}/>
+        <View style={{ width: 100, height: 50, alignItems: "center", justifyContent: "center", borderRadius: 5 }}>
+          <Button color="black" title="Previous" onPress={handlePrevious} />
         </View>
-        <View style={{ backgroundColor: "#A1A1A1", width: 100, alignItems: "center", justifyContent: "center", borderRadius: 5 }}>
-          <Button color="black" title="Next" onPress={handleNext}  />
+        <View style={{ width: 100, alignItems: "center", justifyContent: "center", borderRadius: 5 }}>
+          <Button color="black" title="Next" onPress={handleNext} />
         </View>
       </View>
     </View>
   );
 };
+
 
 
 
@@ -157,9 +160,10 @@ const styles = StyleSheet.create({
   carouselItem: {
     width: width - 30,
     height: 550,
-    backgroundColor: '#D9D9D9',
+    // backgroundColor: '#D9D9D9',
     borderRadius: 10,
-    padding: 20
+    padding: 20,
+    alignItems:"center"
   },
   centeredView: {
     flex: 1,
@@ -234,6 +238,22 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     backgroundColor: 'rgba(0, 0, 0, 0.8)'
   },
+  questionDiv:{
+    backgroundColor:"black",
+    padding:10,
+    width: 350,
+    height: 100,
+    borderRadius: 10,
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
+  },
+  options: {
+    width: 350,
+    borderColor: "black",
+    borderWidth: 0.5, 
+    padding: 20,
+    
+  }
 });
 
 export default MultipleChoiceQue;
