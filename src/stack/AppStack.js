@@ -3,7 +3,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
-import { Image, TouchableOpacity } from 'react-native';
+import { View, Text,Image, TouchableOpacity } from 'react-native';
+import { COLORS, SIZES, WEIGHT, images } from "./../constants";
+
 
 
 // componenets
@@ -54,13 +56,64 @@ function AppStack() {
         <Stack.Screen name="AddCourse" component={AddCourse} options={{ headerShown: false }} />
         <Stack.Screen name="AddTopics" component={AddTopics} options={{ headerShown: false }} />
         <Stack.Screen name="MultipleChoiceQue" component={MultipleChoiceQue} options={{ headerShown: false }} />
-        {/* <Stack.Screen name="AddingTopicsForQuizGeneration" component={AddingTopicsForQuizGeneration} options={{ headerShown: false }} /> */}
-        <Stack.Screen name="SelectTopics" component={SelectTopics} options={{ headerShown: false }} />
-        <Stack.Screen name="CourseCard" component={CourseCard} options={{ headerShown: false }} />
-        <Stack.Screen name="GenerateQuizByAi" component={GenerateQuizByAi} options={{ headerShown: false }} />
-        <Stack.Screen name="CreateYourQuiz" component={CreateYourQuiz} options={{ headerShown: false }} />
+        <Stack.Screen name="SelectTopics" component={SelectTopics} options={{ headerShown: false }} />        
         <Stack.Screen name="OpenAi" component={OpenAI} options={{ headerShown: true }} />
         <Stack.Screen name="getAnswer" component={getAnswer} options={{ headerShown: true }} />
+        <Stack.Screen
+  name="Choose Topics"
+  component={SelectTopics}
+  options={({ navigation }) => ({
+    headerShown: true,
+    headerTitle: () => (
+      <View style={{ flexDirection: 'column'}}>
+        <Text style={{ fontSize: SIZES.xLarge, marginRight: 10 }}>Choose Topics</Text>
+        <Text style={{fontSize:SIZES.medium}}>Select topics to create a quiz</Text>
+      </View>
+    ),
+    headerRight: () => (
+      <Image
+        source={images.profile}
+        style={{ width: 40, height: 40, borderRadius: 20, marginRight: 20 }}
+
+      />
+    ),
+  })}
+/>
+<Stack.Screen
+          name="CourseCard"
+          component={CourseCard}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="GenerateQuizByAi"
+          component={GenerateQuizByAi}
+          options={{ headerShown: false }}
+        />
+<Stack.Screen
+  name="CreateYourQuiz"
+  component={CreateYourQuiz}
+  options={({ navigation }) => ({
+    headerShown: true,
+    headerTitle: () => (
+      <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+        <View>
+          <Text style={{ fontSize: SIZES.xLarge }}>Create Quiz</Text>
+          <Text style={{fontSize:SIZES.medium}}>Start to prepare your quiz</Text>
+        </View>
+       
+      </View>
+    ),
+    headerRight: () => (
+      <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
+        <Image
+          source={images.profile}
+          style={{ width: 40, height: 40, borderRadius: 20, marginRight: 20 }}
+        />
+      </TouchableOpacity>
+    ),
+  })}
+/>
+
 
       </Stack.Navigator>
     </NavigationContainer>
