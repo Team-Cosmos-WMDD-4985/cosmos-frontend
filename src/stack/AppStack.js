@@ -26,6 +26,12 @@ import OpenAI from '../components/chatbot/ChatUi';
 // import CreateYourQuiz from '../components/quiz/CreateYourQuiz';
 import getAnswer from '../components/quiz/GetAnswers';
 
+//Feature Screens
+import Feature1 from '../components/features/Feature1';
+import Feature2 from '../components/features/Feature2';
+import Feature3 from '../components/features/Feature3';
+import Feature4 from '../components/features/Feature4';
+
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -34,9 +40,13 @@ function AppStack() {
   return (
 
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="SplashScreen">
-      <Stack.Screen name="SplashScreen" component={SplashScreen} options={{ headerShown: false }} />
+      <Stack.Navigator initialRouteName="Login">
+        <Stack.Screen name="SplashScreen" component={SplashScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Welcome" component={Welcome} options={{ headerShown: false }} />
+        <Stack.Screen name="Feature1" component={Feature1} options={{ headerShown: false }} />
+        <Stack.Screen name="Feature2" component={Feature2} options={{ headerShown: false }} />
+        <Stack.Screen name="Feature3" component={Feature3} options={{ headerShown: false }} />
+        <Stack.Screen name="Feature4" component={Feature4} options={{ headerShown: false }} />
         <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
         <Stack.Screen name="Signup" component={Signup} options={{ headerShown: false }} />
         <Stack.Screen name="NavigationBar" component={NavigationBar} options={{ headerShown: false }} />

@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { View, Text, ScrollView, SafeAreaView, StyleSheet, Image } from "react-native";
+import { View, Text, ScrollView, SafeAreaView, StyleSheet, Image, Dimensions } from "react-native";
 import { icons, images } from "./../../constants";
 import { SIZES, WEIGHT, COLORS } from "./../../constants/theme";
 import QuizList from "./../home/QuizList";
 import CourseList from "./../home/CourseList"
-import { Dimensions } from 'react-native';
 
 const screenHeight = Dimensions.get('window').height;
 
@@ -22,14 +21,14 @@ const getFormattedDate = () => {
 };
 
 
-const Dashboard = () => {
+const Dashboard = (width, height) => {
     return (
         <SafeAreaView style={{
             flex: 1,
             marginTop: 20,
             backgroundColor: COLORS.lightGrey,
         }} >
-            <View style={{ flex: 1, padding: SIZES.medium }}>
+            <View style={{ flex: 1, padding: 20 }}>
                 <View style={styles.header}>
                     <View style={styles.headerStack}>
                         <Text style={styles.dateText}>{getFormattedDate()}</Text>
@@ -37,7 +36,10 @@ const Dashboard = () => {
                     </View>
                     <Image source={images.profile} style={styles.profileImage} />
                 </View>
-                <CourseList />
+                <View style={styles.courseHeader}>
+                    <Text style={styles.courseHeaderTitle}>Courses</Text>
+                </View>
+                <CourseList width={250} height={screenHeight * 0.25} />
                 <QuizList />
             </View>
         </SafeAreaView >
@@ -66,7 +68,18 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'space-between',
         alignItems: 'left',
-    }
+    },
+    courseHeader: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginTop: SIZES.small,
+        marginBottom: 0,
+    },
+    courseHeaderTitle: {
+        fontSize: SIZES.large,
+        color: COLORS.secondary,
+        fontWeight: "700"
+    },
 })
 
 export default Dashboard;

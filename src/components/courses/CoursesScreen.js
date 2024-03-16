@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, SafeAreaView } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity, SafeAreaView, FlatList, Dimensions } from 'react-native';
 import { COLORS, icons, images, SIZES } from "./../../constants";
+import CourseList from '../home/CourseList';
 
+const screenHeight = Dimensions.get('window').height;
 
 function CoursesScreen({ navigation }) {
-  const hasCourses = false;
+  const hasCourses = true;
   const [linkPressed, setLinkPressed] = useState(false);
 
   return (
@@ -13,31 +15,30 @@ function CoursesScreen({ navigation }) {
         <Text style={styles.headerTitle}>Courses</Text>
         <Image source={images.profile} style={styles.profileImage} />
       </View>
-      <Text style={styles.greeting}>Hi, Kristen</Text>
 
       {hasCourses ? (
-        <View>
-          {/* List of courses */}
+        <View style={styles.courseContainer} >
+          <Text style={styles.viewAdd}>View / add you new course</Text>
+          <CourseList isHorizontal={false} height={screenHeight * 0.25} width={'100%'} />
         </View>
       ) : (
         // This will display if there are no courses
         <View style={styles.noCoursesContainer}>
+          <Text style={styles.greeting}>Hi, Kristen</Text>
           <Image source={images.noCourse} style={styles.illustration} />
           <Text style={styles.noCoursesText}>You do not have any courses.</Text>
           <Text style={styles.noCoursesText}>Would you like to
-            <Text 
-            onPress={() => navigation.navigate('AddCourse')}
-            style={styles.linkStyle}>
+            <Text
+              onPress={() => navigation.navigate('AddCourse')}
+              style={styles.linkStyle}>
               {" create a course "}
             </Text>
             now?</Text>
-
-          <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('AddCourse')}>
-            <Text style={styles.addButtonText}>+ Add Course</Text>
-          </TouchableOpacity>
-
         </View>
       )}
+      <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('AddCourse')}>
+        <Text style={styles.addButtonText}>+ Add Course</Text>
+      </TouchableOpacity>
 
     </SafeAreaView>
   );
@@ -47,14 +48,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingTop: 20,
+    padding: 20,
+  },
+  courseContainer: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'red',
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingTop: 40,
-    paddingHorizontal: 20,
+    marginTop: 40,
+
   },
   headerTitle: {
     fontSize: SIZES.xxLarge,
@@ -62,15 +69,15 @@ const styles = StyleSheet.create({
     color: COLORS.primary,
   },
   profileImage: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 64,
+    height: 64,
   },
   greeting: {
     fontSize: SIZES.xLarge,
     marginHorizontal: 20,
     marginTop: 20,
     marginBottom: 30,
+    fontWeight: 'bold',
   },
   noCoursesContainer: {
     flex: 1,
@@ -98,6 +105,7 @@ const styles = StyleSheet.create({
     height: 54,
   },
   addButtonText: {
+    fontWeight: 'bold',
     fontSize: SIZES.large,
     color: COLORS.midTeal,
     textAlign: 'center',
@@ -109,6 +117,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 50,
     fontWeight: 'bold',
+  },
+  viewAdd: {
+    color: COLORS.darkGray,
+    fontSize: SIZES.medium,
+
   }
 });
 
