@@ -1,11 +1,12 @@
 import { StyleSheet } from "react-native";
-
-import { COLORS, SHADOWS, SIZES } from "../../constants";
+import { Dimensions } from 'react-native';
+import { COLORS, FONT, SHADOWS, SIZES } from "../../constants";
+const screenHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    height: 125,
+    height: screenHeight * 0.125, // 12.5% of the screen height
     justifyContent: "space-between",
     alignItems: "center",
     flexDirection: "row",
@@ -13,21 +14,19 @@ const styles = StyleSheet.create({
     borderRadius: SIZES.small,
     backgroundColor: "#FFF",
     ...SHADOWS.medium,
-    // shadowColor: COLORS.white,
     marginBottom: 10,
   },
   logoContainer: {
     width: 85,
     height: 85,
-    // backgroundColor: COLORS.white,
     borderRadius: SIZES.medium,
     justifyContent: "center",
     alignItems: "center",
   },
   logoImage: {
-    width: 50,
-    height: 50,
-    borderRadius: 5,
+    width: screenHeight * 0.1, // 12.5% of the screen height
+    height: screenHeight * 0.1, // 12.5% of the screen height
+    borderRadius: 10,
   },
   textContainer: {
     flex: 1,
@@ -35,16 +34,28 @@ const styles = StyleSheet.create({
   },
   jobName: {
     fontSize: SIZES.medium,
-    // fontFamily: "DMBold",
     color: COLORS.primary,
+    fontWeight: 'bold',
   },
   jobType: {
-    fontSize: SIZES.small + 2,
-    // fontFamily: "DMRegular",
+    fontSize: SIZES.medium,
     color: COLORS.gray,
     marginTop: 3,
     textTransform: "capitalize",
   },
+  weekStyle: {
+  display: 'flex',
+  color: COLORS.midGray,
+  justifyContent: 'flex-end',
+  alignItems: 'flex-end',
+
+},
+  weekText: {
+  padding: 10,
+  fontSize: SIZES.small,
+  color: COLORS.midGray,
+  fontSize: SIZES.small,
+},
 });
 
 export default styles;

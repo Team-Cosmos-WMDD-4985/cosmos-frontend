@@ -11,7 +11,7 @@ const QuizList = () => {
 
   useEffect(() => {
     getQuizes();
-  })
+  }, [])
 
   const getQuizes = async () => {
     const response = await AxiosService("GET", "getQuizByUser", true);
@@ -22,6 +22,7 @@ const QuizList = () => {
     }
   }
   return (
+    
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Quizzes</Text>

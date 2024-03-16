@@ -1,4 +1,4 @@
-import profile from "../assets/images/kemal.jpg"
+import profile from "../assets/images/profile.png"
 import noCourse from "../assets/images/noCourse.png"
 import logo from "../assets/images/logo.png"
 import splash from "../assets/images/splash.png"

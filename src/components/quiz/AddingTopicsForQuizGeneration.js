@@ -1,31 +1,36 @@
+
 import React from "react";
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  TouchableOpacity,
+  Image,
+} from "react-native";
 import CourseCard from "../cards/CourseCard";
 import AxiosService from "./../../services/axios";
-import { COLORS , SIZES, WEIGHT } from "../../constants";
+import { COLORS, SIZES, WEIGHT, images } from "./../../constants";
 // import AxiosService from "./../../services/axios";
 import { useState, useEffect } from "react";
-
-
+// import CourseListQuiz from "./CourseListQuiz";
 
 const AddingTopicsForQuizGeneration = ({ navigation }) => {
-
-  const [ courseList, setCourseList ] = useState([])
+  const [courseList, setCourseList] = useState([]);
 
   useEffect(() => {
     getCourses();
-  }, [])
+  }, []);
 
   const getCourses = async () => {
     const response = await AxiosService("GET", "courses", true);
     console.log(response.data);
-    console.log(courseList)
-    if(response.data && response.data.success) {
-      setCourseList(response.data.data.courses)
+    console.log(courseList);
+    if (response.data && response.data.success) {
+      setCourseList(response.data.data.courses);
     }
-  }
+  };
 
-  
   // const coursesList = [
   //   {
   //     id: 1,
@@ -61,10 +66,13 @@ const AddingTopicsForQuizGeneration = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View >
-        <Text> Quizzes </Text>
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>Quizzes</Text>
+        <Image source={images.profile} style={styles.profileImage} />
       </View>
+      <Text style={styles.greeting}>Choose your course</Text>
       <CourseCard courses={courseList} navigation={navigation} />
+      {/* <CourseListQuiz courseList={courseList} /> */}
     </SafeAreaView>
   );
 };
@@ -73,36 +81,47 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
+    paddingTop: 20,
+    backgroundColor: COLORS.lightGrey
+
   },
   header: {
-    marginTop: 100,
-    marginBottom: 50,
-    justifyContent: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
-
-
+    paddingTop: 40,
+    paddingHorizontal: 20,
   },
   headerTitle: {
     fontSize: SIZES.xxLarge,
-    fontWeight: WEIGHT.bold,
+    fontWeight: "bold",
     color: COLORS.primary,
-    justifyContent: "center",
-    alignItems: "center",
   },
   addButton: {
     backgroundColor: COLORS.button,
     paddingVertical: 15,
     paddingHorizontal: 30,
     borderRadius: 30,
-    alignItems: 'flex-end',
+    alignItems: "flex-end",
     marginLeft: 200,
-    marginRight:20,
+    marginRight: 20,
     marginBottom: 20,
   },
   addButtonText: {
     fontSize: SIZES.large,
-    color: '#fff',
-    textAlign: 'center',
+    color: "#fff",
+    textAlign: "center",
+  },
+  profileImage: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+  },
+  greeting: {
+    fontSize: SIZES.medium,
+    marginHorizontal: 20,
+    marginTop: 20,
+    marginBottom: 30,
   },
 });
 
