@@ -26,7 +26,7 @@ const Dashboard = (width, height) => {
         <SafeAreaView style={{
             flex: 1,
             marginTop: 20,
-            backgroundColor: COLORS.lightGrey,
+            backgroundColor: COLORS.white,
         }} >
             <View style={{ flex: 1, padding: 20 }}>
                 <View style={styles.header}>

@@ -36,8 +36,7 @@ function NavigationBar() {
                 },
                 tabBarStyle: {
                     height: 80, 
-                    backgroundColor: COLORS.lightGrey,
-                    // backgroundColor: 'transparent',
+                    backgroundColor: COLORS.white,
                 },
                 tabBarShowLabel: false,
                 headerShown: false,
