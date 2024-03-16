@@ -217,7 +217,7 @@ function AddCourse({ navigation }) {
                 </View>
 
                 {/* The upload Course Topics Section */}
-                <View>
+                {/* <View>
                     <Text style={styles.label}>Upload Course Image</Text>
                     <View style={styles.uploadButton}>
                         <TouchableOpacity style={styles.center} onPress={() => pickImage()}>
@@ -225,7 +225,7 @@ function AddCourse({ navigation }) {
                             <Text style={styles.link}>Click here to browse</Text>
                         </TouchableOpacity>
                     </View>
-                </View>
+                </View> */}
 
                 {/* The Action Button Section */}
                 <View style={styles.buttonContainer}>
