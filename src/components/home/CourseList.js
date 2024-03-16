@@ -6,18 +6,18 @@ import AxiosService from "./../../services/axios";
 
 const screenHeight = Dimensions.get('window').height;
 
-const CourseList = ({ isHorizontal = true, width, height , navigation }) => {
+const CourseList = ({ isHorizontal = true, width, height, courses, navigation }) => {
 
   const data = [{}, {}, {}]
   const [courseList, setCourseList] = useState([])
-  
+
   useEffect(() => {
     getCourses();
   }, [])
 
   const getCourses = async () => {
     const response = await AxiosService("GET", "courses", true);
-    console.log(response.data);
+    console.log("course Data: ", response.data);
     if (response.data && response.data.success) {
       setCourseList(response.data.data.courses)
     }
@@ -27,9 +27,11 @@ const CourseList = ({ isHorizontal = true, width, height , navigation }) => {
     <View style={styles.container}>
       <FlatList
         data={courseList}
+        // data={courses}
+
         renderItem={({ item, index }) => {
           return (
-            <CourseCard item={item} index={index} width={width} height={height} courses={courseList} navigation={navigation}/>
+            <CourseCard item={item} index={index} width={width} height={height} navigation={navigation} />
           )
         }}
         keyExtractor={(item, index) => String(index)}

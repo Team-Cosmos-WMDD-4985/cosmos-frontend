@@ -26,7 +26,7 @@ const Feature3 = ({ navigation }) => {
         <View style={[styles.paginationDot, styles.paginationDotInactive]} />
       </View>
       <TouchableOpacity style={styles.nextButton} onPress={() => navigation.navigate('Feature4')}>
-        <Text style={styles.nextText}>→</Text>
+        <Text style={styles.nextText}>Next</Text>
       </TouchableOpacity>
     </View>
   );

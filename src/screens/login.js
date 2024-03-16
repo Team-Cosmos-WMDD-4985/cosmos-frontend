@@ -35,7 +35,7 @@ const Login = ({ navigation }) => {
       <View style={styles.container1}>
         <View style={styles.s1}>
           <Image style={styles.logo} source={icons.logo}></Image>
-          <Text style={styles.h1} onPress={() => navigation.navigate('Welcome')}>Welcome Back Joyce</Text>
+          <Text style={styles.h1} onPress={() => navigation.navigate('Welcome')}>Welcome Back Kristen</Text>
         </View>
         <View style={styles.s2}>
           <Text style={head1}>Login</Text>

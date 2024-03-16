@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Image, StyleSheet, Dimensions } from 'rea
 import { icons, images } from "./../../constants"
 import { COLORS, FONT, SHADOWS, SIZES } from "../../constants";
 
-const CourseCard = ({ item, index, width = 400, height = Dimensions.get('window').height * 0.5 }) => {
+const CourseCard = ({ navigation, item, index, width = 400, height = Dimensions.get('window').height * 0.5 }) => {
 
   const dynamicStyles = StyleSheet.create({
     container: {
@@ -21,7 +21,7 @@ const CourseCard = ({ item, index, width = 400, height = Dimensions.get('window'
       shadowOpacity: 0.3, // This defines the opacity of the shadow
       shadowRadius: 20, // This defines the blur radius of the shadow
       elevation: 8, // Use elevation for Android
-            marginBottom: 10,
+      marginBottom: 10,
       // paddingBottom: 10,
     },
     logoContainer: {
@@ -72,7 +72,9 @@ const CourseCard = ({ item, index, width = 400, height = Dimensions.get('window'
 
   return (
 
-    <TouchableOpacity style={dynamicStyles.container}>
+    <TouchableOpacity style={dynamicStyles.container}
+      onPress={() => navigation.navigate('CourseDetails', { course: item })}
+    >
 
       <View style={dynamicStyles.logoContainer}>
         <Image source={getImageSource()} style={styles.courseStyle} />
