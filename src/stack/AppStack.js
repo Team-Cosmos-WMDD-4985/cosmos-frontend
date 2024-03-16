@@ -36,7 +36,7 @@ function AppStack() {
   return (
 
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="NavigationBar">
+      <Stack.Navigator initialRouteName="SplashScreen">
       <Stack.Screen name="SplashScreen" component={SplashScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Welcome" component={Welcome} options={{ headerShown: false }} />
         <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />

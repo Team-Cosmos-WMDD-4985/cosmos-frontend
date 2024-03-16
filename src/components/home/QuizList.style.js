@@ -14,11 +14,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   headerTitle: {
-    fontSize: SIZES.medium,
+    fontSize: SIZES.large,
     fontFamily: FONT.medium,
     color: COLORS.secondary,
-    fontWeight: "bold",
-
+    fontWeight: 'bold',
+    marginBottom: 10,
   },
   headerBtn: {
     fontSize: SIZES.medium,
@@ -26,11 +26,9 @@ const styles = StyleSheet.create({
     color: COLORS.secondary,
   },
   cardsScrollContainer: {
-    // maxHeight: 240,
   },
   cardsContainer: {
-    marginTop: SIZES.medium,
-    // height:240,
+    // marginTop: SIZES.medium,
   },
 });
 

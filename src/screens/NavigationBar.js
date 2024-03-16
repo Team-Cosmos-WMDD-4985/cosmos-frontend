@@ -35,8 +35,9 @@ function NavigationBar() {
                     return <Image source={iconName} style={{ width: 80, height: 80 }} resizeMode="contain" />;
                 },
                 tabBarStyle: {
-                    height: 100, 
-                    // backgroundColor: COLORS.lightGrey,
+                    height: 80, 
+                    backgroundColor: COLORS.lightGrey,
+                    // backgroundColor: 'transparent',
                 },
                 tabBarShowLabel: false,
                 headerShown: false,

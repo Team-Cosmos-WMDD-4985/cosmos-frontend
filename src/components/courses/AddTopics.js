@@ -4,20 +4,12 @@ import { COLORS, SIZES } from "./../../constants";
 import { HStack, VStack } from 'native-base';
 import { icons, images } from "./../../constants";
 
-// import { Chip } from 'react-native-paper';
-// import Chip from '@mui/material/Chip';
-// import Stack from '@mui/material/Stack';
-// import Fab from '@mui/material/Fab';
-// import AddIcon from '@mui/icons-material/Add';
-
-
-
 function AddTopics({ navigation, route }) {
 
     const handleClick = () => {
         console.info('You clicked the Chip.');
     };
-    
+
     const handleDelete = () => {
         console.info('You clicked the delete icon.');
     };
@@ -92,19 +84,23 @@ function AddTopics({ navigation, route }) {
                                 <Text style={styles.WeekLabel}>Week {week.weekName}</Text>
                                 <View style={styles.topicBox} >
                                     {
-                                       week.topics.map((item, innerIndex) => (
-                                        <Text
-                                            key={`text-${innerIndex}`}
-                                            style={styles.chip}
-                                            onPress={handleClick}
-                                            onClose={handleDelete}
-                                        >
-                                            { item }
-                                        </Text>
-                                       ))
+                                        week.topics.map((item, innerIndex) => (
+                                            <View style={styles.chip}>
+                                                <Text
+                                                    key={`text-${innerIndex}`}
+                                                    onPress={handleClick}
+                                                    onClose={handleDelete}
+                                                >
+                                                    {item}
+                                                </Text>
+                                                <View style={styles.deleteSign}>
+                                                    <Text style={styles.addSignText}>x</Text>
+                                                </View>
+                                            </View>
+                                        ))
                                     }
                                     <View style={styles.addSign}>
-                                        <Text >+</Text>
+                                        <Text style={styles.addSignText}>+</Text>
                                     </View>
                                 </View>
                             </View>
@@ -179,14 +175,18 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         borderWidth: 1,
         flexWrap: "wrap",
-        gap: 14,
+        gap: 10,
         borderColor: COLORS.darkGray,
         padding: 15,
         borderRadius: 10,
+        position: 'relative',
+        // height: 104,
+        paddingBottom: 40,
     },
     WeekLabel: {
         fontSize: SIZES.medium,
-        marginBottom: 10,
+        marginBottom: 5,
+        fontWeight: 'bold',
     },
     buttonContainer: {
         flexDirection: 'row',
@@ -221,26 +221,23 @@ const styles = StyleSheet.create({
     chip: {
         display: 'flex',
         flexDirection: 'row',
-        // width: 120,
-        padding: 5,
-        height: 30,
-        marginRight: 10,
+        paddingLeft: 10,
+        paddingRight: 10,
+        height: 38,
         borderWidth: 1,
-        borderRadius: 15,
-        justifyContent: 'space-around',
-        alignItems: 'center'
+        borderRadius: 19,
+        alignItems: 'center',
+        justifyContent: 'center',
     }
     ,
     chipText: {
-        fontSize: SIZES.small,
-        marginRight: 10,
+        fontSize: SIZES.xSmall,
         borderColor: COLORS.darkGray,
+        marginRight: 20,
     },
 
     deleteSign: {
         display: 'flex',
-        flexDirection: 'column',
-        textAlign: 'center',
         justifyContent: 'center',
         alignItems: 'center',
         width: 20,
@@ -248,12 +245,15 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         borderWidth: 1,
         backgroundColor: COLORS.primary,
+        marginLeft: 10,
+
 
     },
     addSign: {
-        // position: 'absolute',
+        position: 'absolute',
         bottom: 10,
-        // left: '50%',
+        left: '50%',
+        transform: [{ translateX: -10 }],
         display: 'flex',
         flexDirection: 'column',
         textAlign: 'center',
@@ -264,8 +264,9 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         borderWidth: 1,
         backgroundColor: COLORS.primary,
+        marginTop: 10,
     },
-    SignText: {
+    addSignText: {
         fontSize: SIZES.small,
         color: COLORS.midTeal,
         display: 'flex',

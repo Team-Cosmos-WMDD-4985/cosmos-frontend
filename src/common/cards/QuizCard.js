@@ -1,15 +1,16 @@
 import React from 'react'
 import { View, Text, TouchableOpacity, Image } from 'react-native'
-
 import styles from "./QuizCard.style";
 import { images } from '../../constants';
 
-// import { checkImageURL } from "../../../../utils/index";
-
-const QuizCard = ( { quiz } ) => {
+const QuizCard = ({ quiz }) => {
+  const getRandomImageUrl = () => {
+    return `https://picsum.photos/seed/${Math.floor(Math.random() * 1000)}/200/300`;
+  };
+  const randomWeeks = Math.floor(Math.random() * 12) + 1;
 
   const job = {
-    employer_logo : "https://t4.ftcdn.net/jpg/05/05/61/73/360_F_505617309_NN1CW7diNmGXJfMicpY9eXHKV4sqzO5H.jpg",
+    employer_logo: "https://t4.ftcdn.net/jpg/05/05/61/73/360_F_505617309_NN1CW7diNmGXJfMicpY9eXHKV4sqzO5H.jpg",
     employer_name: "Akash Bawa",
     job_title: "React developer",
     job_country: "IN",
@@ -17,12 +18,11 @@ const QuizCard = ( { quiz } ) => {
   }
   return (
     <TouchableOpacity
-      style={styles.container} 
+      style={styles.container}
     >
       <TouchableOpacity style={styles.logoContainer}>
         <Image
-          source={ images.course1 }
-          // resizeMode='contain'
+          source={quiz.image ? { uri: quiz.image } : { uri: getRandomImageUrl() }}
           style={styles.logoImage}
         />
       </TouchableOpacity>
@@ -33,6 +33,13 @@ const QuizCard = ( { quiz } ) => {
         </Text>
 
         <Text style={styles.jobType}>{quiz.totalQuestion}</Text>
+
+        <View style={styles.weekStyle}>
+          <Text style={styles.weekText} numberOfLines={1} >
+            <Text style={styles.weekText}>{`${randomWeeks} / 12 Weeks`}</Text>
+          </Text>
+        </View>
+
       </View>
 
     </TouchableOpacity>

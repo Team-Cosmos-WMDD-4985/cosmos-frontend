@@ -1,6 +1,7 @@
 import { StyleSheet } from "react-native";
-
+import { Dimensions } from 'react-native';
 import { COLORS, FONT, SIZES } from "../../constants";
+const screenHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
   container: {
@@ -13,16 +14,15 @@ const styles = StyleSheet.create({
     marginTop: SIZES.small,
   },
   headerTitle: {
-    fontSize: SIZES.medium,
-    // fontFamily: FONT.medium,
+    fontSize: SIZES.large,
     color: COLORS.secondary,
-    // lineHeight: 28,
     fontWeight: "700"
   },
   cardsContainer: {
     marginTop: SIZES.medium,
     gap: SIZES.small,
-    height:240,
+    height: screenHeight * 0.25, // 25% of the screen height
+    borderRadius: 20,
   },
 });
 
