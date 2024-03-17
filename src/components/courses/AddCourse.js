@@ -96,7 +96,7 @@ function AddCourse({ navigation }) {
 
         try {
             const response = await AxiosService("POST", "addCourse", true, {}, formdata, { "Content-Type": `multipart/form-data` })
-            navigation.navigate("AddTopics", response.data.data);
+            navigation.navigate("AddTopics", {schedule: response.data.data, courseId: response.data.courseId, courseData: response.data.courseData });
             showLoader(false)
             // if (response.data.success) { // Ensure the response is successful before navigation
             //     navigation.navigate("AddTopics", response.data.data);

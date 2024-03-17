@@ -1,35 +1,81 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Button, Image, TouchableOpacity, ScrollView, SafeAreaView, Modal } from 'react-native';
+import { View, Text, TextInput ,StyleSheet, Button, Image, TouchableOpacity, ScrollView, SafeAreaView, Modal } from 'react-native';
 import { COLORS, SIZES } from "./../../constants";
 import { HStack, VStack } from 'native-base';
 import { icons, images } from "./../../constants";
+import AxiosService from "./../../services/axios";
 
 function AddTopics({ navigation, route }) {
+
+    const [schedule, setSchedule] = useState(route.params.schedule);
+    const [courseId, setCourseId] = useState(route.params.courseId);
+    const [courseData, setCourseData] = useState(route.params.courseData);
+
+    const [modalVisible, setModalVisible] = useState(false);
+    const [topicInputModal, setTopicInputModal] = useState(false);
+    const [activeIndexToAdd, setActiveIndexToAdd] = useState(null);
+    const [newTopicValue, setNewTopicValue] = useState("")
 
     const handleClick = () => {
         console.info('You clicked the Chip.');
     };
 
-    const handleDelete = () => {
+    const handleDelete = (outerIndex, innerIndex) => {
         console.info('You clicked the delete icon.');
+        const itemToDelete = schedule[outerIndex].topics[innerIndex];
+        console.log(itemToDelete)
+        let scheduleCopy = JSON.parse(JSON.stringify(schedule));
+        scheduleCopy[outerIndex].topics.splice(innerIndex, 1);
+        // console.log(scheduleCopy[outerIndex])
+        setSchedule(scheduleCopy);
     };
-
-
-    const [schedule, setSchedule] = useState(route.params)
-    const [modalVisible, setModalVisible] = useState(false);
 
 
     const handleCreate = () => {
         setModalVisible(true);
     };
 
+    const handleTopicConfirm = () => {
+        const copySchedule = JSON.parse(JSON.stringify(schedule));
+        if( copySchedule[activeIndexToAdd].topics && Array.isArray(copySchedule[activeIndexToAdd].topics) ) {
+            copySchedule[activeIndexToAdd].topics.push(newTopicValue)
+        } else {
+            copySchedule[activeIndexToAdd].topics = [newTopicValue];
+        }
+
+        setSchedule(copySchedule)
+        setNewTopicValue(null)
+        setTopicInputModal(false);
+    }
+
+    const handleTopicCancel = () => {
+        setNewTopicValue(null)
+        setTopicInputModal(false)
+    }
+
+    const addTopics = async (index) => {
+        console.log(index)
+        setActiveIndexToAdd(index)
+        setTopicInputModal(true)
+
+    }
+
     const handleCancel = () => {
         setModalVisible(false);
     };
 
-    const handleConfirm = () => {
+    const handleConfirm = async () => {
         setModalVisible(false);
-        navigation.navigate("NavigationBar")
+        try {
+            const finalCourseData = JSON.parse(JSON.stringify(courseData));
+            finalCourseData.schedule = schedule;
+            setCourseData(finalCourseData)
+            const response = await AxiosService("POST", "updateSchedule", true, {}, {finalCourseData, courseId});
+            console.log(response.data)
+            navigation.navigate("NavigationBar")
+        } catch (err) {
+            console.log(err)
+        }
     };
 
 
@@ -70,6 +116,49 @@ function AddTopics({ navigation, route }) {
                     </View>
                 </Modal>
 
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={topicInputModal}
+                    onRequestClose={() => {
+                        setModalVisible(!topicInputModal);
+
+                    }}
+                >
+                    <View style={styles.centeredView}>
+                        <View style={styles.overlay} />
+                        <View style={styles.modalView}>
+                            {/* <Image source={icons.checkcircle} style={styles.checkcirclestyle} /> */}
+                            <Text style={styles.modalText}>Add topic</Text>
+                            <View >
+
+                                    <TextInput 
+                                        style={styles.addTopicInput} 
+                                        placeholder='Enter topic'
+                                        onChangeText={(text) => {setNewTopicValue(text)}}
+                                        value={newTopicValue}
+                                    />
+
+                                <View style={styles.buttonContainer}>
+                                    <TouchableOpacity
+                                        style={styles.cancelButton}
+                                        onPress={handleTopicCancel}
+                                    >
+                                        <Text style={styles.cancelButtonText}>Cancel</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity
+                                        style={styles.createButton}
+                                        onPress={handleTopicConfirm}
+                                    >
+                                        <Text style={styles.generateButtonText}>Confirm</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+
+                        </View>
+                    </View>
+                </Modal>
+
                 <View style={styles.header}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>
                         <Image source={icons.chevronLeft} style={styles.backIcon} />
@@ -85,23 +174,29 @@ function AddTopics({ navigation, route }) {
                                 <View style={styles.topicBox} >
                                     {
                                         week.topics.map((item, innerIndex) => (
-                                            <View style={styles.chip}>
+                                            <View style={styles.chip} key={`tag-${innerIndex}`}>
                                                 <Text
                                                     key={`text-${innerIndex}`}
-                                                    onPress={handleClick}
-                                                    onClose={handleDelete}
+                                                    // onPress={handleClick}
+                                                    // onClose={handleDelete}
                                                 >
                                                     {item}
                                                 </Text>
-                                                <View style={styles.deleteSign}>
-                                                    <Text style={styles.addSignText}>x</Text>
-                                                </View>
+                                                <TouchableOpacity onPress={() => handleDelete(index, innerIndex)}>
+                                                    <View style={styles.deleteSign}>
+                                                        <Text style={styles.addSignText}>x</Text>
+                                                    </View>
+                                                </TouchableOpacity>
+                                               
                                             </View>
                                         ))
                                     }
-                                    <View style={styles.addSign}>
-                                        <Text style={styles.addSignText}>+</Text>
-                                    </View>
+                                    <TouchableOpacity style={styles.addSign} onPress={() => addTopics(index) }>
+                                        <View >
+                                            <Text style={styles.addSignText}>+</Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                    
                                 </View>
                             </View>
                         ))
@@ -123,6 +218,12 @@ function AddTopics({ navigation, route }) {
 }
 
 const styles = StyleSheet.create({
+    addTopicInput: {
+        borderWidth: 1,
+        borderColor: COLORS.midGray,
+        padding: 5,
+        borderRadius: 10
+    },
     container: {
         flex: 1,
         backgroundColor: '#fff',
