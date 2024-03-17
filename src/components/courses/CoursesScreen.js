@@ -28,7 +28,7 @@ function CoursesScreen({ navigation }) {
         <Text style={styles.headerTitle}>Courses</Text>
         <Image source={images.profile} style={styles.profileImage} />
       </View>
-
+ 
       {courseList.length > 0 ? (
         <View style={styles.courseContainer} >
           <Text style={styles.viewAdd}>View / add you new course</Text>

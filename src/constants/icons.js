@@ -21,7 +21,7 @@ import checkcircle from '../assets/icons/checkcircle.png';
 import logo from '../assets/icons/logo.png';
 import pdf from "../assets/icons/pdf_icon.png";
 import deleteIcon from "./../assets/icons/delete.png"
-
+import aiImage from "./../assets/icons/aiImage.png"
 export default {
   heart,
   menu,
@@ -44,5 +44,6 @@ export default {
   upload,
   logo,
   pdf,
-  deleteIcon
+  deleteIcon,
+  aiImage
 };
