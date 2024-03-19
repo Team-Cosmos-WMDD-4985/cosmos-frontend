@@ -62,7 +62,15 @@ const CreateYourQuiz = ({ route, navigation }) => {
             { topics, courseId, name, type, difficulty, numQuestions }
         );
         if(response.data.success) {
-            navigation.navigate("MultipleChoiceQue", { quiz: response.data.data });
+          navigation.navigate("MultipleChoiceQue", { 
+            quiz: response.data.data,
+            name: name,
+            courseId: courseId,
+            type: type,
+            topics: topics,
+            difficulty: difficulty,
+            numQuestions: numQuestions
+          });
         }
     } catch (err) {
         console.log(err);

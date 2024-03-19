@@ -9,14 +9,44 @@ import AxiosService from '../../services/axios.js'
 const { width } = Dimensions.get('window');
 
 const MultipleChoiceQue = ({route, navigation}) => {
-  const { quiz } = route.params
+  const { quiz, type } = route.params
   const carouselRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [color, SetColor] = useState("");
+  const [regeneratedQuiz, SetRegeneratedQuiz] = useState(null);
+  const [isRegenerated, setIsRegenerated] = useState(false);
+
   // const [quiz, SetQuiz] = useState();
   
+  useEffect(() => {
+    
+    console.log(`this is type${type}`)
+    // console.log(`this is quiz${quiz.courseId}`)
+    // console.log(`this is quiz${quiz._id}`)
+  }, []);
 
 console.log(`routes: ${route.params.quiz.questions.length}`)
+
+
+
+
+const fetchRegeneratedQuiz = async () => {
+  try {
+    const response = await AxiosService("POST", `regenerateQuiz/${quiz._id}/${quiz.courseId}`, true, {}, {type: type});
+    if (response && response.data) {
+      SetRegeneratedQuiz(response.data.data);
+      console.log("this is " ,response.data.data);
+      setIsRegenerated(true);
+
+      
+    } else {
+      console.log("Failed to regenerate quiz:", response.data.error);
+      
+    }
+  } catch (err) {
+    console.log("Error fetching regenerated quiz:", err);
+  }
+};
  
 
 
@@ -30,6 +60,8 @@ console.log(`routes: ${route.params.quiz.questions.length}`)
   //   { title: 'question 7', question: "What's dad name?", options: ['Red', 'Blue', 'Green', 'blue'] },
   //   { title: 'question 8', question: "What's dad name?", options: ['Red', 'Blue', 'Green', 'blue'] },
   // ];
+
+  
 
   const handleNext = () => {
     carouselRef.current.snapToNext();
@@ -45,7 +77,7 @@ console.log(`routes: ${route.params.quiz.questions.length}`)
   }
 
   console.log(color);
-console.log("this is quiz",quiz)
+// console.log("this is quiz",quiz)
 
 
 const renderItem = ({ item, index }) => {
@@ -120,20 +152,20 @@ const renderItem = ({ item, index }) => {
 
       {/* =============== Main View ================== */}
       <Text style={styles.title}>Multiple Choice Question</Text>
-      <View style={{ marginTop: 30, alignSelf: "flex-end", marginRight: 20 }}>
+      <View style={{ marginTop: 30, alignSelf: "flex-end", marginRight: 20, flexDirection: 'row' }}>
         <Button title='Check Answer' onPress={onCheckAns} />
+        <Button title='regnerate Quiz' onPress={fetchRegeneratedQuiz} />
       </View>
       <View style={{ padding: 30 }}>
         <View style={{ flexDirection: 'row', justifyContent: 'center', }}>
           <Carousel
             ref={carouselRef}
             layout="default"
-            data={quiz.questions}
+            data={isRegenerated ? regeneratedQuiz.questions : quiz.questions}
             renderItem={renderItem}
             sliderWidth={width}
             itemWidth={width}
-            // loop
-            // onSnapToItem={index => setCurrentIndex(index)}
+
           />
         </View>
 

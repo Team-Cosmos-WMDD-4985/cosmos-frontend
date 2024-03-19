@@ -19,8 +19,9 @@ const Login = ({ navigation }) => {
   const [isSelected, setSelection] = useState(false);
 
 
+
   const submitLogin = async () => {
-    const data = await AxiosService( 'POST', 'auth/login',  false,  {}, { email, password },)
+    const data = await AxiosService('POST', 'auth/login', false, {}, { email, password },)
       .then(async function (response) {
         await secoreStoreService.save("token", response.data.token);
         navigation.navigate("NavigationBar")
@@ -35,7 +36,7 @@ const Login = ({ navigation }) => {
       <View style={styles.container1}>
         <View style={styles.s1}>
           <Image style={styles.logo} source={icons.logo}></Image>
-          <Text style={styles.h1} onPress={() => navigation.navigate('Welcome')}>Welcome Back Joyce</Text>
+          <Text style={styles.h1} onPress={() => navigation.navigate('Welcome')}>Welcome Back Kristen</Text>
         </View>
         <View style={styles.s2}>
           <Text style={head1}>Login</Text>
@@ -46,7 +47,8 @@ const Login = ({ navigation }) => {
           </View>
           <View style={formGroup}>
             <Text style={label}>Password</Text>
-            <TextInput style={input} placeholder='Enter Your Password' onChangeText={(text) => setPassword(text)} />
+            <TextInput style={input} value={password} secureTextEntry={true} // This hides the password
+              placeholder='Enter Your Password' onChangeText={(text) => setPassword(text)} />
           </View>
           <View style={styles.fp}>
             {/* <View>
@@ -135,7 +137,8 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: COLORS.lightTeal,
     borderRadius: 20,
-    padding: 10
+    padding: 10,
+
   },
   loginLinks: {
     textDecorationLine: 'underline',

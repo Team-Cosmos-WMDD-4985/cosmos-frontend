@@ -34,6 +34,7 @@ import Feature2 from '../components/features/Feature2';
 import Feature3 from '../components/features/Feature3';
 import Feature4 from '../components/features/Feature4';
 
+import CourseDetails from './../components/courses/CourseDetails'
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -55,6 +56,7 @@ function AppStack() {
         <Stack.Screen name="Dashboard" component={Dashboard} options={{ headerShown: false }} />
         <Stack.Screen name="AddCourse" component={AddCourse} options={{ headerShown: false }} />
         <Stack.Screen name="AddTopics" component={AddTopics} options={{ headerShown: false }} />
+        <Stack.Screen name="CourseDetails" component={CourseDetails} options={{ headerShown: false }} />
         <Stack.Screen name="MultipleChoiceQue" component={MultipleChoiceQue} options={{ headerShown: false }} />
         <Stack.Screen name="SelectTopics" component={SelectTopics} options={{ headerShown: false }} />        
         <Stack.Screen name="OpenAi" component={OpenAI} options={{ headerShown: true }} />

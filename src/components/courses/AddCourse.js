@@ -10,10 +10,12 @@ import AxiosService from "./../../services/axios";
 function AddCourse({ navigation }) {
 
     const [courseName, setCourseName] = useState('');
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date());
     const [showStartDatePicker, setShowStartDatePicker] = useState(false);
     const [showEndDatePicker, setShowEndDatePicker] = useState(false);
+
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
+
     const [file, setFile] = useState(null);
     const [showLoader, setShowLoader] = useState(false);
 
@@ -25,23 +27,18 @@ function AddCourse({ navigation }) {
         const myToken = await secoreStoreService.getValueFor('token');
     }
 
+    const onStartDateChange = (event, selectedDate) => {
+        setShowStartDatePicker(Platform.OS === 'ios');
+        const currentDate = selectedDate || new Date(); // If no date is selected, default to today
+        setStartDate(currentDate);
+    };
 
-    //     if (!result.cancelled) {
-    //         setter(result.uri);
-    //     }
+    const onEndDateChange = (event, selectedDate) => {
+        setShowEndDatePicker(Platform.OS === 'ios');
+        const currentDate = selectedDate || new Date(new Date().setMonth(new Date().getMonth() + 4)); // If no date is selected, default to today + 4 months
+        setEndDate(currentDate);
+    };
 
-    //     // let result = await DocumentPicker.getDocumentAsync({
-    //     //     type: "application/pdf"
-    //     // })
-
-
-    //     if (!result.canceled && result.assets && result.assets.length > 0) {
-    //         setFile(result.assets[0]);
-    //     }
-    //     if (!result.cancelled) {
-    //         setter(result.uri);
-    //     }
-    // };
 
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -83,7 +80,7 @@ function AddCourse({ navigation }) {
         //   }
     }
 
-    const handleGenerate = async () => {
+     const handleGenerate = async () => {
         setShowLoader(true);
         const toSend = {
             file: file,
@@ -99,7 +96,7 @@ function AddCourse({ navigation }) {
 
         try {
             const response = await AxiosService("POST", "addCourse", true, {}, formdata, { "Content-Type": `multipart/form-data` })
-            navigation.navigate("AddTopics", response.data.data);
+            navigation.navigate("AddTopics", {schedule: response.data.data, courseId: response.data.courseId, courseData: response.data.courseData });
             showLoader(false)
             // if (response.data.success) { // Ensure the response is successful before navigation
             //     navigation.navigate("AddTopics", response.data.data);
@@ -119,13 +116,12 @@ function AddCourse({ navigation }) {
 
     return (
         <View style={styles.container}>
-        
-        {
-            showLoader && <View style={styles.loaderContainer}>
-                            <ActivityIndicator size="large" color={COLORS.midTeal} />
-                        </View>
-        }
-        
+            {
+                showLoader && <View style={styles.loaderContainer}>
+                    <ActivityIndicator size="large" color={COLORS.midTeal} />
+                </View>
+            }
+
             {/*  Add Course Header*/}
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -152,38 +148,29 @@ function AddCourse({ navigation }) {
                 <View >
                     <Text style={styles.label}>Course Length</Text>
                     <View style={styles.datePickerRow}>
-                        <TouchableOpacity onPress={() => setShowStartDatePicker(Platform.OS === 'ios')} >
-                            {
-                                startDate != null ? (<Text style={styles.label}>{startDate.toDateString()}</Text>) : (<Text style={styles.label}>Start</Text>)
-                            }
-
+                        <TouchableOpacity onPress={() => setShowStartDatePicker(true)}>
+                            <Text style={styles.label}>{startDate ? startDate.toDateString() : 'Start'}</Text>
                         </TouchableOpacity>
                         {showStartDatePicker && (
                             <DateTimePicker
-                                value={startDate}
+                                value={startDate || new Date()} // Use the current date if startDate is null
                                 mode="date"
                                 display="default"
-                                onChange={(event, selectedDate) => {
-                                    setShowStartDatePicker(Platform.OS === 'ios');
-                                    setStartDate(selectedDate || startDate);
-                                }}
+                                onChange={onStartDateChange}
                             />
                         )}
+
                         <Image source={require('./../../assets/icons/calendar.png')} style={styles.icon} />
-                        <TouchableOpacity onPress={() => setShowEndDatePicker(Platform.OS === 'ios')}>
-                            {
-                                endDate != null ? (<Text style={styles.label}>{endDate.toDateString()}</Text>) : (<Text style={styles.label}>End</Text>)
-                            }
+
+                        <TouchableOpacity onPress={() => setShowEndDatePicker(true)}>
+                            <Text style={styles.label}>{endDate ? endDate.toDateString() : 'End'}</Text>
                         </TouchableOpacity>
                         {showEndDatePicker && (
                             <DateTimePicker
-                                value={endDate}
+                                value={endDate || new Date(new Date().setMonth(new Date().getMonth() + 4))} // Use the current date + 4 months if endDate is null
                                 mode="date"
                                 display="default"
-                                onChange={(event, selectedDate) => {
-                                    setShowEndDatePicker(Platform.OS === 'ios');
-                                    setEndDate(selectedDate || endDate);
-                                }}
+                                onChange={onEndDateChange}
                             />
                         )}
                     </View>
@@ -195,14 +182,14 @@ function AddCourse({ navigation }) {
 
                     {
                         file ? (<View style={styles.fileContainer}>
-                                    <View style={styles.fileInner}>
-                                        <Image source={icons.pdf} style={styles.pdfIcon} />
-                                        <Text> {file.name}</Text>
-                                    </View>
-                                    <TouchableOpacity onPress={deleteFile}>
-                                        <Image source={icons.deleteIcon} style={styles.pdfIcon} />
-                                    </TouchableOpacity>
-                                    
+                            <View style={styles.fileInner}>
+                                <Image source={icons.pdf} style={styles.pdfIcon} />
+                                <Text> {file.name}</Text>
+                            </View>
+                            <TouchableOpacity onPress={deleteFile}>
+                                <Image source={icons.deleteIcon} style={styles.pdfIcon} />
+                            </TouchableOpacity>
+
                         </View>) : (
                             <View style={styles.uploadButton}>
                                 <TouchableOpacity style={styles.center} onPress={() => uploadPdf()}>
@@ -217,7 +204,7 @@ function AddCourse({ navigation }) {
                 </View>
 
                 {/* The upload Course Topics Section */}
-                <View>
+                {/* <View>
                     <Text style={styles.label}>Upload Course Image</Text>
                     <View style={styles.uploadButton}>
                         <TouchableOpacity style={styles.center} onPress={() => pickImage()}>
@@ -225,20 +212,17 @@ function AddCourse({ navigation }) {
                             <Text style={styles.link}>Click here to browse</Text>
                         </TouchableOpacity>
                     </View>
-                </View>
+                </View> */}
 
                 {/* The Action Button Section */}
-                <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={[styles.button, styles.cancelButton]} onPress={() => navigation.goBack()}>
-                        <Text style={styles.cancelButtonText}>Cancel</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={[styles.button, styles.generateButton]}
-                        onPress={() => {
-                            handleGenerate();
-                        }}>
-                        <Text style={styles.generateButtonText}>Generate</Text>
-                    </TouchableOpacity>
-                </View>
+            </View>
+            <View style={styles.buttonContainer}>
+                <TouchableOpacity style={[styles.button, styles.cancelButton]} onPress={() => navigation.goBack()}>
+                    <Text style={styles.cancelButtonText}>Cancel</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={[styles.button, styles.generateButton]} onPress={() => { handleGenerate(); }}>
+                    <Text style={styles.generateButtonText}>Generate</Text>
+                </TouchableOpacity>
             </View>
         </View >
     );
@@ -252,12 +236,12 @@ const styles = StyleSheet.create({
         width: "100%",
         justifyContent: 'space-around',
         backgroundColor: 'rgba(0, 0, 0, 0.6)',
-      },
+    },
     fileContainer: {
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
-        justifyContent:"space-between",
+        justifyContent: "space-between",
         height: 50,
         borderRadius: 5,
         borderWidth: 1,
@@ -265,7 +249,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginBottom: 20,
         borderStyle: "dotted",
-    }, 
+    },
     fileInner: {
         display: "flex",
         flexDirection: "row",
@@ -279,6 +263,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
+        position: 'relative',
     },
     header: {
         flexDirection: 'row',
@@ -347,15 +332,20 @@ const styles = StyleSheet.create({
     buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'space-around',
-        marginTop: 20,
+        position: 'absolute',
+        bottom: 10,
+        left: 0,
+        right: 0,
+        paddingVertical: 10,
     },
     button: {
         paddingVertical: 10,
         paddingHorizontal: 30,
         borderRadius: 20,
+        width: '40%',
     },
     cancelButton: {
-        backgroundColor: COLORS.lightGray,
+        backgroundColor: COLORS.white,
         borderWidth: 1,
         borderColor: COLORS.midGray,
         padding: 15,

@@ -2,24 +2,38 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, SafeAreaView, FlatList, Dimensions } from 'react-native';
 import { COLORS, icons, images, SIZES } from "./../../constants";
 import CourseList from '../home/CourseList';
+import AxiosService from "./../../services/axios";
 
 const screenHeight = Dimensions.get('window').height;
 
 function CoursesScreen({ navigation }) {
-  const hasCourses = true;
-  const [linkPressed, setLinkPressed] = useState(false);
 
+  const [courseList, setCourseList] = useState([]);
+
+  useEffect(() => {
+    getCourses();
+  }, []);
+
+  const getCourses = async () => {
+    const response = await AxiosService("GET", "courses", true);
+    if (response.data && response.data.success) {
+      setCourseList(response.data.data.courses);
+    }
+  };
+
+  
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Courses</Text>
         <Image source={images.profile} style={styles.profileImage} />
       </View>
-
-      {hasCourses ? (
+ 
+      {courseList.length > 0 ? (
         <View style={styles.courseContainer} >
           <Text style={styles.viewAdd}>View / add you new course</Text>
-          <CourseList isHorizontal={false} height={screenHeight * 0.25} width={'100%'} />
+          <CourseList isHorizontal={false} height={screenHeight * 0.25} width={'100%'} courses={courseList} navigation={navigation} />
+
         </View>
       ) : (
         // This will display if there are no courses
@@ -52,9 +66,10 @@ const styles = StyleSheet.create({
   },
   courseContainer: {
     flex: 1,
+    width: '200',
+  },
+  courseCardContainer: {
     width: '100%',
-    height: '100%',
-    backgroundColor: 'red',
   },
   header: {
     flexDirection: 'row',
@@ -71,6 +86,7 @@ const styles = StyleSheet.create({
   profileImage: {
     width: 64,
     height: 64,
+
   },
   greeting: {
     fontSize: SIZES.xLarge,
@@ -83,7 +99,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
   },
   illustration: {
     width: 300,
@@ -121,7 +137,7 @@ const styles = StyleSheet.create({
   viewAdd: {
     color: COLORS.darkGray,
     fontSize: SIZES.medium,
-
+    marginBottom: 10,
   }
 });
 

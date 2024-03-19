@@ -3,18 +3,26 @@ import { View, Text, TouchableOpacity, Image, StyleSheet, Dimensions } from 'rea
 import { icons, images } from "./../../constants"
 import { COLORS, FONT, SHADOWS, SIZES } from "../../constants";
 
-const CourseCard = ({ item, index, width = 250, height = Dimensions.get('window').height * 0.25 }) => {
+const CourseCard = ({ courses, navigation, item, index, width = 400, height = Dimensions.get('window').height * 0.5 }) => {
 
   const dynamicStyles = StyleSheet.create({
     container: {
-      width: width, // Use the width passed as a prop, default to 250
-      height: height, // Use the height passed as a prop
+      width: width,
+      height: height,
       backgroundColor: "#FFF",
       borderRadius: 20,
       justifyContent: "space-between",
       borderRadius: SIZES.medium,
+      borderColor: COLORS.lightGrey,
+      borderWidth: 1,
       ...SHADOWS.medium,
       shadowColor: COLORS.lightGrey,
+      shadowOffset: { width: 0, height: 10 }, // This defines the shadow's x and y offset
+      shadowOpacity: 0.3, // This defines the opacity of the shadow
+      shadowRadius: 20, // This defines the blur radius of the shadow
+      elevation: 8, // Use elevation for Android
+      marginBottom: 10,
+      // paddingBottom: 10,
     },
     logoContainer: {
       width: "100%",
@@ -47,24 +55,33 @@ const CourseCard = ({ item, index, width = 250, height = Dimensions.get('window'
     return { uri: `https://picsum.photos/300/200?random=${index}` };
   };
 
-  const getRandomCourseDate = () => {
-    const startDate = Math.floor(Math.random() * (31 - 1 + 1)) + 1;
-    const endDate = Math.floor(Math.random() * (30 - 1 + 1)) + 1;
-    return `Jan ${startDate < 10 ? `0${startDate}` : startDate} - Apr ${endDate < 10 ? `0${endDate}` : endDate}, 2024`;
-  };
 
-  const getDateFormat = (date) => {
-    let dateObj = new Date(date);
-    const month = dateObj.getUTCMonth() + 1;
-    const day = dateObj.getUTCDate();
-    const year = dateObj.getUTCFullYear();
-    return `${month}-${day}-${year}`
+  const getDateFormat = (startDate, endDate) => {
+    const months = [
+      "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
+
+    const startDateObj = new Date(startDate);
+    const endDateObj = new Date(endDate);
+
+    const startMonth = months[startDateObj.getMonth()];
+    const endMonth = months[endDateObj.getMonth()];
+
+    const startDay = startDateObj.getDate();
+    const endDay = endDateObj.getDate();
+
+    const startYear = startDateObj.getFullYear();
+    const endYear = endDateObj.getFullYear();
+
+    return `${startMonth} ${startDay} - ${endMonth} ${endDay}, ${startYear}`;
   }
 
 
   return (
 
-    <TouchableOpacity style={dynamicStyles.container}>
+    <TouchableOpacity style={dynamicStyles.container}
+      onPress={() => navigation.navigate('CourseDetails', { course: item })}
+    >
 
       <View style={dynamicStyles.logoContainer}>
         <Image source={getImageSource()} style={styles.courseStyle} />
@@ -82,9 +99,7 @@ const CourseCard = ({ item, index, width = 250, height = Dimensions.get('window'
         </View>
 
         <View >
-          <Text style={styles.courseDate} numberOfLines={1} >
-            {item.courseDate || getRandomCourseDate()}
-          </Text>
+          <Text style={styles.weekText} numberOfLines={1}>{getDateFormat(item.startDate, item.endDate)}</Text>
         </View>
 
         <View style={styles.weekStyle}>
@@ -160,7 +175,8 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   weekText: {
-    padding: 10,
+    // padding: 10,
+    marginTop: 5,
     fontSize: SIZES.small,
     color: COLORS.midGray,
     fontSize: SIZES.small,
