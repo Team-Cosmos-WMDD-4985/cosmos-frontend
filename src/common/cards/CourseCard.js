@@ -8,8 +8,17 @@ import { useNavigation } from '@react-navigation/native';
 const CourseCard = ({ courses, item, index, width = 400, height = Dimensions.get('window').height * 0.5 }) => {
   const navigation = useNavigation();
 
-  const handleCoursePress = () => {
-    navigation.navigate('CourseDetails', { item });
+  // const handleCoursePress = () => {
+  //   navigation.navigate('CourseDetails', { item } );
+  // };
+
+
+  const handleCoursePress = (topics) => {
+    // Assuming 'item' contains a property named 'courseId' that you want to pass along
+    const { courseId } = item;
+    // navigation.navigate('CourseDetails', { courseId });
+    navigation.navigate('CourseDetails', { topics, courseId: item });
+
   };
 
   const dynamicStyles = StyleSheet.create({
