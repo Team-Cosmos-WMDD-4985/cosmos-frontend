@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, SafeAreaView } from 'react-native';
 import { icons, COLORS, SIZES, images } from "../../constants";
-
+import AxiosService from "../../services/axios"
 
 const CourseDetails = ({ route, navigation }) => {
     const { item } = route.params;
