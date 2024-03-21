@@ -1,10 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, SafeAreaView } from 'react-native';
 import { icons, COLORS, SIZES, images } from "../../constants";
 
 
 const CourseDetails = ({ route, navigation }) => {
+    const { item } = route.params;
+    const [courseDetails, setCourseDetails] = useState(null);
 
+    useEffect(() => {
+        getCourseDetails();
+    }, []);
+
+    const getCourseDetails = async () => {
+        try {
+            const response = await AxiosService("GET", `courseId=${item._id}`, true);
+            if (response.data ) {
+                setCourseDetails(response.data);
+            }
+        } catch (error) {
+            console.error('Error fetching course details:', error);
+        }
+    };
+
+    // Array of characters for options
+    const optionLabels = ['A', 'B', 'C', 'D'];
 
 
     return (
@@ -20,6 +39,42 @@ const CourseDetails = ({ route, navigation }) => {
                 <Text style={styles.headerTitle}>Course Details</Text>
                 <Image source={images.profile} style={styles.profileImage} />
                 <View />
+            </View>
+
+
+            <View style={styles.content}>
+                {courseDetails ? (
+                    <>
+                        <View style={styles.row}>
+                            <Text style={styles.label}>Course Name:</Text>
+                            <Text>{courseDetails.courseName}</Text>
+                        </View>
+                        <View style={styles.row}>
+                            <Text style={styles.label}>Total Questions:</Text>
+                            <Text>{courseDetails.totalQuestion}</Text>
+                        </View>
+                        <View style={styles.row}>
+                            <Text style={styles.label}>Question Type:</Text>
+                            {courseDetails.questions.length > 0 && (
+                                <Text>{courseDetails.questions[0].questionType}</Text>
+                            )}
+                        </View>
+                        <Text numberOfLines={1}>-------------------------------------------------------------------------------</Text>
+                        {courseDetails.questions.map((question, index) => (
+                            <View key={index} style={{ marginBottom: 20 }}>
+                                <Text style={styles.label}>{`Question ${index + 1}: ${question.question}`}</Text>
+                                {question.options.map((option, optionIndex) => (
+                                    <Text style={styles.label1} key={optionIndex}>{`${optionLabels[optionIndex]}. ${option.optionValue}`}</Text>
+                                ))}
+                                <Text style={styles.label2}>Answer: {question.answer}</Text>
+                            </View>
+                        ))}
+                    </>
+                ) : (
+                    <View style={styles.loadingContainer}>
+                        <Image source={require('../../assets/images/loading.gif')} style={styles.loadingImage} />
+                    </View>
+                )}
             </View>
 
 

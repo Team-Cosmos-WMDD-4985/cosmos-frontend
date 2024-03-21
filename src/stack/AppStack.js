@@ -33,13 +33,15 @@ import Feature2 from "../components/features/Feature2";
 import Feature3 from "../components/features/Feature3";
 import Feature4 from "../components/features/Feature4";
 
+import CourseDetails from "../components/courses/CourseDetails";
+
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function AppStack() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="SplashScreen">
+      <Stack.Navigator initialRouteName="Login">
         <Stack.Screen
           name="SplashScreen"
           component={SplashScreen}
@@ -98,6 +100,11 @@ function AppStack() {
         <Stack.Screen
           name="AddTopics"
           component={AddTopics}
+          options={{ headerShown: false }}
+        />
+         <Stack.Screen
+          name="CourseDetails"
+          component={CourseDetails}
           options={{ headerShown: false }}
         />
         <Stack.Screen

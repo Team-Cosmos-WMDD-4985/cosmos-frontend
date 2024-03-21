@@ -2,8 +2,15 @@ import React from 'react'
 import { View, Text, TouchableOpacity, Image, StyleSheet, Dimensions } from 'react-native'
 import { icons, images } from "./../../constants"
 import { COLORS, FONT, SHADOWS, SIZES } from "../../constants";
+import CourseDetails from '../../components/courses/CourseDetails';
+import { useNavigation } from '@react-navigation/native';
 
-const CourseCard = ({ courses, navigation, item, index, width = 400, height = Dimensions.get('window').height * 0.5 }) => {
+const CourseCard = ({ courses, item, index, width = 400, height = Dimensions.get('window').height * 0.5 }) => {
+  const navigation = useNavigation();
+
+  const handleCoursePress = () => {
+    navigation.navigate('CourseDetails', { item });
+  };
 
   const dynamicStyles = StyleSheet.create({
     container: {
@@ -17,16 +24,15 @@ const CourseCard = ({ courses, navigation, item, index, width = 400, height = Di
       borderWidth: 1,
       ...SHADOWS.medium,
       shadowColor: COLORS.lightGrey,
-      shadowOffset: { width: 0, height: 10 }, // This defines the shadow's x and y offset
-      shadowOpacity: 0.3, // This defines the opacity of the shadow
-      shadowRadius: 20, // This defines the blur radius of the shadow
-      elevation: 8, // Use elevation for Android
+      shadowOffset: { width: 0, height: 10 }, 
+      shadowOpacity: 0.3, 
+      shadowRadius: 20, 
+      elevation: 8, 
       marginBottom: 10,
-      // paddingBottom: 10,
     },
     logoContainer: {
       width: "100%",
-      height: height * 0.5, // 50% of the container height
+      height: height * 0.5, 
       backgroundColor: COLORS.primary,
       justifyContent: "center",
       alignItems: "center",
@@ -34,18 +40,17 @@ const CourseCard = ({ courses, navigation, item, index, width = 400, height = Di
       borderTopRightRadius: 20,
     },
     infoContainer: {
-      height: height * 0.5, // Remaining 50% for the info container
+      height: height * 0.5, 
       paddingHorizontal: 10,
       paddingVertical: 5,
 
     },
     courseStyle: {
       width: '100%',
-      height: '100%', // Adjust as needed
+      height: '100%', 
       borderTopLeftRadius: 20,
       borderTopRightRadius: 20,
     },
-    // Add other styles as needed
   });
 
   const getImageSource = () => {
@@ -80,7 +85,7 @@ const CourseCard = ({ courses, navigation, item, index, width = 400, height = Di
   return (
 
     <TouchableOpacity style={dynamicStyles.container}
-      onPress={() => navigation.navigate('CourseDetails', { course: item })}
+      onPress={handleCoursePress}
     >
 
       <View style={dynamicStyles.logoContainer}>
