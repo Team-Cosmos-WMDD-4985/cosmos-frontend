@@ -53,6 +53,7 @@ const MultipleChoiceQue = ({ route, navigation }) => {
       console.log("response ", response)
       await getQuizById();
       setModalVisible2(false)
+      setIsRegenerated(false);
       console.log("After getQuizById");
     } catch (error) {
       console.error("Error adding question:", error);
@@ -70,6 +71,8 @@ const MultipleChoiceQue = ({ route, navigation }) => {
     }
   }
 
+
+  console.log("this is quiz",quiz)
 
   // console.log(`this is quiz data ${JSON.stringify(quizz.questions)}`);
 
