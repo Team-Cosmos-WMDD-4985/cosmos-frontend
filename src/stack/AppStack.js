@@ -141,7 +141,7 @@ function AppStack() {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="OpenAi"
+          name="AI Assistant"
           component={OpenAI}
           options={{ headerShown: true }}
         />
