@@ -46,34 +46,29 @@ const MultipleChoiceQue = ({ route, navigation }) => {
   console.log(`routes: ${route.params.quiz.questions.length}`)
 
 
-
   const addQuestions = async () => {
     try {
+      console.log("Before AxiosService");
       const response = await AxiosService("POST", `addQuestion/${quiz._id}`, true, {}, { question: question, options: options, answer: answer });
-      
+      console.log("response ", response)
       await getQuizById();
-      
-      
-      setQuestion('');
-      setOptions(['', '', '', '']);
-      setAnswer('');
+      setModalVisible2(false)
+      console.log("After getQuizById");
     } catch (error) {
       console.error("Error adding question:", error);
     }
   }
-  
 
 
   const getQuizById = async () => {
     try {
       const response = await AxiosService("POST", `getQuizForUpdate/${quiz._id}`, true);
-      console.log("Updated quiz details:", response.data.questions);
+      // console.log("Updated quiz details:", response.data.questions);
       setQuizz(response.data.questions)
     } catch (error) {
       console.error("Error getting quiz details:", error);
     }
   }
-
 
 
   // console.log(`this is quiz data ${JSON.stringify(quizz.questions)}`);
@@ -116,7 +111,7 @@ const MultipleChoiceQue = ({ route, navigation }) => {
 
   const onCheckAns = () => {
     SetColor("red");
-    navigation.navigate("getAnswer", { quiz: quiz });
+    navigation.navigate("getAnswer", { quiz: quizz });
   };
 
   const renderItem = ({ item, index }) => {
@@ -206,7 +201,7 @@ const MultipleChoiceQue = ({ route, navigation }) => {
     setQuestion('');
     setOptions(['', '', '', '']);
     setAnswer('');
-    
+
   };
 
   const handleConfirm = () => {
@@ -361,10 +356,10 @@ const MultipleChoiceQue = ({ route, navigation }) => {
         </View>
       </Modal>
 
-      <Text style={styles.title}>Multiple Choice Question</Text>
+      {/* <Text style={styles.title}>Multiple Choice Question</Text> */}
       <View style={{ marginTop: 30, alignSelf: "flex-end", marginRight: 20, flexDirection: 'row' }}>
-        <Button title='Check Answer' onPress={onCheckAns} />
-        <Button title='regnerate Quiz' onPress={fetchRegeneratedQuiz} />
+        {/* <Button title='Check Answer' onPress={onCheckAns} /> */}
+        {/* <Button title='regnerate Quiz' onPress={fetchRegeneratedQuiz} /> */}
       </View>
       <View style={{ padding: 30 }}>
         <View style={{ flexDirection: "row", justifyContent: "center" }}>
@@ -436,6 +431,7 @@ const MultipleChoiceQue = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   scrollViewContent: {
     flexGrow: 1,
+    // marginRight:30,
     alignItems: "center",
   },
   title: {
@@ -447,7 +443,8 @@ const styles = StyleSheet.create({
   carouselItem: {
     width: width - 30,
     height: 550,
-    padding: 20,
+    alignItems: "center",
+    // padding: 10,
   },
   centeredView: {
     flex: 1,
@@ -579,6 +576,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingVertical: 10,
     alignItems: "center",
+    
   },
   numQuestions: {
     flexDirection: "row",

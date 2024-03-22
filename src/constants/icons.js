@@ -22,6 +22,10 @@ import logo from '../assets/icons/logo.png';
 import pdf from "../assets/icons/pdf_icon.png";
 import deleteIcon from "./../assets/icons/delete.png"
 import aiImage from "./../assets/icons/aiImage.png"
+import chevronDown from "./../assets/icons/chevron-down.png"
+import chevronUp from "./../assets/icons/chevron-up.png"
+import edit from "./../assets/icons/edit.png"
+
 export default {
   heart,
   menu,
@@ -45,5 +49,8 @@ export default {
   logo,
   pdf,
   deleteIcon,
-  aiImage
+  aiImage,
+  chevronDown,
+  chevronUp,
+  edit,
 };

@@ -41,7 +41,7 @@ const Tab = createBottomTabNavigator();
 function AppStack() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
+      <Stack.Navigator initialRouteName="SplashScreen">
         <Stack.Screen
           name="SplashScreen"
           component={SplashScreen}
@@ -141,7 +141,7 @@ function AppStack() {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="OpenAi"
+          name="AI Assistant"
           component={OpenAI}
           options={{ headerShown: true }}
         />

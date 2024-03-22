@@ -1,25 +1,39 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {SafeAreaView, View, TextInput, Button, Text, ScrollView, StyleSheet} from 'react-native';
-
+import {SafeAreaView, View, TextInput, Button, Text, ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
+import AxiosService from "./../../services/axios";
+import { icons, COLORS, SIZES, images } from "../../constants";
 import {sendMessageToOpenAI} from './ChatBot';
 
-const OpenAi = () => {
+const OpenAi = ({route}) => {
   const [message, setMessage] = useState('');
   const [chat, setChat] = useState([]);
   const scrollViewRef = useRef();
 
+  const { courseId } = route.params;
+
+  // console.log(courseId);
+
   const handleSend = async () => {
+    console.log(message)
 
     const userMessage = {role: 'user', content: message};
     setChat([...chat, userMessage]);
     setMessage('');
+    const response = await AxiosService("GET", `chatai/${courseId}?message=${message}`, true);
+    console.log(response.data);
+    console.log(response.data.text);
+    const botMessage = {role: 'bot', content: response.data.text};
 
-    const botResponse = await sendMessageToOpenAI(message);
-    const botMessage = {role: 'bot', content: botResponse};
     setChat((chat) => [...chat, botMessage]);
+    
+
+
+    // const botResponse = await sendMessageToOpenAI(message);
+    // const botMessage = {role: 'bot', content: botResponse};
+    // setChat((chat) => [...chat, botMessage]);
   };
 
-  console.log(chat)
+  // console.log(chat)
 
   return (
     <SafeAreaView style={styles.container}>
@@ -30,7 +44,7 @@ const OpenAi = () => {
       >
         {chat.map((msg, index) => (
           <View key={index} style={[styles.message, msg.role === 'user' ? styles.userMessage : styles.botMessage]}>
-            <Text style={styles.messageText}>{msg.content}</Text>
+            <Text style={[msg.role === 'user' ? styles.messageTextUser : styles.messageTextBot]}>{msg.content}</Text>
           </View>
         ))}
       </ScrollView>
@@ -40,15 +54,30 @@ const OpenAi = () => {
           onChangeText={setMessage}
           value={message}
           placeholder="Type a message..."
-          onSubmitEditing={handleSend}
         />
-        <Button title="Send" onPress={handleSend} />
+        <TouchableOpacity style={styles.sendButton} onPress={() => handleSend()}>
+            <Text style={styles.buttonText}>Send</Text>
+          </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  buttonText: {
+    color: COLORS.midTeal,
+    fontSize: 20,
+    margin: 'auto',
+    textAlign: 'center',
+  },
+  sendButton: {
+    width: 100,
+    height: 50,
+    backgroundColor: COLORS.primary,
+    borderRadius: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   container: {
     flex: 1,
     margin: 10,
@@ -64,14 +93,17 @@ const styles = StyleSheet.create({
   },
   userMessage: {
     alignSelf: 'flex-end',
-    backgroundColor: '#0078fe',
+    backgroundColor: COLORS.midGray,
   },
   botMessage: {
     alignSelf: 'flex-start',
-    backgroundColor: 'lightgreen',
+    backgroundColor: COLORS.white,
   },
-  messageText: {
+  messageTextUser: {
     color: 'white',
+  },
+  messageTextBot:{
+    color: COLORS.primary,
   },
   inputContainer: {
     flexDirection: 'row',
@@ -79,11 +111,12 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    height: 40,
+    height: 50,
     borderColor: 'gray',
     borderWidth: 1,
     marginRight: 10,
     paddingLeft: 10,
+    borderRadius: 30,
   },
 });
 
