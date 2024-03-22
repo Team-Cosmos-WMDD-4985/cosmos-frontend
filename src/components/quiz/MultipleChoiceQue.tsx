@@ -40,8 +40,7 @@ const MultipleChoiceQue = ({ route, navigation }) => {
   // const [quiz, SetQuiz] = useState();
 
   useEffect(() => {
-
-    console.log(`this is type${type}`)
+    getQuizById()
   }, []);
 
   console.log(`routes: ${route.params.quiz.questions.length}`)
@@ -50,22 +49,37 @@ const MultipleChoiceQue = ({ route, navigation }) => {
 
   const addQuestions = async () => {
     try {
-        const response = await AxiosService("POST", `addQuestion/${quiz._id}`, true, {}, { question: question, options: options, answer: answer });
-        await getQuizById();
+      const response = await AxiosService("POST", `addQuestion/${quiz._id}`, true, {}, { question: question, options: options, answer: answer });
+      
+      await getQuizById();
+      
+      
+      setQuestion('');
+      setOptions(['', '', '', '']);
+      setAnswer('');
     } catch (error) {
-        console.error("Error adding question:", error);
+      console.error("Error adding question:", error);
     }
-}
+  }
+  
 
-const getQuizById = async () => {
+
+  const getQuizById = async () => {
     try {
-        const response = await AxiosService("POST", `getQuizForUpdate/${quiz._id}`, true);
-        console.log("Updated quiz details:", response.data);
-        setQuizz(response.data)
+      const response = await AxiosService("POST", `getQuizForUpdate/${quiz._id}`, true);
+      console.log("Updated quiz details:", response.data.questions);
+      setQuizz(response.data.questions)
     } catch (error) {
-        console.error("Error getting quiz details:", error);
+      console.error("Error getting quiz details:", error);
     }
-}
+  }
+
+
+
+  // console.log(`this is quiz data ${JSON.stringify(quizz.questions)}`);
+
+
+
 
   const fetchRegeneratedQuiz = async () => {
     try {
@@ -88,15 +102,6 @@ const getQuizById = async () => {
 
 
 
-  // const question = [
-  //   { title: 'question 1', question: "Q.Which of the following best defines branding?", options: ['A.The process of designing a logo for a company.', 'B.The process of designing a logo for a company.', 'C.The process of designing a logo for a company.', 'D.The process of designing a logo for a company.'] },
-  //   { title: 'question 2', question: "Where do you live?", options: ['A.The process of designing a logo for a company.', 'B.The process of designing a logo for a company.', 'C.The process of designing a logo for a company.', 'D.The process of designing a logo for a company.'] },
-  //   { title: 'question 3', question: "What's your name?", options: ['A.The process of designing a logo for a company.', 'B.The process of designing a logo for a company.', 'C.The process of designing a logo for a company.', 'D.The process of designing a logo for a company.'] },
-  //   { title: 'question 5', question: "What's dad name?", true: ['True', 'False'] },
-  //   { title: 'question 6', question: "What's dad name?", options: ['Red', 'Blue', 'Green', 'blue'] },
-  //   { title: 'question 7', question: "What's dad name?", options: ['Red', 'Blue', 'Green', 'blue'] },
-  //   { title: 'question 8', question: "What's dad name?", options: ['Red', 'Blue', 'Green', 'blue'] },
-  // ];
 
 
 
@@ -198,7 +203,10 @@ const getQuizById = async () => {
 
   const handleCancel2 = () => {
     setModalVisible2(false);
-    navigation.navigate("NavigationBar");
+    setQuestion('');
+    setOptions(['', '', '', '']);
+    setAnswer('');
+    
   };
 
   const handleConfirm = () => {
@@ -363,7 +371,7 @@ const getQuizById = async () => {
           <Carousel
             ref={carouselRef}
             layout="default"
-            data={isRegenerated ? regeneratedQuiz.questions : quiz.questions}
+            data={isRegenerated ? regeneratedQuiz.questions : quizz}
             renderItem={renderItem}
             sliderWidth={width}
             itemWidth={width}
@@ -409,7 +417,7 @@ const getQuizById = async () => {
         </View>
         <View>
           <TouchableOpacity
-            onPress={() => {}}
+            onPress={() => { }}
             style={{
               borderBottomWidth: 1,
               borderBottomColor: COLORS.primary,
