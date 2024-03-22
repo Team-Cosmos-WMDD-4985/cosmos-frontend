@@ -6,12 +6,45 @@ import AxiosService from "../../services/axios"
 const CourseDetails = ({ route, navigation }) => {
     // const { item } = route.params;
     const { courseId } = route.params;
+    const { finalCourseData } = route.params;
+    const { schedule } = route.params;
+    const { finalData } = route.params;
 
     const [courseDetails, setCourseDetails] = useState(null);
+    const [courseData, setCourseData] = useState(route.params.courseData);
 
     useEffect(() => {
         getCourseDetails();
     }, []);
+
+    useEffect(() => {
+        console.log("useEffect finalCourseData", finalCourseData);
+    }, [finalCourseData]);
+
+    useEffect(() => {
+        console.log("useEffect finalCourseData", finalCourseData);
+    }, [schedule]);
+
+    // const handleConfirm = async () => {
+    //     setModalVisible(false);
+    //     try {
+    //         const finalCourseData = JSON.parse(JSON.stringify(courseData));
+    //         finalCourseData.schedule = schedule;
+    //         setCourseData(finalCourseData)
+    //         const response = await AxiosService("POST", "updateSchedule", true, {}, {finalCourseData, courseId});
+    //         console.log(response.data)
+    //         console.log("AddTopic finalCourseData: ",finalCourseData)
+
+    //         navigation.navigate("NavigationBar")
+    //     } catch (err) {
+    //         console.log(err)
+    //     }
+    // };
+
+    console.log("AddTopic finalCourseData: ", finalCourseData)
+
+    console.log("schedule is : ", schedule)
+
 
     const getCourseDetails = async () => {
         console.log("this is courseId", courseId._id);
@@ -19,41 +52,39 @@ const CourseDetails = ({ route, navigation }) => {
             const response = await AxiosService("GET", `courses`, true);
             if (response.data) {
                 setCourseDetails(response.data.data);
-                console.log("get course details func : ", response.data.data);
-                // response.data.data.courses.forEach((course, index) => {
-                // console.log(`Course ${index + 1}: `, course);
-                // });
-
-            }
+            }     
         } catch (error) {
-            console.error('Error fetching course details:', error);
-        }
-    };
+        console.error('Error fetching course details:', error);
+    }
+};
 
-    console.log("test courseId : ", courseId.topics)
+// console.log("test topics : ", courseId.topics);
+// console.log("test schedule : ", courseId.finalData);
+console.log("this is finalCourseData  ", finalCourseData);
+console.log("this is finalData  ", finalData);
 
-    return (
-        <SafeAreaView style={{
-            flex: 1,
-            marginTop: 20,
-            backgroundColor: COLORS.white,
-        }} >
-            <View style={styles.header}>
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <Image source={icons.chevronLeft} style={styles.backIcon} />
-                </TouchableOpacity>
-                <Text style={styles.headerTitle}>Course Details</Text>
-                <Image source={images.profile} style={styles.profileImage} />
-                <View />
-            </View>
+return (
+    <SafeAreaView style={{
+        flex: 1,
+        marginTop: 20,
+        backgroundColor: COLORS.white,
+    }} >
+        <View style={styles.header}>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Image source={icons.chevronLeft} style={styles.backIcon} />
+            </TouchableOpacity>
+            <Text style={styles.headerTitle}>Course Details</Text>
+            <Image source={images.profile} style={styles.profileImage} />
+            <View />
+        </View>
 
 
-            <View style={styles.content}>
-                {courseId ? (
+        <View style={styles.content}>
+            {courseId ? (
 
-                    <View>
-                        <Text style={styles.courseName}>Course Name: {courseId.courseName}</Text>
-                        {/* {courseDetails.schedule && courseDetails.schedule.map((week, index) => (
+                <View>
+                    <Text style={styles.courseName}>Course Name: {courseId.courseName}</Text>
+                    {/* {courseDetails.schedule && courseDetails.schedule.map((week, index) => (
                             <View key={index}>
                                 <Text style={styles.weekLabel}>Week {week.weekName}</Text>
                                 {week.topics && week.topics.map((topic, topicIndex) => (
@@ -61,31 +92,31 @@ const CourseDetails = ({ route, navigation }) => {
                                 ))}
                             </View>
                         ))} */}
-                        <View style={styles.topicsArea}>
-                            {courseId.topics && courseId.topics.map((topic, index) => (
-                                <Text key={index} style={styles.topic}>{topic}</Text>
-                            ))}
-                        </View>
+                    <View style={styles.topicsArea}>
+                        {courseId.topics && courseId.topics.map((topic, index) => (
+                            <Text key={index} style={styles.topic}>{topic}</Text>
+                        ))}
                     </View>
-                ) : (
-                    <View style={styles.loadingContainer}>
-                        <Image source={require('../../assets/images/loading.gif')} style={styles.loadingImage} />
-                        <Text style={styles.courseName}>Course Name: {courseId.courseName}</Text>
+                </View>
+            ) : (
+                <View style={styles.loadingContainer}>
+                    <Image source={require('../../assets/images/loading.gif')} style={styles.loadingImage} />
+                    <Text style={styles.courseName}>Course Name: {courseId.courseName}</Text>
 
-                    </View>
-                )}
-            </View>
+                </View>
+            )}
+        </View>
 
 
-            <View style={styles.buttonContainer}>
-                <TouchableOpacity style={[styles.aiButton]} onPress={() => navigation.goBack()}>
-                    <Image source={icons.aiImage} style={styles.aiImage} />
-                    <Text style={styles.aiButtonText}>AI Assistant</Text>
-                </TouchableOpacity>
-            </View>
+        <View style={styles.buttonContainer}>
+            <TouchableOpacity style={[styles.aiButton]} onPress={() => navigation.goBack()}>
+                <Image source={icons.aiImage} style={styles.aiImage} />
+                <Text style={styles.aiButtonText}>AI Assistant</Text>
+            </TouchableOpacity>
+        </View>
 
-        </SafeAreaView >
-    );
+    </SafeAreaView >
+);
 };
 
 const styles = StyleSheet.create({

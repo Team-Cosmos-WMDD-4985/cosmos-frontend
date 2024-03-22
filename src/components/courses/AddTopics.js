@@ -72,6 +72,8 @@ function AddTopics({ navigation, route }) {
             setCourseData(finalCourseData)
             const response = await AxiosService("POST", "updateSchedule", true, {}, {finalCourseData, courseId});
             console.log(response.data)
+            console.log("AddTopic finalCourseData: ",finalCourseData)
+
             navigation.navigate("NavigationBar")
         } catch (err) {
             console.log(err)
