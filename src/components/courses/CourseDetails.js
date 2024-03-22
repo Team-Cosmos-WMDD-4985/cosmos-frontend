@@ -52,7 +52,12 @@ const CourseDetails = ({ route, navigation }) => {
             const response = await AxiosService("GET", `courses`, true);
             if (response.data) {
                 setCourseDetails(response.data.data);
-            }     
+                // console.log("get course details func : ", response.data.data);
+                // response.data.data.courses.forEach((course, index) => {
+                // console.log(`Course ${index + 1}: `, course);
+                // });
+
+            }
         } catch (error) {
         console.error('Error fetching course details:', error);
     }
@@ -109,7 +114,7 @@ return (
 
 
         <View style={styles.buttonContainer}>
-            <TouchableOpacity style={[styles.aiButton]} onPress={() => navigation.goBack()}>
+            <TouchableOpacity style={[styles.aiButton]} onPress={() => navigation.navigate("AI Assistant", { courseId: courseId._id  })}>
                 <Image source={icons.aiImage} style={styles.aiImage} />
                 <Text style={styles.aiButtonText}>AI Assistant</Text>
             </TouchableOpacity>
