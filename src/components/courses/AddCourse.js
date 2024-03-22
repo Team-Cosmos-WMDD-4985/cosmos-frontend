@@ -79,6 +79,7 @@ function AddCourse({ navigation }) {
         //     setFile(result.assets[0]);
         //   }
     }
+    
 
      const handleGenerate = async () => {
         setShowLoader(true);
@@ -332,11 +333,12 @@ const styles = StyleSheet.create({
     buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'space-around',
-        position: 'absolute',
-        bottom: 10,
-        left: 0,
-        right: 0,
+        // position: 'absolute',
+        // bottom: 10,
+        // left: 0,
+        // right: 0,
         paddingVertical: 10,
+        marginTop: '55%',
     },
     button: {
         paddingVertical: 10,

@@ -1,24 +1,26 @@
-import React from 'react'
-import { View, Text, TouchableOpacity, Image } from 'react-native'
+import React from 'react';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import styles from "./QuizCard.style";
 import { images } from '../../constants';
 
 const QuizCard = ({ quiz }) => {
+  const navigation = useNavigation();
+
   const getRandomImageUrl = () => {
     return `https://picsum.photos/seed/${Math.floor(Math.random() * 1000)}/200/300`;
   };
   const randomWeeks = Math.floor(Math.random() * 12) + 1;
 
-  const job = {
-    employer_logo: "https://t4.ftcdn.net/jpg/05/05/61/73/360_F_505617309_NN1CW7diNmGXJfMicpY9eXHKV4sqzO5H.jpg",
-    employer_name: "Akash Bawa",
-    job_title: "React developer",
-    job_country: "IN",
-    job_employment_type: "Fulltime"
-  }
+  const handleQuizPress = () => {
+    // Navigate to QuizDetails screen with quiz details
+    navigation.navigate('QuizDetails', { quiz });
+  };
+
   return (
     <TouchableOpacity
       style={styles.container}
+      onPress={handleQuizPress}
     >
       <TouchableOpacity style={styles.logoContainer}>
         <Image
@@ -43,7 +45,7 @@ const QuizCard = ({ quiz }) => {
       </View>
 
     </TouchableOpacity>
-  )
-}
+  );
+};
 
-export default QuizCard
+export default QuizCard;

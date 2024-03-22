@@ -6,7 +6,7 @@ import AxiosService from "./../../services/axios";
 
 const screenHeight = Dimensions.get('window').height;
 
-const CourseList = ({ isHorizontal = true, width, height, courses, navigation }) => {
+const CourseList = ({ isHorizontal = true, width, height, courses }) => {
 
   const data = [{}, {}, {}]
   const [courseList, setCourseList] = useState([])
@@ -31,7 +31,7 @@ const CourseList = ({ isHorizontal = true, width, height, courses, navigation })
 
         renderItem={({ item, index }) => {
           return (
-            <CourseCard item={item} index={index} width={width} height={height} navigation={navigation} />
+            <CourseCard item={item} index={index} width={width} height={height} />
           )
         }}
         keyExtractor={(item, index) => String(index)}
