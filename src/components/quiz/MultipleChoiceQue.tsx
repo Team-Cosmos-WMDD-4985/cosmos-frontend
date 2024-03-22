@@ -21,10 +21,89 @@ import Icon from "react-native-vector-icons/FontAwesome";
 const { width } = Dimensions.get("window");
 
 const MultipleChoiceQue = ({ route, navigation }) => {
-  const { quiz } = route.params;
+  const { quiz, type } = route.params
   const carouselRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [color, setColor] = useState("");
+  const [color, SetColor] = useState("");
+  const [regeneratedQuiz, SetRegeneratedQuiz] = useState(null);
+  const [isRegenerated, setIsRegenerated] = useState(false);
+
+
+
+  const [modalVisible, setModalVisible] = useState(false)
+  const [modalVisible2, setModalVisible2] = useState(false)
+  const [question, setQuestion] = useState('');
+  const [options, setOptions] = useState(['', '', '', '']);
+  const [answer, setAnswer] = useState('');
+  const [quizz, setQuizz] = useState();
+
+  // const [quiz, SetQuiz] = useState();
+
+  useEffect(() => {
+    getQuizById()
+  }, []);
+
+  console.log(`routes: ${route.params.quiz.questions.length}`)
+
+
+
+  const addQuestions = async () => {
+    try {
+      const response = await AxiosService("POST", `addQuestion/${quiz._id}`, true, {}, { question: question, options: options, answer: answer });
+      
+      await getQuizById();
+      
+      
+      setQuestion('');
+      setOptions(['', '', '', '']);
+      setAnswer('');
+    } catch (error) {
+      console.error("Error adding question:", error);
+    }
+  }
+  
+
+
+  const getQuizById = async () => {
+    try {
+      const response = await AxiosService("POST", `getQuizForUpdate/${quiz._id}`, true);
+      console.log("Updated quiz details:", response.data.questions);
+      setQuizz(response.data.questions)
+    } catch (error) {
+      console.error("Error getting quiz details:", error);
+    }
+  }
+
+
+
+  // console.log(`this is quiz data ${JSON.stringify(quizz.questions)}`);
+
+
+
+
+  const fetchRegeneratedQuiz = async () => {
+    try {
+      const response = await AxiosService("POST", `regenerateQuiz/${quiz._id}/${quiz.courseId}`, true, {}, { type: type });
+      if (response && response.data) {
+        SetRegeneratedQuiz(response.data.data);
+        console.log("this is ", response.data.data);
+        setIsRegenerated(true);
+
+
+      } else {
+        console.log("Failed to regenerate quiz:", response.data.error);
+
+      }
+    } catch (err) {
+      console.log("Error fetching regenerated quiz:", err);
+    }
+  };
+
+
+
+
+
+
 
   const handleNext = () => {
     carouselRef.current.snapToNext();
@@ -36,7 +115,7 @@ const MultipleChoiceQue = ({ route, navigation }) => {
   const optionLabels = ["A", "B", "C", "D"];
 
   const onCheckAns = () => {
-    setColor("red");
+    SetColor("red");
     navigation.navigate("getAnswer", { quiz: quiz });
   };
 
@@ -98,7 +177,7 @@ const MultipleChoiceQue = ({ route, navigation }) => {
             <Text style={{ color: "black" }}>/</Text>
             <Text style={{ color: "black" }}>{quiz.totalQuestion}</Text>
           </View>
-          <TouchableOpacity style={styles.arrows} onPress={handleNext}>
+          <TouchableOpacity style={styles.arrows} onPress={handleConfirmTwo}>
             <Icon name="plus" size={15} color="black" />
           </TouchableOpacity>
         </View>
@@ -106,17 +185,45 @@ const MultipleChoiceQue = ({ route, navigation }) => {
     );
   };
 
-  const [modalVisible, setModalVisible] = useState(false);
+
+
+
+
+
+  console.log(question)
+  console.log(options)
+  console.log(answer)
+
+
 
   const handleCancel = () => {
     setModalVisible(false);
     navigation.navigate("NavigationBar");
   };
 
+  const handleCancel2 = () => {
+    setModalVisible2(false);
+    setQuestion('');
+    setOptions(['', '', '', '']);
+    setAnswer('');
+    
+  };
+
   const handleConfirm = () => {
     setModalVisible(true);
     navigation.navigate("NavigationBar");
   };
+  const handleConfirmTwo = () => {
+    setModalVisible2(true);
+    console.log("Confirm Pressed");
+
+  };
+
+
+  const handleSave = () => {
+
+  }
+
 
   return (
     <ScrollView contentContainerStyle={styles.scrollViewContent}>
@@ -144,15 +251,131 @@ const MultipleChoiceQue = ({ route, navigation }) => {
           </View>
         </View>
       </Modal>
+
+
+
+      {/* ================================================================================ */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible2}
+        onRequestClose={() => {
+          setModalVisible2(!modalVisible2);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.overlay} />
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Enter your quiz details:</Text>
+
+            {/* Input for the question */}
+            <Text style={styles.label}>Question:</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={text => setQuestion(text)}
+              value={question}
+              placeholder="Enter your question"
+            />
+
+
+            <View>
+              <Text style={styles.label}>Option 1:</Text>
+              <TextInput
+                style={styles.input}
+                onChangeText={text => {
+                  const updatedOptions = [...options];
+                  updatedOptions[0] = text;
+                  setOptions(updatedOptions);
+                }}
+                value={options[0]}
+                placeholder="Enter option 1"
+              />
+            </View>
+            <View>
+              <Text style={styles.label}>Option 2:</Text>
+              <TextInput
+                style={styles.input}
+                onChangeText={text => {
+                  const updatedOptions = [...options];
+                  updatedOptions[1] = text;
+                  setOptions(updatedOptions);
+                }}
+                value={options[1]}
+                placeholder="Enter option 2"
+              />
+            </View>
+            <View>
+              <Text style={styles.label}>Option 3:</Text>
+              <TextInput
+                style={styles.input}
+                onChangeText={text => {
+                  const updatedOptions = [...options];
+                  updatedOptions[2] = text;
+                  setOptions(updatedOptions);
+                }}
+                value={options[2]}
+                placeholder="Enter option 3"
+              />
+            </View>
+            <View>
+              <Text style={styles.label}>Option 4:</Text>
+              <TextInput
+                style={styles.input}
+                onChangeText={text => {
+                  const updatedOptions = [...options];
+                  updatedOptions[3] = text;
+                  setOptions(updatedOptions);
+                }}
+                value={options[3]}
+                placeholder="Enter option 4"
+              />
+            </View>
+
+
+
+            <Text style={styles.label}>Answer:</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={text => setAnswer(text)}
+              value={answer}
+              placeholder="Enter the correct answer"
+            />
+
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={styles.submitButton}
+                onPress={addQuestions}
+              >
+                <Text style={styles.generateButtonText}>Save</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.submitButton}
+                onPress={handleCancel2}
+              >
+                <Text style={styles.submitButtonText}>Cancel</Text>
+              </TouchableOpacity>
+            </View>
+
+          </View>
+        </View>
+      </Modal>
+
+      <Text style={styles.title}>Multiple Choice Question</Text>
+      <View style={{ marginTop: 30, alignSelf: "flex-end", marginRight: 20, flexDirection: 'row' }}>
+        <Button title='Check Answer' onPress={onCheckAns} />
+        <Button title='regnerate Quiz' onPress={fetchRegeneratedQuiz} />
+      </View>
       <View style={{ padding: 30 }}>
         <View style={{ flexDirection: "row", justifyContent: "center" }}>
           <Carousel
             ref={carouselRef}
             layout="default"
-            data={quiz.questions}
+            data={isRegenerated ? regeneratedQuiz.questions : quizz}
             renderItem={renderItem}
             sliderWidth={width}
             itemWidth={width}
+
           />
         </View>
       </View>
@@ -194,7 +417,7 @@ const MultipleChoiceQue = ({ route, navigation }) => {
         </View>
         <View>
           <TouchableOpacity
-            onPress={() => {}}
+            onPress={() => { }}
             style={{
               borderBottomWidth: 1,
               borderBottomColor: COLORS.primary,
@@ -202,7 +425,7 @@ const MultipleChoiceQue = ({ route, navigation }) => {
               marginTop: 10,
             }}
           >
-            <Text>Regenerate the quiz</Text>
+            <Text onPress={fetchRegeneratedQuiz}>Regenerate the quiz</Text>
           </TouchableOpacity>
         </View>
       </View>
