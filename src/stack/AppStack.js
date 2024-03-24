@@ -111,7 +111,7 @@ function AppStack() {
           name="MultipleChoiceQue"
           component={MultipleChoiceQue}
           options={({ navigation }) => ({
-            headerShown: true,
+            headerShown: false,
             headerTitle: () => (
               <View style={{ flexDirection: "column" }}>
                 <Text style={{ fontSize: SIZES.xLarge, marginRight: 10 }}>
@@ -153,36 +153,14 @@ function AppStack() {
         <Stack.Screen
           name="QuizDetails"
           component={QuizDetails}
-          options={({ navigation }) => ({
-            headerShown: true,
-            headerTitle: () => (
-              <View style={{ flexDirection: "column" }}>
-                <Text style={{ fontSize: SIZES.xLarge, marginRight: 10 }}>
-                  Quizzes
-                </Text>
-                <Text style={{ fontSize: SIZES.medium }}>
-                  Summary of your quiz
-                </Text>
-              </View>
-            ),
-            headerRight: () => (
-              <Image
-                source={images.profile}
-                style={{
-                  width: 40,
-                  height: 40,
-                  borderRadius: 20,
-                  marginRight: 20,
-                }}
-              />
-            ),
-          })}
+          options={{ headerShown: false }}
+
         />
         <Stack.Screen
           name="Choose Topics"
           component={SelectTopics}
           options={({ navigation }) => ({
-            headerShown: true,
+            headerShown: false,
             headerTitle: () => (
               <View style={{ flexDirection: "column" }}>
                 <Text style={{ fontSize: SIZES.xLarge, marginRight: 10 }}>
@@ -220,7 +198,7 @@ function AppStack() {
           name="CreateYourQuiz"
           component={CreateYourQuiz}
           options={({ navigation }) => ({
-            headerShown: true,
+            headerShown: false,
             headerTitle: () => (
               <View
                 style={{

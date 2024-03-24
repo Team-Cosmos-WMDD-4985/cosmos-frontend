@@ -10,6 +10,7 @@ import {
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { COLORS, SIZES } from "../../constants";
+import Headers from "../../common/Headers";
 
 const SelectTopics = ({ route, navigation }) => {
   const { topics, courseId } = route.params;
@@ -55,8 +56,13 @@ const SelectTopics = ({ route, navigation }) => {
     </TouchableOpacity>
   );
 
+  const handleNavigate = () => {
+    navigation.goBack();
+  }
   return (
     <View style={styles.flexContainer}>
+      <Headers courseText="Course Details"  display={true} handleNavigate={handleNavigate} courseTextDes="course Detail"/>
+
       <FlatList
         data={selectedTopics}
         renderItem={renderTopicItem}
@@ -87,10 +93,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     // marginTop: 20,
-    paddingHorizontal: 20,
+    // paddingHorizontal: 20,
   },
   container: {
-    paddingTop:20
+    paddingTop:20,
+        paddingHorizontal: 20,
+
       },
   topicItem: {
     flexDirection: "row",

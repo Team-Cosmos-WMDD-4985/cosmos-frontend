@@ -14,6 +14,7 @@ import { COLORS, SIZES } from "../../constants";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faCircleMinus, faCirclePlus } from "@fortawesome/free-solid-svg-icons";
+import Headers from "../../common/Headers";
 
 
 const CreateYourQuiz = ({ route, navigation }) => {
@@ -54,28 +55,28 @@ const CreateYourQuiz = ({ route, navigation }) => {
   // };
   const sendQuizInfo = async () => {
     try {
-        const response = await AxiosService(
-            "POST",
-            "sendTopics",
-            true,
-            {},
-            { topics, courseId, name, type, difficulty, numQuestions }
-        );
-        if(response.data.success) {
-          navigation.navigate("MultipleChoiceQue", { 
-            quiz: response.data.data,
-            name: name,
-            courseId: courseId,
-            type: type,
-            topics: topics,
-            difficulty: difficulty,
-            numQuestions: numQuestions
-          });
-        }
+      const response = await AxiosService(
+        "POST",
+        "sendTopics",
+        true,
+        {},
+        { topics, courseId, name, type, difficulty, numQuestions }
+      );
+      if (response.data.success) {
+        navigation.navigate("MultipleChoiceQue", {
+          quiz: response.data.data,
+          name: name,
+          courseId: courseId,
+          type: type,
+          topics: topics,
+          difficulty: difficulty,
+          numQuestions: numQuestions
+        });
+      }
     } catch (err) {
-        console.log(err);
+      console.log(err);
     }
-};
+  };
   const clearName = () => {
     setName("");
   };
@@ -91,9 +92,16 @@ const CreateYourQuiz = ({ route, navigation }) => {
     }
   };
 
+  const handleNavigate = () => {
+    navigation.goBack();
+  }
+
   return (
     <View style={styles.flexContainer}>
+      <Headers courseText="Quizzes" display={true} handleNavigate={handleNavigate} courseTextDes="course Detail" />
+
       <View style={styles.container}>
+
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Quiz Name</Text>
           <View style={styles.textInputContainer}>
@@ -108,33 +116,33 @@ const CreateYourQuiz = ({ route, navigation }) => {
           </View>
         </View>
         <View style={styles.inputContainer}>
-  <Text style={styles.label}>Question Type</Text>
-  {["True or False", "Multiple Choice", "Long/Short Answer"].map(
-    (option, index) => (
-      <TouchableOpacity
-        key={option}
-        style={[
-          styles.qInput,
-          type === option && styles.selectedButton,
-        ]}
-        onPress={() => handleTypeSelection(option)}
-      >
-        <View style={{ flexDirection: "row", alignItems: "center"}}>
-          <Icon
-            name={
-              type === option
-                ? "checkbox-marked"
-                : "checkbox-blank"
-            }
-            size={24}
-            color={COLORS.black}
-          />
-          <Text style={styles.buttonText}>{option}</Text>
+          <Text style={styles.label}>Question Type</Text>
+          {["True or False", "Multiple Choice", "Long/Short Answer"].map(
+            (option, index) => (
+              <TouchableOpacity
+                key={option}
+                style={[
+                  styles.qInput,
+                  type === option && styles.selectedButton,
+                ]}
+                onPress={() => handleTypeSelection(option)}
+              >
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  <Icon
+                    name={
+                      type === option
+                        ? "checkbox-marked"
+                        : "checkbox-blank"
+                    }
+                    size={24}
+                    color={COLORS.black}
+                  />
+                  <Text style={styles.buttonText}>{option}</Text>
+                </View>
+              </TouchableOpacity>
+            )
+          )}
         </View>
-      </TouchableOpacity>
-    )
-  )}
-</View>
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Level</Text>
           <View style={styles.buttonDiv}>
@@ -222,7 +230,7 @@ const CreateYourQuiz = ({ route, navigation }) => {
           >
             <Text style={styles.generateButtonText}>Create Quiz</Text>
           </TouchableOpacity>
-          
+
         </View>
       </View>
     </View>
@@ -234,27 +242,29 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     // marginTop: 20,
-    alignItems: "center",
+    // alignItems: "center",
     borderColor: COLORS.midGray,
-    paddingHorizontal: 20,
+    // paddingHorizontal: 20,
   },
   formContainer: {
     width: "80%",
     justifyContent: "space-around",
+
   },
   container: {
-paddingTop:20
+    paddingTop: 20,
+    paddingHorizontal: 20,
   },
   inputContainer: {
     marginBottom: 20,
-    
-   
-    
+
+
+
   },
   label: {
     fontSize: 20,
     marginBottom: 2,
-   
+
   },
   input: {
     borderWidth: 1,
@@ -290,8 +300,8 @@ paddingTop:20
   buttonDiv: {
     flexDirection: "row",
     justifyContent: "space-between",
-    
-    
+
+
   },
   selectedButton: {
     backgroundColor: COLORS.lightTeal,
@@ -327,7 +337,7 @@ paddingTop:20
     fontSize: SIZES.large,
     color: COLORS.midTeal,
     textAlign: "center",
-    
+
   },
   textInputContainer: {
     flexDirection: "row",
@@ -378,15 +388,15 @@ paddingTop:20
     width: '100%',
     height: 54,
   },
-  qInput:{
-        flexDirection: "row",
+  qInput: {
+    flexDirection: "row",
     alignItems: "center",
     borderRadius: 30,
     borderColor: COLORS.midGray,
     borderWidth: 1,
     paddingVertical: 8,
     paddingHorizontal: 20,
-   
+
     height: 48,
     marginTop: 10,
   }
