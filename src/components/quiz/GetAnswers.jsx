@@ -3,12 +3,12 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native';
 
 const GetAnswer = ({ route, navigation }) => {
     const { quiz } = route.params;
-    console.log(`quiz getAnswer ${JSON.stringify(quiz)}`);
-
+    console.log(`quiz getAnswer ${quiz}`);
+    
     return (
         <View style={styles.container}>
             <ScrollView>
-                {quiz.questions.map((question, index) => (
+                {quiz.map((question, index) => (
                     <View key={index} style={styles.questionContainer}>
                         <View style={styles.quizContainer}>
                             <Text style={styles.question}>Question {index + 1}</Text>
