@@ -6,6 +6,7 @@ import * as DocumentPicker from 'expo-document-picker';
 import { COLORS, SIZES, icons, SHADOWS } from "./../../constants";
 import secoreStoreService from "../../services/secureStore";
 import AxiosService from "./../../services/axios";
+import Headers from '../../common/Headers';
 
 function AddCourse({ navigation }) {
 
@@ -124,7 +125,9 @@ function AddCourse({ navigation }) {
                 </View>
             }
 
-            {/*  Add Course Header*/}
+            {/* <Headers courseText="Course Details">
+            </Headers> */}
+            
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Image source={icons.chevronLeft} style={styles.backIcon} />

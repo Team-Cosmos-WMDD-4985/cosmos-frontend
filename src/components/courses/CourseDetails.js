@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, SafeAreaView
 import { icons, COLORS, SIZES, images } from "../../constants";
 import AxiosService from "../../services/axios"
 import { Theme } from '@gluestack-style/react';
+import Headers from '../../common/Headers';
 
 const CourseDetails = ({ route, navigation }) => {
     const { courseId } = route.params;
@@ -47,21 +48,27 @@ const CourseDetails = ({ route, navigation }) => {
         return pairs;
     };
 
+    const handleNavigate = () => {
+        navigation.navigate("NavigationBar");
+    }
+
     return (
         <SafeAreaView style={{
             flex: 1,
             marginTop: 20,
             backgroundColor: COLORS.white,
         }} >
-            <View style={styles.header}>
+
+            <Headers courseText="Course Details" handleNavigate={handleNavigate} display={true} courseTextDes="course Detail"/>
+            {/* <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Image source={icons.chevronLeft} style={styles.backIcon} />
                 </TouchableOpacity>
                 <Text style={styles.headerTitle}>Course Details</Text>
                 <Image source={images.profile} style={styles.profileImage} />
                 <View />
-            </View>
-            <Text style={styles.courseName}>Course Name: {courseId.courseName}</Text>
+            </View> */}
+            {/* <Text style={styles.courseName}>Course Name: {courseId.courseName}</Text> */}
 
             <ScrollView style={styles.scrollViewStyle}>
                 {courseId ? (

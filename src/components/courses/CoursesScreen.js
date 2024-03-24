@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, SafeAreaView, FlatList
 import { COLORS, icons, images, SIZES } from "./../../constants";
 import CourseList from '../home/CourseList';
 import AxiosService from "./../../services/axios";
+import Headers from '../../common/Headers';
 
 const screenHeight = Dimensions.get('window').height;
 
@@ -21,17 +22,18 @@ function CoursesScreen({ navigation }) {
     }
   };
 
-  
+
+
+
   return (
+
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Courses</Text>
-        <Image source={images.profile} style={styles.profileImage} />
-      </View>
- 
+      <Headers courseText="Courses" display={false} courseTextDes="course Detail" />
+
+
       {courseList.length > 0 ? (
         <View style={styles.courseContainer} >
-          <Text style={styles.viewAdd}>View / add you new course</Text>
+          {/* <Text style={styles.viewAdd}>View / add you new course</Text> */}
           <CourseList isHorizontal={false} height={screenHeight * 0.25} width={'100%'} courses={courseList} navigation={navigation} />
 
         </View>
@@ -62,11 +64,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    padding: 20,
+    // padding: 20,
   },
   courseContainer: {
     flex: 1,
     width: '200',
+    padding:20
   },
   courseCardContainer: {
     width: '100%',

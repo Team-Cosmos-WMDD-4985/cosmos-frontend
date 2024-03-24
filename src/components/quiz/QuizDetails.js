@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import AxiosService from "../../services/axios";
 import { COLORS, SIZES, WEIGHT, images, SHADOWS } from "../../constants";
+import Headers from '../../common/Headers';
 
 const QuizDetails = ({ route,navigation }) => {
   const { quiz } = route.params;
@@ -25,8 +26,13 @@ const QuizDetails = ({ route,navigation }) => {
   // Array of characters for options
   const optionLabels = ['A', 'B', 'C', 'D'];
 
+  const handleNavigate = () => {
+    navigation.navigate("NavigationBar");
+}
+
   return (
     <View style={styles.pageContainer}>
+      <Headers courseText="Quizzes" handleNavigate={handleNavigate} display={true} courseTextDes="course Detail"/>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.container}>
           <View style={styles.content}>

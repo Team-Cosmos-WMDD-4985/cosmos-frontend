@@ -14,6 +14,7 @@ import { COLORS, SIZES, WEIGHT, images } from "./../../constants";
 // import AxiosService from "./../../services/axios";
 import { useState, useEffect } from "react";
 // import CourseListQuiz from "./CourseListQuiz";
+import Headers from "../../common/Headers";
 
 const AddingTopicsForQuizGeneration = ({ navigation }) => {
   const [courseList, setCourseList] = useState([]);
@@ -31,14 +32,18 @@ const AddingTopicsForQuizGeneration = ({ navigation }) => {
     }
   };
 
+  const handleNavigate =() => {
+    navigation.navigate("NavigationBar")
+  }
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
+      <Headers courseText="Quizzes" handleNavigate={handleNavigate} display={false} courseTextDes="Choose your cours"/>
+      {/* <View style={styles.header}>
         <Text style={styles.headerTitle}>Quizzes</Text>
         <Image source={images.profile} style={styles.profileImage} />
-      </View>
-      <Text style={styles.greeting}>Choose your course</Text>
+      </View> */}
+      {/* <Text style={styles.greeting}>Choose your course</Text> */}
       <CourseCard courses={courseList} navigation={navigation} />
       {/* <CourseListQuiz courseList={courseList} /> */}
     </SafeAreaView>

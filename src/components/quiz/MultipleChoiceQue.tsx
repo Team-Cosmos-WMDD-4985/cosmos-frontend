@@ -10,23 +10,28 @@ import {
   Modal,
   Image,
   TouchableOpacity,
+
 } from "react-native";
+import Picker from '@react-native-picker/picker';
 import Carousel from "react-native-snap-carousel";
 import { icons, images, SHADOWS } from "../../constants";
 import { COLORS, SIZES } from "../../constants";
 import { NavigationProp } from "@react-navigation/native";
 import AxiosService from "../../services/axios.js";
 import Icon from "react-native-vector-icons/FontAwesome";
+import Headers from "../../common/Headers";
 
 const { width } = Dimensions.get("window");
 
 const MultipleChoiceQue = ({ route, navigation }) => {
   const { quiz, type } = route.params
   const carouselRef = useRef(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  // const [currentIndex, setCurrentIndex] = useState(0);
   const [color, SetColor] = useState("");
   const [regeneratedQuiz, SetRegeneratedQuiz] = useState(null);
   const [isRegenerated, setIsRegenerated] = useState(false);
+  const [selectedAnswerIndex, setSelectedAnswerIndex] = useState(0);
+
 
 
 
@@ -36,6 +41,7 @@ const MultipleChoiceQue = ({ route, navigation }) => {
   const [options, setOptions] = useState(['', '', '', '']);
   const [answer, setAnswer] = useState('');
   const [quizz, setQuizz] = useState();
+  const [quizzTwo, setQuizTwo] = useState();
 
   // const [quiz, SetQuiz] = useState();
 
@@ -66,13 +72,15 @@ const MultipleChoiceQue = ({ route, navigation }) => {
       const response = await AxiosService("POST", `getQuizForUpdate/${quiz._id}`, true);
       // console.log("Updated quiz details:", response.data.questions);
       setQuizz(response.data.questions)
+      setQuizTwo(response.data)
+      console.log(`quizzTwo ${quizzTwo}`)
     } catch (error) {
       console.error("Error getting quiz details:", error);
     }
   }
 
 
-  console.log("this is quiz",quiz)
+  console.log("this is quiz", quiz)
 
   // console.log(`this is quiz data ${JSON.stringify(quizz.questions)}`);
 
@@ -173,7 +181,7 @@ const MultipleChoiceQue = ({ route, navigation }) => {
             </View>
 
             <Text style={{ color: "black" }}>/</Text>
-            <Text style={{ color: "black" }}>{quiz.totalQuestion}</Text>
+            <Text style={{ color: "black" }}>{quizz.totalQuestion}</Text>
           </View>
           <TouchableOpacity style={styles.arrows} onPress={handleConfirmTwo}>
             <Icon name="plus" size={15} color="black" />
@@ -182,8 +190,6 @@ const MultipleChoiceQue = ({ route, navigation }) => {
       </View>
     );
   };
-
-
 
 
 
@@ -222,8 +228,16 @@ const MultipleChoiceQue = ({ route, navigation }) => {
 
   }
 
+  const handleNavigate = () => {
+    navigation.goBack();
+}
+
 
   return (
+    <View>
+
+<Headers courseText="Quizzes" handleNavigate={handleNavigate} display={true} courseTextDes="course Detail"/>
+
     <ScrollView contentContainerStyle={styles.scrollViewContent}>
       <Modal
         animationType="slide"
@@ -339,7 +353,10 @@ const MultipleChoiceQue = ({ route, navigation }) => {
               placeholder="Enter the correct answer"
             />
 
-            <View style={styles.buttonContainer}>
+           
+
+
+            <View style={styles.buttonContainer2}>
               <TouchableOpacity
                 style={styles.submitButton}
                 onPress={addQuestions}
@@ -428,6 +445,7 @@ const MultipleChoiceQue = ({ route, navigation }) => {
         </View>
       </View>
     </ScrollView>
+    </View>
   );
 };
 
@@ -444,10 +462,10 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   carouselItem: {
-    width: width - 30,
+    width: width * .94,
     height: 550,
     alignItems: "center",
-    // padding: 10,
+    
   },
   centeredView: {
     flex: 1,
@@ -514,6 +532,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 32,
     padding: 20,
+    width: 300,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -579,7 +598,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingVertical: 10,
     alignItems: "center",
-    
+
   },
   numQuestions: {
     flexDirection: "row",
@@ -605,6 +624,35 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  label: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 5,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: 'black',
+    borderRadius: 5,
+    paddingHorizontal: 60,
+    paddingVertical: 8,
+    marginBottom: 10,
+  },
+  submitButton: {
+    backgroundColor: COLORS.primary,
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 10,
+    alignItems: 'center',
+  },
+  submitButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  buttonContainer2: {
+    flexDirection: 'row',
+    gap: 10,
+  }
 });
 
 export default MultipleChoiceQue;
