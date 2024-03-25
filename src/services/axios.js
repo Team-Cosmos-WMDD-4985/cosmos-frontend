@@ -4,7 +4,7 @@ import secoreStoreService from "./secureStore";
 // Live url
 // const url = "https://ec2-54-70-7-254.us-west-2.compute.amazonaws.com/api"
 // const url = "http://ec2-54-70-7-254.us-west-2.compute.amazonaws.com/api"
-const url = "https://8971-2001-569-52f6-b300-61ab-3fcc-e6ea-1d6e.ngrok-free.app";
+const url = "https://045c-2001-569-52f6-b300-9c2-1b0a-6e6a-b413.ngrok-free.app";
 // const url = "https://cosmos-backend-6bue.onrender.com"
 export default async function useApi(type, endpoint, tokenRequired = true , params = {}, body = {}, headers = {}) {
 
