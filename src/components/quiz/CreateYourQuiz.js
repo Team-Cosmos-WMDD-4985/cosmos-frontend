@@ -15,6 +15,8 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faCircleMinus, faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import Headers from "../../common/Headers";
+import { useDispatch } from "react-redux";
+import { setLoader } from '../../redux/user';
 
 
 const CreateYourQuiz = ({ route, navigation }) => {
@@ -24,12 +26,8 @@ const CreateYourQuiz = ({ route, navigation }) => {
   const [difficulty, setDifficulty] = useState("");
   const [numQuestions, setNumQuestions] = useState("");
 
-  console.log(name);
-  console.log(courseId);
-  console.log(type);
-  console.log(topics);
-  console.log(difficulty);
-  console.log(numQuestions);
+  const dispatch = useDispatch();
+
   const handleTypeSelection = (selectedType) => {
     setType(selectedType);
   };
@@ -55,6 +53,7 @@ const CreateYourQuiz = ({ route, navigation }) => {
   // };
   const sendQuizInfo = async () => {
     try {
+      dispatch(setLoader({loader: true}))
       const response = await AxiosService(
         "POST",
         "sendTopics",
@@ -62,6 +61,7 @@ const CreateYourQuiz = ({ route, navigation }) => {
         {},
         { topics, courseId, name, type, difficulty, numQuestions }
       );
+      dispatch(setLoader({loader: false}))
       if (response.data.success) {
         navigation.navigate("MultipleChoiceQue", {
           quiz: response.data.data,
@@ -74,6 +74,7 @@ const CreateYourQuiz = ({ route, navigation }) => {
         });
       }
     } catch (err) {
+      dispatch(setLoader({loader: false}))
       console.log(err);
     }
   };

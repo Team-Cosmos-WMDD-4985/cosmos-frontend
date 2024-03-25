@@ -9,6 +9,8 @@ import images from './../constants/images'
 import { icons } from '../constants';
 import { Input } from 'react-native-elements';
 // import CheckBox from '@react-native-community/checkbox';
+import { useDispatch } from "react-redux";
+import { setLoader } from '../redux/user';
 
 
 import logo from "./../../assets/logo.png"
@@ -18,15 +20,21 @@ const Login = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [isSelected, setSelection] = useState(false);
 
-
+  const dispatch = useDispatch();
 
   const submitLogin = async () => {
+
+    dispatch(setLoader({loader: true}))
     const data = await AxiosService('POST', 'auth/login', false, {}, { email, password },)
       .then(async function (response) {
+      dispatch(setLoader({loader: false}))
+        console.log("user data ", response.data)
         await secoreStoreService.save("token", response.data.token);
+        await secoreStoreService.save("user", response.data.user);
         navigation.navigate("NavigationBar")
       })
       .catch(function (error) {
+      dispatch(setLoader({loader: false}))
         console.log(error);
       });
   }

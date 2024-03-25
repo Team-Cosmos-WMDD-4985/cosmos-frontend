@@ -20,6 +20,8 @@ import { NavigationProp } from "@react-navigation/native";
 import AxiosService from "../../services/axios.js";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Headers from "../../common/Headers";
+import { useDispatch } from "react-redux";
+import { setLoader } from '../../redux/user';
 
 const { width } = Dimensions.get("window");
 
@@ -42,6 +44,8 @@ const MultipleChoiceQue = ({ route, navigation }) => {
   const [answer, setAnswer] = useState('');
   const [quizz, setQuizz] = useState();
   const [quizzTwo, setQuizTwo] = useState();
+
+  const dispatch = useDispatch();
 
   // const [quiz, SetQuiz] = useState();
 
@@ -89,7 +93,10 @@ const MultipleChoiceQue = ({ route, navigation }) => {
 
   const fetchRegeneratedQuiz = async () => {
     try {
+
+      dispatch(setLoader({loader: true}))
       const response = await AxiosService("POST", `regenerateQuiz/${quiz._id}/${quiz.courseId}`, true, {}, { type: type });
+      dispatch(setLoader({loader: false}))
       if (response && response.data) {
         SetRegeneratedQuiz(response.data.data);
         console.log("this is ", response.data.data);
@@ -101,6 +108,7 @@ const MultipleChoiceQue = ({ route, navigation }) => {
 
       }
     } catch (err) {
+      dispatch(setLoader({loader: false}))
       console.log("Error fetching regenerated quiz:", err);
     }
   };

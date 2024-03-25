@@ -7,12 +7,16 @@ import { COLORS, SIZES, icons, SHADOWS } from "./../../constants";
 import secoreStoreService from "../../services/secureStore";
 import AxiosService from "./../../services/axios";
 import Headers from '../../common/Headers';
+import { useDispatch } from "react-redux";
+import { setLoader } from '../../redux/user';
 
 function AddCourse({ navigation }) {
 
     const [courseName, setCourseName] = useState('');
     const [showStartDatePicker, setShowStartDatePicker] = useState(false);
     const [showEndDatePicker, setShowEndDatePicker] = useState(false);
+
+    const dispatch = useDispatch();
 
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
@@ -83,13 +87,10 @@ function AddCourse({ navigation }) {
     
 
      const handleGenerate = async () => {
-        setShowLoader(true);
-        const toSend = {
-            file: file,
-            name: courseName,
-            startDate: startDate,
-            endDate: endDate
-        }
+
+        dispatch(setLoader({loader: true}));
+
+
         let formdata = new FormData();
         formdata.append('file', file);
         formdata.append("name", courseName);
@@ -98,19 +99,13 @@ function AddCourse({ navigation }) {
 
         try {
             const response = await AxiosService("POST", "addCourse", true, {}, formdata, { "Content-Type": `multipart/form-data` })
-            setShowLoader(false)
             navigation.navigate("AddTopics", {schedule: response.data.data, courseId: response.data.courseId, courseData: response.data.courseData });
-            // showLoader(false)
-            // if (response.data.success) { // Ensure the response is successful before navigation
-            //     navigation.navigate("AddTopics", response.data.data);
-            // }
+            dispatch(setLoader({loader: true}));
 
         } catch (err) {
             console.log(err)
-            showLoader(false)
+            dispatch(setLoader({loader: true}));
         }
-
-
     };
 
     const deleteFile = async () => {

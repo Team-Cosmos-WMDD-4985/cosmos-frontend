@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { View, Text, ScrollView, SafeAreaView, StyleSheet, Image, Dimensions } from "react-native";
 import { icons, images } from "./../../constants";
 import { SIZES, WEIGHT, COLORS } from "./../../constants/theme";
 import QuizList from "./../home/QuizList";
-import CourseList from "./../home/CourseList"
+import CourseList from "./../home/CourseList";
+import  secoreStoreService from "../../services/secureStore";
 
 const screenHeight = Dimensions.get('window').height;
 
@@ -22,6 +23,22 @@ const getFormattedDate = () => {
 
 
 const Dashboard = (width, height) => {
+    
+    const [user, setUser] = useState({});
+    useEffect(() => {
+        getUserData();
+    }, [])
+
+    const getUserData = async () => {
+        try {
+            let userInfo = await secoreStoreService.getValueFor("user");
+            setUser(userInfo)
+            console.log("user info ", userInfo)
+        } catch(err) {
+            console.log("Error getting user info: ", err);
+        }
+    }
+
     return (
         <SafeAreaView style={{
             flex: 1,
@@ -32,7 +49,7 @@ const Dashboard = (width, height) => {
                 <View style={styles.header}>
                     <View style={styles.headerStack}>
                         <Text style={styles.dateText}>{getFormattedDate()}</Text>
-                        <Text style={styles.headerText}>Welcome back, Kristen</Text>
+                        <Text style={styles.headerText}>Welcome back, {user.name}</Text>
                     </View>
                     <Image source={images.profile} style={styles.profileImage} />
                 </View>
