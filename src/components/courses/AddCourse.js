@@ -88,7 +88,7 @@ function AddCourse({ navigation }) {
 
      const handleGenerate = async () => {
 
-        // dispatch(setLoader({loader: true}));
+        dispatch(setLoader({loader: true}));
 
 
         let formdata = new FormData();
@@ -100,11 +100,11 @@ function AddCourse({ navigation }) {
         try {
             const response = await AxiosService("POST", "addCourse", true, {}, formdata, { "Content-Type": `multipart/form-data` })
             navigation.navigate("AddTopics", {schedule: response.data.data, courseId: response.data.courseId, courseData: response.data.courseData });
-            // dispatch(setLoader({loader: true}));
+            dispatch(setLoader({loader: false}));
 
         } catch (err) {
             console.log(err)
-            // dispatch(setLoader({loader: true}));
+            dispatch(setLoader({loader: false}));
         }
     };
 
