@@ -7,12 +7,16 @@ import { COLORS, SIZES, icons, SHADOWS } from "./../../constants";
 import secoreStoreService from "../../services/secureStore";
 import AxiosService from "./../../services/axios";
 import Headers from '../../common/Headers';
+import { useDispatch } from "react-redux";
+import { setLoader } from '../../redux/user';
 
 function AddCourse({ navigation }) {
 
     const [courseName, setCourseName] = useState('');
     const [showStartDatePicker, setShowStartDatePicker] = useState(false);
     const [showEndDatePicker, setShowEndDatePicker] = useState(false);
+
+    const dispatch = useDispatch();
 
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
@@ -66,11 +70,11 @@ function AddCourse({ navigation }) {
             }
             setFile(pdfUpload);
         } catch (err) {
-            if (DocumentPicker.isCancel(err)) {
-                console.log("User cancelled")
-            } else {
+            // if (DocumentPicker.isCancel(err)) {
+            //     console.log("User cancelled")
+            // } else {
                 console.log(err)
-            }
+            // }
         }
 
 
@@ -83,13 +87,10 @@ function AddCourse({ navigation }) {
     
 
      const handleGenerate = async () => {
-        setShowLoader(true);
-        const toSend = {
-            file: file,
-            name: courseName,
-            startDate: startDate,
-            endDate: endDate
-        }
+
+        dispatch(setLoader({loader: true}));
+
+
         let formdata = new FormData();
         formdata.append('file', file);
         formdata.append("name", courseName);
@@ -98,23 +99,20 @@ function AddCourse({ navigation }) {
 
         try {
             const response = await AxiosService("POST", "addCourse", true, {}, formdata, { "Content-Type": `multipart/form-data` })
-            setShowLoader(false)
             navigation.navigate("AddTopics", {schedule: response.data.data, courseId: response.data.courseId, courseData: response.data.courseData });
-            // showLoader(false)
-            // if (response.data.success) { // Ensure the response is successful before navigation
-            //     navigation.navigate("AddTopics", response.data.data);
-            // }
+            dispatch(setLoader({loader: false}));
 
         } catch (err) {
             console.log(err)
-            showLoader(false)
+            dispatch(setLoader({loader: false}));
         }
-
-
     };
 
     const deleteFile = async () => {
         setFile(null);
+    }
+    const handleNavigate = () => {
+        navigation.navigate("NavigationBar");
     }
 
     return (
@@ -128,13 +126,14 @@ function AddCourse({ navigation }) {
             {/* <Headers courseText="Course Details">
             </Headers> */}
             
-            <View style={styles.header}>
+            {/* <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Image source={icons.chevronLeft} style={styles.backIcon} />
                 </TouchableOpacity>
                 <Text style={styles.headerTitle}>Course Details</Text>
                 <View />
-            </View>
+            </View> */}
+            <Headers courseText="Course Details" handleNavigate={handleNavigate} display={true} />
 
             <View style={styles.content}>
 
@@ -260,6 +259,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         gap: 10,
         alignItems: "center",
+        
     },
     pdfIcon: {
         width: 30,
@@ -290,7 +290,7 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         marginBottom: 20,
         fontSize: SIZES.medium,
-        borderRadius: 10,
+        borderRadius: 30,
         paddingHorizontal: 10,
     },
     label: {
@@ -307,7 +307,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: COLORS.gray,
         paddingHorizontal: 10,
-        borderRadius: 10,
+        borderRadius: 30,
     },
     uploadButton: {
         flexDirection: 'column',
@@ -316,7 +316,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: COLORS.lightGray,
         padding: 15,
-        borderRadius: 10,
+        borderRadius: 30,
         marginBottom: 20,
         borderStyle: "dotted",
     },

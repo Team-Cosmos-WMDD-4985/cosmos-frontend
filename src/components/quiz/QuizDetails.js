@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: COLORS.lightGrey,
+    backgroundColor: COLORS.lightGray,
     borderRadius: SIZES.medium,
     justifyContent: 'space-between',
     ...SHADOWS.medium,
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     fontSize: SIZES.large,
     color: COLORS.midTeal,
     textAlign: "center",
-    WEIGHT: WEIGHT.bold,
+    fontWeight: WEIGHT.bold,
     
   },
 });

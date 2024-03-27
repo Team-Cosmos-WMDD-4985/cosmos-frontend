@@ -2,7 +2,7 @@ import { Center } from '@gluestack-ui/themed';
 import { useEffect, React } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ImageBackground } from 'react-native';
 import { COLORS, icons, images, SIZES } from "./../constants";
-
+import Loader from "./../common/Loader";
 function SplashScreen({ navigation }) {
 
 
@@ -21,6 +21,7 @@ function SplashScreen({ navigation }) {
   };
 
   return (
+    <View style= {{flex: 1}}>
     <ImageBackground source={images.splash} style={styles.container}>
       <TouchableOpacity onPress={navigateToNext}>
         <Image source={images.logo} style={styles.logo} />
@@ -30,6 +31,8 @@ function SplashScreen({ navigation }) {
         <Text style={styles.title}>MANAGEMENT SYSTEM</Text>
       </View>
     </ImageBackground>
+    
+    </View>
   );
 }
 

@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 5
   },
   paginationDotInactive: {
-    backgroundColor: COLORS.lightGrey
+    backgroundColor: COLORS.lightGray
   },
   nextButton: {
     width: '100%',

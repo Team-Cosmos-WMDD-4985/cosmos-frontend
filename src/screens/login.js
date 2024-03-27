@@ -9,24 +9,32 @@ import images from './../constants/images'
 import { icons } from '../constants';
 import { Input } from 'react-native-elements';
 // import CheckBox from '@react-native-community/checkbox';
+import { useDispatch } from "react-redux";
+import { setLoader } from '../redux/user';
 
 
 import logo from "./../../assets/logo.png"
 const Login = ({ navigation }) => {
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('akash@gmail.com');
+  const [password, setPassword] = useState('1234');
   const [isSelected, setSelection] = useState(false);
 
-
+  const dispatch = useDispatch();
 
   const submitLogin = async () => {
+
+    dispatch(setLoader({ loader: true }))
     const data = await AxiosService('POST', 'auth/login', false, {}, { email, password },)
       .then(async function (response) {
+        dispatch(setLoader({ loader: false }))
+        console.log("user data ", response.data)
         await secoreStoreService.save("token", response.data.token);
+        await secoreStoreService.save("user", response.data.user);
         navigation.navigate("NavigationBar")
       })
       .catch(function (error) {
+        dispatch(setLoader({ loader: false }))
         console.log(error);
       });
   }
@@ -43,12 +51,22 @@ const Login = ({ navigation }) => {
           <Text style={head2}>Please login to your account.</Text>
           <View style={formGroup}>
             <Text style={label}>Email</Text>
-            <TextInput style={input} placeholder='Enter Your Email' onChangeText={(text) => setEmail(text)} />
+            {/* <TextInput style={input} placeholder='Enter Your Email' onChangeText={(text) => setEmail(text)} /> */}
+            <TextInput
+              style={input}
+              value={email} // Use the state value here
+              onChangeText={(text) => setEmail(text)}
+            />
           </View>
           <View style={formGroup}>
             <Text style={label}>Password</Text>
-            <TextInput style={input} value={password} secureTextEntry={true} // This hides the password
-              placeholder='Enter Your Password' onChangeText={(text) => setPassword(text)} />
+            {/* <TextInput style={input} value={password} secureTextEntry={true} placeholder='Enter Your Password' onChangeText={(text) => setPassword(text)} /> */}
+              <TextInput
+              style={input}
+              value={password} // Use the state value here
+              secureTextEntry={true} // This hides the password
+              onChangeText={(text) => setPassword(text)}
+            />
           </View>
           <View style={styles.fp}>
             {/* <View>

@@ -2,14 +2,15 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AppStack from './src/stack/AppStack';
-
-const Stack = createNativeStackNavigator();
+import { Provider } from 'react-redux'
+import { store } from './src/redux/store';
 
 export default function App() {
   return (
-    <AppStack/>
- 
-
+    <Provider store={store}>
+        <AppStack/>
+    </Provider>
+   
   );
 }
 const styles = StyleSheet.create({

@@ -3,7 +3,7 @@ const COLORS = {
   secondary: "#307177",
   accent: "#2DFFE5",
   white: "#FFFFFF",
-  lightGrey: "#EFEFEF", 
+  lightGray: "#EFEFEF", 
   midGray: "#74757B",
   darkGray: "#505568",
   lightTeal: "#D7FFF3",
