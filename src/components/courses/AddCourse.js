@@ -70,11 +70,11 @@ function AddCourse({ navigation }) {
             }
             setFile(pdfUpload);
         } catch (err) {
-            if (DocumentPicker.isCancel(err)) {
-                console.log("User cancelled")
-            } else {
+            // if (DocumentPicker.isCancel(err)) {
+            //     console.log("User cancelled")
+            // } else {
                 console.log(err)
-            }
+            // }
         }
 
 
