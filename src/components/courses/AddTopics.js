@@ -4,6 +4,9 @@ import { COLORS, SIZES } from "./../../constants";
 import { HStack, VStack } from 'native-base';
 import { icons, images } from "./../../constants";
 import AxiosService from "./../../services/axios";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import Headers from "../../common/Headers";
+
 
 function AddTopics({ navigation, route }) {
 
@@ -42,23 +45,27 @@ function AddTopics({ navigation, route }) {
         } else {
             copySchedule[activeIndexToAdd].topics = [newTopicValue];
         }
-
+    
         setSchedule(copySchedule)
         setNewTopicValue(null)
         setTopicInputModal(false);
     }
-
+    
     const handleTopicCancel = () => {
-        setNewTopicValue(null)
-        setTopicInputModal(false)
+        setNewTopicValue("");
+        setTopicInputModal(false);
     }
-
+    
     const addTopics = async (index) => {
         console.log(index)
         setActiveIndexToAdd(index)
         setTopicInputModal(true)
 
     }
+
+    const handleNavigate = () => {
+        navigation.navigate("NavigationBar");
+      };
 
     const handleCancel = () => {
         setModalVisible(false);
@@ -131,12 +138,12 @@ function AddTopics({ navigation, route }) {
                         <View style={styles.overlay} />
                         <View style={styles.modalView}>
                             {/* <Image source={icons.checkcircle} style={styles.checkcirclestyle} /> */}
-                            <Text style={styles.modalText}>Add topic</Text>
+                            <Text style={styles.modalText}>Add topics</Text>
                             <View >
 
                                     <TextInput 
                                         style={styles.addTopicInput} 
-                                        placeholder='Enter topic'
+                                        placeholder='Topic Name'
                                         onChangeText={(text) => {setNewTopicValue(text)}}
                                         value={newTopicValue}
                                     />
@@ -161,11 +168,17 @@ function AddTopics({ navigation, route }) {
                     </View>
                 </Modal>
 
-                <View style={styles.header}>
-                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                <View >
+                <Headers
+        courseText="Manage Topics"
+        handleNavigate={handleNavigate}
+        display={true}
+        // courseTextDes="Manage Topics"
+      />
+                    {/* <TouchableOpacity onPress={() => navigation.goBack()}>
                         <Image source={icons.chevronLeft} style={styles.backIcon} />
                     </TouchableOpacity>
-                    <Text style={styles.headerTitle}>Manage Topics</Text>
+                    <Text style={styles.headerTitle}>Manage Topics</Text> */}
                 </View>
 
                 {
@@ -224,7 +237,8 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: COLORS.midGray,
         padding: 5,
-        borderRadius: 10
+        borderRadius: 30,
+        textAlign: 'center',
     },
     container: {
         flex: 1,
@@ -275,7 +289,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: "center",
+        justifyContent: "flex-start",
         borderWidth: 1,
         flexWrap: "wrap",
         gap: 10,
@@ -405,8 +419,10 @@ const styles = StyleSheet.create({
     modalText: {
         marginBottom: 10,
         marginTop: 10,
-        fontSize: SIZES.medium,
-        textAlign: "center"
+        fontSize: SIZES.xLarge,
+        fontWeight: 'bold',
+        textAlign: "center",
+        
     },
     checkcirclestyle: {
         width: 80,

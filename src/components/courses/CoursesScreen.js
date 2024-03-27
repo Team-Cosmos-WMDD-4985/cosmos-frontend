@@ -28,7 +28,7 @@ function CoursesScreen({ navigation }) {
   return (
 
     <SafeAreaView style={styles.container}>
-      <Headers courseText="Courses" display={false} courseTextDes="course Detail" />
+      <Headers courseText="Courses" display={false} courseTextDes="View / add your new course" />
 
 
       {courseList.length > 0 ? (
@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    
     // padding: 20,
   },
   courseContainer: {
@@ -120,8 +121,11 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     borderRadius: 30,
     marginTop: 40,
-    width: '100%',
+    marginBottom: 20,
+    width: '90%',
     height: 54,
+    alignSelf: 'center',
+  
   },
   addButtonText: {
     fontWeight: 'bold',
