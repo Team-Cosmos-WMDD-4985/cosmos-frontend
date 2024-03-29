@@ -7,7 +7,6 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import { COLORS, SIZES, WEIGHT, images } from "./../constants";
 
 // componenets
-import Welcome from "../screens/welcome";
 import Signup from "../screens/signup";
 // import AddingTopicsForQuizGeneration from "./../components/quiz/AddingTopicsForQuizGeneration";
 import CreateYourQuiz from "../components/quiz/CreateYourQuiz";
@@ -29,10 +28,12 @@ import getAnswer from "../components/quiz/GetAnswers";
 import LoaderComponent from "../common/Loader";
 
 //Feature Screens
+import SmartCourse from "../components/features/SmartCourse";
 import Feature1 from "../components/features/Feature1";
 import Feature2 from "../components/features/Feature2";
 import Feature3 from "../components/features/Feature3";
 import Feature4 from "../components/features/Feature4";
+
 import { useSelector } from "react-redux";
 import CourseDetails from "../components/courses/CourseDetails";
 
@@ -53,8 +54,8 @@ function AppStack() {
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            name="Welcome"
-            component={Welcome}
+            name="SmartCourse"
+            component={SmartCourse}
             options={{ headerShown: false }}
           />
           <Stack.Screen
@@ -261,7 +262,7 @@ function AppStack() {
       </NavigationContainer>
 
       {
-        loader && <LoaderComponent/>
+        loader && <LoaderComponent />
       }
     </View>
   );
