@@ -36,6 +36,8 @@ const CourseCard = ({ courses, navigation }) => {
     navigation.navigate('Choose Topics', { topics, courseId });
   };
 
+  
+
   return (
     <ScrollView>
       {courses.map((course) => (

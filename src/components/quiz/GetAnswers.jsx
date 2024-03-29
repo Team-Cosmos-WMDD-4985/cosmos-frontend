@@ -1,13 +1,23 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import Headers from '../../common/Headers';
 
 const GetAnswer = ({ route, navigation }) => {
     const { quiz } = route.params;
     console.log(`quiz getAnswer ${quiz}`);
     
+    const handleNavigate = () => {
+    if (navigation.canGoBack()) {
+        navigation.goBack();
+      } 
+}
+
+
     return (
         <View style={styles.container}>
+            <Headers courseText="Answers" courseTextDes="Answers" display={true} handleNavigate={handleNavigate}/>
             <ScrollView>
+                
                 {quiz.map((question, index) => (
                     <View key={index} style={styles.questionContainer}>
                         <View style={styles.quizContainer}>
@@ -28,9 +38,9 @@ const GetAnswer = ({ route, navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingHorizontal: 20,
+        // paddingHorizontal: 20,
         paddingVertical: 10,
-        alignItems: "center"
+        // alignItems: "center"
     },
     questionContainer: {
         marginBottom: 20,
