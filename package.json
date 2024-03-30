@@ -39,6 +39,7 @@
     "openai": "^4.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-lorem-picsum": "^2.0.1",
     "react-native": "0.72.10",
     "react-native-document-picker": "^8.2.1",
     "react-native-element-dropdown": "^2.10.1",

@@ -44,6 +44,7 @@ const MultipleChoiceQue = ({ route, navigation }) => {
   const [answer, setAnswer] = useState('');
   const [quizz, setQuizz] = useState();
   const [quizzTwo, setQuizTwo] = useState();
+  const [isTrue, setIsTrue] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -51,6 +52,7 @@ const MultipleChoiceQue = ({ route, navigation }) => {
 
   useEffect(() => {
     getQuizById()
+
   }, []);
 
   console.log(`routes: ${route.params.quiz.questions.length}`)
@@ -74,7 +76,6 @@ const MultipleChoiceQue = ({ route, navigation }) => {
   const getQuizById = async () => {
     try {
       const response = await AxiosService("POST", `getQuizForUpdate/${quiz._id}`, true);
-      // console.log("Updated quiz details:", response.data.questions);
       setQuizz(response.data.questions)
       setQuizTwo(response.data)
       console.log(`quizzTwo ${quizzTwo}`)
@@ -84,9 +85,7 @@ const MultipleChoiceQue = ({ route, navigation }) => {
   }
 
 
-  console.log("this is quiz", quiz)
-
-  // console.log(`this is quiz data ${JSON.stringify(quizz.questions)}`);
+  console.log("this is quiz", JSON.stringify(quizz))
 
 
 
@@ -94,9 +93,9 @@ const MultipleChoiceQue = ({ route, navigation }) => {
   const fetchRegeneratedQuiz = async () => {
     try {
 
-      dispatch(setLoader({loader: true}))
+      dispatch(setLoader({ loader: true }))
       const response = await AxiosService("POST", `regenerateQuiz/${quiz._id}/${quiz.courseId}`, true, {}, { type: type });
-      dispatch(setLoader({loader: false}))
+      dispatch(setLoader({ loader: false }))
       if (response && response.data) {
         SetRegeneratedQuiz(response.data.data);
         console.log("this is ", response.data.data);
@@ -108,7 +107,7 @@ const MultipleChoiceQue = ({ route, navigation }) => {
 
       }
     } catch (err) {
-      dispatch(setLoader({loader: false}))
+      dispatch(setLoader({ loader: false }))
       console.log("Error fetching regenerated quiz:", err);
     }
   };
@@ -121,10 +120,13 @@ const MultipleChoiceQue = ({ route, navigation }) => {
 
   const handleNext = () => {
     carouselRef.current.snapToNext();
+    setIsTrue(false);
   };
 
   const handlePrevious = () => {
     carouselRef.current.snapToPrev();
+    setIsTrue(false);
+
   };
   const optionLabels = ["A", "B", "C", "D"];
 
@@ -132,6 +134,11 @@ const MultipleChoiceQue = ({ route, navigation }) => {
     SetColor("red");
     navigation.navigate("getAnswer", { quiz: quizz });
   };
+
+  const isTrueFunc = () => {
+    setIsTrue((prevIsTrue) => !prevIsTrue);
+    console.log("his is", isTrue)
+  }
 
   const renderItem = ({ item, index }) => {
     return (
@@ -163,18 +170,35 @@ const MultipleChoiceQue = ({ route, navigation }) => {
           </View>
           {item.options.map((option, optionIndex) => (
             <View key={optionIndex}>
-              <View style={styles.options}>
+              <View
+                style={[
+                  {
+                    width: 350,
+                    padding: 20,
+                    paddingTop: 35,
+                    flexDirection: "row",
+                    alignItems: "center",
+                    borderColor: "black",
+                    borderWidth: 0.5,
+                    backgroundColor:
+                      isTrue && option.optionValue === item.answer ? "#D7FFF3" : "white",
+                  },
+                  optionIndex === item.options.length - 1 && {
+                    borderBottomLeftRadius: 20,
+                    borderBottomRightRadius: 20,
+                  },
+                ]}
+              >
                 <Text>{optionLabels[optionIndex]}. </Text>
                 <Text>{option.optionValue}</Text>
               </View>
-              {optionIndex !== item.options.length - 1 && (
-                <View style={styles.separator}></View>
-              )}
+             
             </View>
           ))}
+
         </View>
         <View style={styles.iconContainer}>
-          <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: "row", }}>
             <TouchableOpacity style={styles.arrows} onPress={handlePrevious}>
               <Icon name="chevron-left" size={15} color="black" />
             </TouchableOpacity>
@@ -189,7 +213,7 @@ const MultipleChoiceQue = ({ route, navigation }) => {
             </View>
 
             <Text style={{ color: "black" }}>/</Text>
-            <Text style={{ color: "black" }}>{quizz.totalQuestion}</Text>
+            <Text style={{ color: "black" }}>{isRegenerated ? regeneratedQuiz.questions.length : quizz.length}</Text>
           </View>
           <TouchableOpacity style={styles.arrows} onPress={handleConfirmTwo}>
             <Icon name="plus" size={15} color="black" />
@@ -228,7 +252,6 @@ const MultipleChoiceQue = ({ route, navigation }) => {
   const handleConfirmTwo = () => {
     setModalVisible2(true);
     console.log("Confirm Pressed");
-
   };
 
 
@@ -238,221 +261,224 @@ const MultipleChoiceQue = ({ route, navigation }) => {
 
   const handleNavigate = () => {
     navigation.goBack();
-}
+  }
+
 
 
   return (
     <View>
 
-<Headers courseText="Quizzes" handleNavigate={handleNavigate} display={true} courseTextDes="course Detail"/>
+      <Headers courseText="Multiple Choice" handleNavigate={handleNavigate} display={true} courseTextDes="Feel free to edit the content" />
 
-    <ScrollView contentContainerStyle={styles.scrollViewContent}>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(!modalVisible)}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.overlay} />
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>
-              Your quiz was successfully saved
-            </Text>
-            <Image source={icons.checkcircle} style={styles.checkcirclestyle} />
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity
-                style={styles.createButton}
-                onPress={handleCancel}
-              >
-                <Text style={styles.generateButtonText}>Return To Home</Text>
-              </TouchableOpacity>
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => setModalVisible(!modalVisible)}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.overlay} />
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>
+                Your quiz was successfully saved
+              </Text>
+              <Image source={icons.checkcircle} style={styles.checkcirclestyle} />
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                  style={styles.createButton}
+                  onPress={handleCancel}
+                >
+                  <Text style={styles.generateButtonText}>Return To Home</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
+        </Modal>
+
+
+
+        {/* ================================================================================ */}
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible2}
+          onRequestClose={() => {
+            setModalVisible2(!modalVisible2);
+          }}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.overlay} />
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>Enter your quiz details:</Text>
+
+              {/* Input for the question */}
+              <Text style={styles.label}>Question:</Text>
+              <TextInput
+                style={styles.input}
+                onChangeText={text => setQuestion(text)}
+                value={question}
+                placeholder="Enter your question"
+              />
+
+
+              <View>
+                <Text style={styles.label}>Option 1:</Text>
+                <TextInput
+                  style={styles.input}
+                  onChangeText={text => {
+                    const updatedOptions = [...options];
+                    updatedOptions[0] = text;
+                    setOptions(updatedOptions);
+                  }}
+                  value={options[0]}
+                  placeholder="Enter option 1"
+                />
+              </View>
+              <View>
+                <Text style={styles.label}>Option 2:</Text>
+                <TextInput
+                  style={styles.input}
+                  onChangeText={text => {
+                    const updatedOptions = [...options];
+                    updatedOptions[1] = text;
+                    setOptions(updatedOptions);
+                  }}
+                  value={options[1]}
+                  placeholder="Enter option 2"
+                />
+              </View>
+              <View>
+                <Text style={styles.label}>Option 3:</Text>
+                <TextInput
+                  style={styles.input}
+                  onChangeText={text => {
+                    const updatedOptions = [...options];
+                    updatedOptions[2] = text;
+                    setOptions(updatedOptions);
+                  }}
+                  value={options[2]}
+                  placeholder="Enter option 3"
+                />
+              </View>
+              <View>
+                <Text style={styles.label}>Option 4:</Text>
+                <TextInput
+                  style={styles.input}
+                  onChangeText={text => {
+                    const updatedOptions = [...options];
+                    updatedOptions[3] = text;
+                    setOptions(updatedOptions);
+                  }}
+                  value={options[3]}
+                  placeholder="Enter option 4"
+                />
+              </View>
+
+
+
+              <Text style={styles.label}>Answer:</Text>
+              <TextInput
+                style={styles.input}
+                onChangeText={text => setAnswer(text)}
+                value={answer}
+                placeholder="Enter the correct answer"
+              />
+
+
+
+
+              <View style={styles.buttonContainer2}>
+                <TouchableOpacity
+                  style={styles.submitButton}
+                  onPress={addQuestions}
+                >
+                  <Text style={styles.generateButtonText}>Save</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={styles.submitButton}
+                  onPress={handleCancel2}
+                >
+                  <Text style={styles.submitButtonText}>Cancel</Text>
+                </TouchableOpacity>
+              </View>
+
+            </View>
+          </View>
+        </Modal>
+
+        {/* <Text style={styles.title}>Multiple Choice Question</Text> */}
+        <View style={{ marginTop: 19, alignSelf: "flex-end", marginRight: 20, flexDirection: 'row' }}>
+          {/* <Button title='Check Answer' onPress={onCheckAns} /> */}
+          {/* <Button title='regnerate Quiz' onPress={fetchRegeneratedQuiz} /> */}
         </View>
-      </Modal>
-
-
-
-      {/* ================================================================================ */}
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible2}
-        onRequestClose={() => {
-          setModalVisible2(!modalVisible2);
-        }}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.overlay} />
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Enter your quiz details:</Text>
-
-            {/* Input for the question */}
-            <Text style={styles.label}>Question:</Text>
-            <TextInput
-              style={styles.input}
-              onChangeText={text => setQuestion(text)}
-              value={question}
-              placeholder="Enter your question"
+        <View style={{ padding: 30 }}>
+          <View style={{ flexDirection: "row", justifyContent: "center" }}>
+            <Carousel
+              ref={carouselRef}
+              layout="default"
+              data={isRegenerated ? regeneratedQuiz.questions : quizz}
+              renderItem={renderItem}
+              sliderWidth={width}
+              itemWidth={width}
+              scrollEnabled={false}
             />
-
-
-            <View>
-              <Text style={styles.label}>Option 1:</Text>
-              <TextInput
-                style={styles.input}
-                onChangeText={text => {
-                  const updatedOptions = [...options];
-                  updatedOptions[0] = text;
-                  setOptions(updatedOptions);
-                }}
-                value={options[0]}
-                placeholder="Enter option 1"
-              />
-            </View>
-            <View>
-              <Text style={styles.label}>Option 2:</Text>
-              <TextInput
-                style={styles.input}
-                onChangeText={text => {
-                  const updatedOptions = [...options];
-                  updatedOptions[1] = text;
-                  setOptions(updatedOptions);
-                }}
-                value={options[1]}
-                placeholder="Enter option 2"
-              />
-            </View>
-            <View>
-              <Text style={styles.label}>Option 3:</Text>
-              <TextInput
-                style={styles.input}
-                onChangeText={text => {
-                  const updatedOptions = [...options];
-                  updatedOptions[2] = text;
-                  setOptions(updatedOptions);
-                }}
-                value={options[2]}
-                placeholder="Enter option 3"
-              />
-            </View>
-            <View>
-              <Text style={styles.label}>Option 4:</Text>
-              <TextInput
-                style={styles.input}
-                onChangeText={text => {
-                  const updatedOptions = [...options];
-                  updatedOptions[3] = text;
-                  setOptions(updatedOptions);
-                }}
-                value={options[3]}
-                placeholder="Enter option 4"
-              />
-            </View>
-
-
-
-            <Text style={styles.label}>Answer:</Text>
-            <TextInput
-              style={styles.input}
-              onChangeText={text => setAnswer(text)}
-              value={answer}
-              placeholder="Enter the correct answer"
-            />
-
-           
-
-
-            <View style={styles.buttonContainer2}>
-              <TouchableOpacity
-                style={styles.submitButton}
-                onPress={addQuestions}
-              >
-                <Text style={styles.generateButtonText}>Save</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={styles.submitButton}
-                onPress={handleCancel2}
-              >
-                <Text style={styles.submitButtonText}>Cancel</Text>
-              </TouchableOpacity>
-            </View>
-
           </View>
         </View>
-      </Modal>
-
-      {/* <Text style={styles.title}>Multiple Choice Question</Text> */}
-      <View style={{ marginTop: 30, alignSelf: "flex-end", marginRight: 20, flexDirection: 'row' }}>
-        {/* <Button title='Check Answer' onPress={onCheckAns} /> */}
-        {/* <Button title='regnerate Quiz' onPress={fetchRegeneratedQuiz} /> */}
-      </View>
-      <View style={{ padding: 30 }}>
-        <View style={{ flexDirection: "row", justifyContent: "center" }}>
-          <Carousel
-            ref={carouselRef}
-            layout="default"
-            data={isRegenerated ? regeneratedQuiz.questions : quizz}
-            renderItem={renderItem}
-            sliderWidth={width}
-            itemWidth={width}
-
-          />
-        </View>
-      </View>
-      {/* <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 10, marginBottom:30,  gap:50  }}>
+        {/* <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 10, marginBottom:30,  gap:50  }}>
         <View style={{ marginTop: 30, alignSelf: "flex-end", marginRight: 20 }}>
           <Button title='Check Answer' onPress={onCheckAns} />
         </View>
         <View style={{ backgroundColor: "white",borderColor:"black", justifyContent: "center", width : 150, borderRadius:10 }}><Button color="black" title="Download PDF" onPress={handleCancel} /></View>
         <View style={{ backgroundColor: "#A1A1A1", justifyContent: "center", width:150, borderRadius:10 }}><Button color="black" title="Save Quiz" onPress={handleConfirm}  /></View>
       </View> */}
-      <View style={styles.buttonContainer}>
-        <View style={styles.btnContainer}>
-          <TouchableOpacity
-            style={[styles.button, styles.cancelButton]}
-            onPress={onCheckAns}
-          >
-            <Text style={styles.cancelButtonText}>Get Answers</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.button, styles.generateButton]}
-            onPress={handleConfirm}
-          >
-            <Text style={styles.generateButtonText}>Save</Text>
-          </TouchableOpacity>
-        </View>
+        <View style={styles.buttonContainer}>
+          <View style={styles.btnContainer}>
+            <TouchableOpacity
+              style={[styles.button, styles.cancelButton]}
+              onPress={isTrueFunc}
+            >
+              <Text style={styles.cancelButtonText}>Get Answer</Text>
 
-        {/* <View style={{  justifyContent: "center", width : 150, borderRadius:10 }}><Button  title="Download PDF" onPress={handleCancel} /></View> */}
-        <View>
-          <TouchableOpacity
-            onPress={handleCancel}
-            style={{
-              borderBottomWidth: 1,
-              borderBottomColor: COLORS.primary,
-              alignItems: "center",
-            }}
-          >
-            <Text>Download PDF</Text>
-          </TouchableOpacity>
+            </TouchableOpacity>
+            {/* <Text onPress={isTrueFunc} style={styles.cancelButtonText}>Get Answers2</Text> */}
+            <TouchableOpacity
+              style={[styles.button, styles.generateButton]}
+              onPress={handleConfirm}
+            >
+              <Text style={styles.generateButtonText}>Save</Text>
+            </TouchableOpacity>
+          </View>
+
+          {/* <View style={{  justifyContent: "center", width : 150, borderRadius:10 }}><Button  title="Download PDF" onPress={handleCancel} /></View> */}
+          <View>
+            <TouchableOpacity
+              onPress={handleCancel}
+              style={{
+                borderBottomWidth: 1,
+                borderBottomColor: COLORS.primary,
+                alignItems: "center",
+              }}
+            >
+              <Text onPress={onCheckAns}>Get All Answers</Text>
+            </TouchableOpacity>
+          </View>
+          <View>
+            <TouchableOpacity
+              onPress={() => { }}
+              style={{
+                borderBottomWidth: 1,
+                borderBottomColor: COLORS.primary,
+                alignItems: "center",
+                marginTop: 10,
+              }}
+            >
+              <Text onPress={fetchRegeneratedQuiz}>Regenerate the quiz</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-        <View>
-          <TouchableOpacity
-            onPress={() => { }}
-            style={{
-              borderBottomWidth: 1,
-              borderBottomColor: COLORS.primary,
-              alignItems: "center",
-              marginTop: 10,
-            }}
-          >
-            <Text onPress={fetchRegeneratedQuiz}>Regenerate the quiz</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
     </View>
   );
 };
@@ -470,10 +496,10 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   carouselItem: {
-    width: width * .94,
-    height: 550,
+    width: width - 30,
+    height: 520,
     alignItems: "center",
-    
+
   },
   centeredView: {
     flex: 1,
@@ -506,6 +532,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: COLORS.button,
     // paddingVertical: 15,
+    alignItems: "center",
+    justifyContent: "center",
     // paddingHorizontal: 30,
     borderRadius: 30,
     marginRight: 10,
@@ -514,8 +542,8 @@ const styles = StyleSheet.create({
   },
   generateButton: {
     backgroundColor: COLORS.primary,
-    // paddingVertical: 15,
-    // paddingHorizontal: 30,
+    alignItems: "center",
+    justifyContent: "center",
     borderRadius: 30,
     borderWidth: 1,
     width: 184,
@@ -592,20 +620,24 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: SIZES.medium,
     justifyContent: "space-between",
-    borderColor: "black",
-    borderWidth: 1,
+    // borderColor: "black",
+    // borderWidth: 1,
+
     height: 400,
     width: 350,
   },
-  separator: {
-    height: 1,
-    backgroundColor: "black",
-  },
+  // separator: {
+  //   height: 1,
+  //   // backgroundColor: "black",
+  // },
+
   iconContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingVertical: 10,
+    paddingVertical: "10%",
     alignItems: "center",
+    gap: 50
+
 
   },
   numQuestions: {

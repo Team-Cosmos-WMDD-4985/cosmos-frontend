@@ -134,7 +134,7 @@ function AddCourse({ navigation }) {
                 <Text style={styles.headerTitle}>Course Details</Text>
                 <View />
             </View> */}
-            <Headers courseText="Course Details" handleNavigate={handleNavigate} display={true} />
+            <Headers courseText="Course Details" courseTextDes="Generate Course" handleNavigate={handleNavigate} display={true} />
 
             <View style={styles.content}>
 

@@ -50,7 +50,7 @@ const SelectTopics = ({ route, navigation }) => {
         style={styles.checkboxIcon}
       />
       <View style={styles.textContainer}>
-        <Text style={styles.weekText}>{`Week ${index + 1}:`}</Text>
+        <Text style={styles.weekText}>{`Topic ${index + 1}:`}</Text>
         <Text style={styles.topicText}>{item.name}</Text>
       </View>
     </TouchableOpacity>
@@ -61,7 +61,7 @@ const SelectTopics = ({ route, navigation }) => {
   }
   return (
     <View style={styles.flexContainer}>
-      <Headers courseText="Course Details"  display={true} handleNavigate={handleNavigate} courseTextDes="course Detail"/>
+      <Headers courseText="Choose Topics"  display={true} handleNavigate={handleNavigate} courseTextDes="Select topics to create quiz"/>
 
       <FlatList
         data={selectedTopics}
