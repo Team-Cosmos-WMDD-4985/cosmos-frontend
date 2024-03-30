@@ -38,7 +38,7 @@ const AddingTopicsForQuizGeneration = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Headers courseText="Quizzes" handleNavigate={handleNavigate} display={false} courseTextDes="Choose your cours"/>
+      <Headers courseText="Quizzes" handleNavigate={handleNavigate} display={false} courseTextDes="Choose your course"/>
       {/* <View style={styles.header}>
         <Text style={styles.headerTitle}>Quizzes</Text>
         <Image source={images.profile} style={styles.profileImage} />

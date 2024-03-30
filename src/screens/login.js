@@ -8,12 +8,9 @@ import secoreStoreService from "./../services/secureStore";
 import images from './../constants/images'
 import { icons } from '../constants';
 import { Input } from 'react-native-elements';
-// import CheckBox from '@react-native-community/checkbox';
 import { useDispatch } from "react-redux";
 import { setLoader } from '../redux/user';
 
-
-import logo from "./../../assets/logo.png"
 const Login = ({ navigation }) => {
 
   const [email, setEmail] = useState('akash@gmail.com');
@@ -44,11 +41,11 @@ const Login = ({ navigation }) => {
       <View style={styles.container1}>
         <View style={styles.s1}>
           <Image style={styles.logo} source={icons.logo}></Image>
-          <Text style={styles.h1} onPress={() => navigation.navigate('Welcome')}>Welcome Back Kristen</Text>
+          <Text style={styles.h1}>MyGuru</Text>
         </View>
         <View style={styles.s2}>
-          <Text style={head1}>Login</Text>
-          <Text style={head2}>Please login to your account.</Text>
+          <Text style={styles.head1}>Login</Text>
+          <Text style={styles.head2}>Please login to your account.</Text>
           <View style={formGroup}>
             <Text style={label}>Email</Text>
             {/* <TextInput style={input} placeholder='Enter Your Email' onChangeText={(text) => setEmail(text)} /> */}
@@ -61,7 +58,7 @@ const Login = ({ navigation }) => {
           <View style={formGroup}>
             <Text style={label}>Password</Text>
             {/* <TextInput style={input} value={password} secureTextEntry={true} placeholder='Enter Your Password' onChangeText={(text) => setPassword(text)} /> */}
-              <TextInput
+            <TextInput
               style={input}
               value={password} // Use the state value here
               secureTextEntry={true} // This hides the password
@@ -69,14 +66,6 @@ const Login = ({ navigation }) => {
             />
           </View>
           <View style={styles.fp}>
-            {/* <View>
-              <CheckBox
-                value={isSelected}
-                onValueChange={setSelection}
-                style={{ alignSelf: 'center' }}
-              />
-              <Text>Stay Loggined</Text>
-            </View> */}
             <Text style={styles.loginLinks}>Forget Password</Text>
           </View>
 
@@ -116,7 +105,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   logo: {
-    marginTop: 110,
+    marginTop: 10,
     height: 123,
     height: 110,
     resizeMode: 'contain'
@@ -129,12 +118,23 @@ const styles = StyleSheet.create({
     height: "40%"
 
   },
+  head1:{
+    fontSize:30,
+    color:"black",
+    textAlign:"center",
+    fontWeight:"bold"
+},
+head2:{
+    fontSize:15,
+    color:"black",
+    textAlign:"center"
+},
   h1: {
-    fontSize: 30,
+    fontSize: SIZES.xLarge,
     color: COLORS.midTeal,
   },
   small: {
-    fontSize: 15,
+    fontSize: 15, 
     color: "white",
   },
   s2: {
@@ -144,7 +144,8 @@ const styles = StyleSheet.create({
     height: "60%",
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
-    padding: 20
+    padding: 20,
+    paddingTop: 10,
   },
   fp: {
     display: 'flex',
@@ -166,7 +167,7 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: COLORS.primary,
     borderRadius: 30,
-    marginTop: 20,
+    marginTop: 10,
     justifyContent: 'center',
     alignItems: 'center',
     height: 54,

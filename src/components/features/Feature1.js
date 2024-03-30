@@ -13,7 +13,7 @@ const Feature1 = ({ navigation }) => {
       </TouchableOpacity>
       <Image
         source={images.feature1}
-        style={styles.image}
+        style={styles.image}            
         resizeMode="contain"
       />
       <Text style={styles.title}>Create Schedules easily</Text>

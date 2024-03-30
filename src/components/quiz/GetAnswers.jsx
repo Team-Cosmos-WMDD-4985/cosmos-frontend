@@ -15,14 +15,14 @@ const GetAnswer = ({ route, navigation }) => {
 
     return (
         <View style={styles.container}>
-            <Headers courseText="Answers" courseTextDes="Answers" display={true} handleNavigate={handleNavigate}/>
-            <ScrollView>
+            <Headers courseText="Get Answers" courseTextDes="Check your answers" display={true} handleNavigate={handleNavigate}/>
+            <ScrollView style={styles.scrollViewDiv}>
                 
                 {quiz.map((question, index) => (
                     <View key={index} style={styles.questionContainer}>
                         <View style={styles.quizContainer}>
                             <Text style={styles.question}>Question {index + 1}</Text>
-                            <Text style={styles.question}>{question.question}</Text>
+                            <Text style={styles.questionDes}>{question.question}</Text>
                         </View>
                         <View style={styles.answerDiv}>
                             <Text>Your answer: </Text>
@@ -44,12 +44,13 @@ const styles = StyleSheet.create({
     },
     questionContainer: {
         marginBottom: 20,
+        // marginTop: 30,
         justifyContent: "center",
         alignItems: "center"
     },
     question: {
-        fontSize: 13,
-        // fontWeight: 'bold',
+        fontSize: 19,
+        fontWeight: 'bold',
         marginBottom: 10,
         color: "white",
         textAlign: "left"
@@ -64,18 +65,19 @@ const styles = StyleSheet.create({
     quizContainer: {
         backgroundColor: "#3C3D43",
         width: 350,
-        height: 120,
-        borderRadius: 10,
+        height: 100,
+        borderRadius: 20,
         borderBottomLeftRadius: 0,
         borderBottomRightRadius: 0,
         padding: 10,
+        justifyContent:"center"
     },
 
     answerDiv: {
         width: 350,
         borderWidth: 1,
         padding: 20,
-        borderRadius: 10,
+        borderRadius: 30,
         borderTopLeftRadius: 0,
         borderTopRightRadius: 0,
         borderColor: 'black',
@@ -85,7 +87,14 @@ const styles = StyleSheet.create({
     answer:{
         fontWeight:"bold",
         fontSize:16
-    }
+    }, 
+    questionDes: {
+        fontSize: 15,
+        color:"white"
+     },
+     scrollViewDiv:{
+        marginTop:30
+     }
 });
 
 export default GetAnswer;

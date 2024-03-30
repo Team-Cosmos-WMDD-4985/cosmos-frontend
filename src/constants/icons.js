@@ -25,6 +25,7 @@ import aiImage from "./../assets/icons/aiImage.png"
 import chevronDown from "./../assets/icons/chevron-down.png"
 import chevronUp from "./../assets/icons/chevron-up.png"
 import edit from "./../assets/icons/edit.png"
+import decoration from "./../assets/icons/decoration.png"
 
 export default {
   heart,
@@ -53,4 +54,5 @@ export default {
   chevronDown,
   chevronUp,
   edit,
+  decoration,
 };

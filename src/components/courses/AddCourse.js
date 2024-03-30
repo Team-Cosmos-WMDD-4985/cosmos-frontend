@@ -73,22 +73,23 @@ function AddCourse({ navigation }) {
             // if (DocumentPicker.isCancel(err)) {
             //     console.log("User cancelled")
             // } else {
-                console.log(err)
+            console.log(err)
             // }
         }
-
-
-        // console.log(result)
-
-        // if (!result.canceled && result.assets && result.assets.length > 0) {
-        //     setFile(result.assets[0]);
-        //   }
     }
-    
+    function formatDate(date) {
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const day = date.getDate();
+        const monthIndex = date.getMonth();
+        const year = date.getFullYear();
 
-     const handleGenerate = async () => {
+        return `${monthNames[monthIndex]}-${day < 10 ? '0' + day : day}-${year}`;
+    }
 
-        dispatch(setLoader({loader: true}));
+    const handleGenerate = async () => {
+
+        dispatch(setLoader({ loader: true }));
 
 
         let formdata = new FormData();
@@ -99,12 +100,12 @@ function AddCourse({ navigation }) {
 
         try {
             const response = await AxiosService("POST", "addCourse", true, {}, formdata, { "Content-Type": `multipart/form-data` })
-            navigation.navigate("AddTopics", {schedule: response.data.data, courseId: response.data.courseId, courseData: response.data.courseData });
-            dispatch(setLoader({loader: false}));
+            navigation.navigate("AddTopics", { schedule: response.data.data, courseId: response.data.courseId, courseData: response.data.courseData });
+            dispatch(setLoader({ loader: false }));
 
         } catch (err) {
             console.log(err)
-            dispatch(setLoader({loader: false}));
+            dispatch(setLoader({ loader: false }));
         }
     };
 
@@ -125,7 +126,7 @@ function AddCourse({ navigation }) {
 
             {/* <Headers courseText="Course Details">
             </Headers> */}
-            
+
             {/* <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Image source={icons.chevronLeft} style={styles.backIcon} />
@@ -133,7 +134,7 @@ function AddCourse({ navigation }) {
                 <Text style={styles.headerTitle}>Course Details</Text>
                 <View />
             </View> */}
-            <Headers courseText="Course Details" handleNavigate={handleNavigate} display={true} />
+            <Headers courseText="Course Details" courseTextDes="Generate Course" handleNavigate={handleNavigate} display={true} />
 
             <View style={styles.content}>
 
@@ -153,7 +154,7 @@ function AddCourse({ navigation }) {
                     <Text style={styles.label}>Course Length</Text>
                     <View style={styles.datePickerRow}>
                         <TouchableOpacity onPress={() => setShowStartDatePicker(true)}>
-                            <Text style={styles.label}>{startDate ? startDate.toDateString() : 'Start'}</Text>
+                            <Text style={styles.startEnd}>{startDate ? formatDate(startDate) : 'Start'}</Text>
                         </TouchableOpacity>
                         {showStartDatePicker && (
                             <DateTimePicker
@@ -167,7 +168,7 @@ function AddCourse({ navigation }) {
                         <Image source={require('./../../assets/icons/calendar.png')} style={styles.icon} />
 
                         <TouchableOpacity onPress={() => setShowEndDatePicker(true)}>
-                            <Text style={styles.label}>{endDate ? endDate.toDateString() : 'End'}</Text>
+                            <Text style={styles.startEnd}>{endDate ? formatDate(endDate) : 'End'}</Text>
                         </TouchableOpacity>
                         {showEndDatePicker && (
                             <DateTimePicker
@@ -259,7 +260,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         gap: 10,
         alignItems: "center",
-        
+
     },
     pdfIcon: {
         width: 30,
@@ -293,6 +294,13 @@ const styles = StyleSheet.create({
         borderRadius: 30,
         paddingHorizontal: 10,
     },
+
+    startEnd: {
+        paddingVertical: 15,
+        fontSize: SIZES.medium,
+        borderRadius: 30,
+        paddingHorizontal: 10,
+    },
     label: {
         marginTop: 10,
         marginBottom: 10,
@@ -314,7 +322,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderWidth: 1,
-        borderColor: COLORS.lightGray,
+        borderColor: COLORS.gray,
         padding: 15,
         borderRadius: 30,
         marginBottom: 20,
@@ -334,6 +342,7 @@ const styles = StyleSheet.create({
     center: {
         alignItems: 'center',
     },
+
     buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'space-around',
@@ -342,11 +351,11 @@ const styles = StyleSheet.create({
         // left: 0,
         // right: 0,
         paddingVertical: 10,
-        marginTop: '55%',
+        marginTop: '20%',
     },
     button: {
         paddingVertical: 10,
-        paddingHorizontal: 30,
+        paddingHorizontal: 20,
         borderRadius: 20,
         width: '40%',
     },
@@ -354,7 +363,7 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.white,
         borderWidth: 1,
         borderColor: COLORS.midGray,
-        padding: 15,
+        padding: 10,
     },
     generateButton: {
         backgroundColor: COLORS.primary,

@@ -125,6 +125,8 @@ const MultipleChoiceQue = ({ route, navigation }) => {
 
   const handlePrevious = () => {
     carouselRef.current.snapToPrev();
+    setIsTrue(false);
+
   };
   const optionLabels = ["A", "B", "C", "D"];
 
@@ -182,8 +184,8 @@ const MultipleChoiceQue = ({ route, navigation }) => {
                       isTrue && option.optionValue === item.answer ? "#D7FFF3" : "white",
                   },
                   optionIndex === item.options.length - 1 && {
-                    borderBottomLeftRadius: 10,
-                    borderBottomRightRadius: 10,
+                    borderBottomLeftRadius: 20,
+                    borderBottomRightRadius: 20,
                   },
                 ]}
               >
@@ -211,7 +213,7 @@ const MultipleChoiceQue = ({ route, navigation }) => {
             </View>
 
             <Text style={{ color: "black" }}>/</Text>
-            <Text style={{ color: "black" }}>{quiz.totalQuestion}</Text>
+            <Text style={{ color: "black" }}>{isRegenerated ? regeneratedQuiz.questions.length : quizz.length}</Text>
           </View>
           <TouchableOpacity style={styles.arrows} onPress={handleConfirmTwo}>
             <Icon name="plus" size={15} color="black" />
@@ -250,7 +252,6 @@ const MultipleChoiceQue = ({ route, navigation }) => {
   const handleConfirmTwo = () => {
     setModalVisible2(true);
     console.log("Confirm Pressed");
-
   };
 
 
@@ -267,7 +268,7 @@ const MultipleChoiceQue = ({ route, navigation }) => {
   return (
     <View>
 
-      <Headers courseText="Quizzes" handleNavigate={handleNavigate} display={true} courseTextDes="course Detail" />
+      <Headers courseText="Multiple Choice" handleNavigate={handleNavigate} display={true} courseTextDes="Feel free to edit the content" />
 
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <Modal
@@ -408,7 +409,7 @@ const MultipleChoiceQue = ({ route, navigation }) => {
         </Modal>
 
         {/* <Text style={styles.title}>Multiple Choice Question</Text> */}
-        <View style={{ marginTop: 30, alignSelf: "flex-end", marginRight: 20, flexDirection: 'row' }}>
+        <View style={{ marginTop: 19, alignSelf: "flex-end", marginRight: 20, flexDirection: 'row' }}>
           {/* <Button title='Check Answer' onPress={onCheckAns} /> */}
           {/* <Button title='regnerate Quiz' onPress={fetchRegeneratedQuiz} /> */}
         </View>
@@ -421,7 +422,7 @@ const MultipleChoiceQue = ({ route, navigation }) => {
               renderItem={renderItem}
               sliderWidth={width}
               itemWidth={width}
-
+              scrollEnabled={false}
             />
           </View>
         </View>
@@ -438,7 +439,7 @@ const MultipleChoiceQue = ({ route, navigation }) => {
               style={[styles.button, styles.cancelButton]}
               onPress={isTrueFunc}
             >
-              <Text style={styles.cancelButtonText}>Get Answers</Text>
+              <Text style={styles.cancelButtonText}>Get Answer</Text>
 
             </TouchableOpacity>
             {/* <Text onPress={isTrueFunc} style={styles.cancelButtonText}>Get Answers2</Text> */}
@@ -633,7 +634,7 @@ const styles = StyleSheet.create({
   iconContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingVertical: 10,
+    paddingVertical: "10%",
     alignItems: "center",
     gap: 50
 

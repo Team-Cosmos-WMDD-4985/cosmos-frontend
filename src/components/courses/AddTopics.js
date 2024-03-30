@@ -171,6 +171,7 @@ function AddTopics({ navigation, route }) {
                 <View >
                 <Headers
         courseText="Manage Topics"
+        courseTextDes="Edit Course"
         handleNavigate={handleNavigate}
         display={true}
         // courseTextDes="Manage Topics"

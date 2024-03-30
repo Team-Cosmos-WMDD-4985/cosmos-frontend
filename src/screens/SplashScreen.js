@@ -3,21 +3,11 @@ import { useEffect, React } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ImageBackground } from 'react-native';
 import { COLORS, icons, images, SIZES } from "./../constants";
 import Loader from "./../common/Loader";
+import SmartCourse from '../components/features/SmartCourse';
+
 function SplashScreen({ navigation }) {
-
-
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     navigation.navigate('Welcome');
-  //   }, 3000);
-
-  //   // Cleanup function to clear the timer if the component unmounts
-  //   return () => clearTimeout(timer);
-  // }, [navigation]);
-
-
   const navigateToNext = () => {
-    navigation.navigate('Feature1');
+    navigation.navigate('SmartCourse');
   };
 
   return (

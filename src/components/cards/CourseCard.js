@@ -36,7 +36,13 @@ const CourseCard = ({ courses, navigation }) => {
     navigation.navigate('Choose Topics', { topics, courseId });
   };
 
-  
+  const getRandomImageUrl = () => {
+    const seed = Math.floor(Math.random() * 1000);
+    return `https://picsum.photos/seed/${seed}/200/300`;
+  };
+
+
+
 
   return (
     <ScrollView>
@@ -48,7 +54,7 @@ const CourseCard = ({ courses, navigation }) => {
         >
           <View>
             <Image
-              source={images.course1}
+              source={{ uri: getRandomImageUrl(), width:"100%" , height: 145 }}
               style={styles.courseStyle}
             />
           </View>
