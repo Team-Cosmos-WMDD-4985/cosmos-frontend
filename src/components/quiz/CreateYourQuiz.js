@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useState } from "react";
 import {
   View,
@@ -8,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   Button,
+  ScrollView,
 } from "react-native";
 import AxiosService from "../../services/axios";
 import { COLORS, SIZES } from "../../constants";
@@ -53,7 +52,7 @@ const CreateYourQuiz = ({ route, navigation }) => {
   // };
   const sendQuizInfo = async () => {
     try {
-      dispatch(setLoader({loader: true}))
+      dispatch(setLoader({ loader: true }))
       const response = await AxiosService(
         "POST",
         "sendTopics",
@@ -61,7 +60,7 @@ const CreateYourQuiz = ({ route, navigation }) => {
         {},
         { topics, courseId, name, type, difficulty, numQuestions }
       );
-      dispatch(setLoader({loader: false}))
+      dispatch(setLoader({ loader: false }))
       if (response.data.success) {
         navigation.navigate("MultipleChoiceQue", {
           quiz: response.data.data,
@@ -74,7 +73,7 @@ const CreateYourQuiz = ({ route, navigation }) => {
         });
       }
     } catch (err) {
-      dispatch(setLoader({loader: false}))
+      dispatch(setLoader({ loader: false }))
       console.log(err);
     }
   };
@@ -101,7 +100,7 @@ const CreateYourQuiz = ({ route, navigation }) => {
     <View style={styles.flexContainer}>
       <Headers courseText="Quizzes" display={true} handleNavigate={handleNavigate} courseTextDes="course Detail" />
 
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
 
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Quiz Name</Text>
@@ -204,27 +203,7 @@ const CreateYourQuiz = ({ route, navigation }) => {
           </View>
           <TextInput style={styles.helperText}>Maximum of 30 questions only</TextInput>
         </View>
-        {/* <View style={styles.inputContainer}>
-                    <Text style={styles.label}>Number of Questions</Text>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="30 items"
-                        keyboardType="number-pad"
-                        value={numQuestions}
-                        onChangeText={setNumQuestions}
-                    />
-                    <Text style={styles.helperText}>Maximum of 30 questions only</Text>
-                </View> */}
-        {/* <TouchableOpacity style={styles.button} onPress={() => sendQuizInfo()}>
-                    <Text style={styles.buttonText}>Create Quiz</Text>
-                </TouchableOpacity> */}
         <View style={styles.buttonContainer1}>
-          {/* <TouchableOpacity
-            style={[styles.button1, styles.cancelButton]}
-            onPress={() => navigation.goBack()}
-          >
-            <Text style={styles.cancelButtonText}>Cancel</Text>
-          </TouchableOpacity> */}
           <TouchableOpacity
             style={[styles.button1, styles.generateButton]}
             onPress={() => sendQuizInfo()}
@@ -233,7 +212,7 @@ const CreateYourQuiz = ({ route, navigation }) => {
           </TouchableOpacity>
 
         </View>
-      </View>
+      </ScrollView >
     </View>
   );
 };
@@ -310,8 +289,8 @@ const styles = StyleSheet.create({
   buttonContainer1: {
     flexDirection: "row",
     justifyContent: "space-around",
-    marginTop: 20,
-    marginBottom: 70,
+    marginTop: 10,
+    marginBottom: 40,
   },
   button1: {
     paddingVertical: 10,
