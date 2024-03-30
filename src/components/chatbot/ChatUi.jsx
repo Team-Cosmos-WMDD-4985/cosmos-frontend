@@ -3,8 +3,9 @@ import {SafeAreaView, View, TextInput, Button, Text, ScrollView, StyleSheet, Tou
 import AxiosService from "./../../services/axios";
 import { icons, COLORS, SIZES, images } from "../../constants";
 import {sendMessageToOpenAI} from './ChatBot';
+import Headers from '../../common/Headers';
 
-const OpenAi = ({route}) => {
+const OpenAi = ({route, navigation}) => {
   const [message, setMessage] = useState('');
   const [chat, setChat] = useState([]);
   const scrollViewRef = useRef();
@@ -35,8 +36,13 @@ const OpenAi = ({route}) => {
 
   // console.log(chat)
 
+  const handleNavigate = () => {
+    navigation.goBack();
+  }
+
   return (
     <SafeAreaView style={styles.container}>
+      <Headers courseText="Chat Bot" courseTextDes="Chat With PDF" handleNavigate={handleNavigate} display={true}/>
       <ScrollView
         style={styles.scrollView}
         ref={scrollViewRef}

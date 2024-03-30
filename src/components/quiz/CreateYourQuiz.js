@@ -98,7 +98,7 @@ const CreateYourQuiz = ({ route, navigation }) => {
 
   return (
     <View style={styles.flexContainer}>
-      <Headers courseText="Quizzes" display={true} handleNavigate={handleNavigate} courseTextDes="course Detail" />
+      <Headers courseText="Create Quiz" display={true} handleNavigate={handleNavigate} courseTextDes="Start to prepare your quiz" />
 
       <ScrollView style={styles.container}>
 
