@@ -22,7 +22,7 @@ const getFormattedDate = () => {
 };
 
 
-const Dashboard = (width, height) => {
+const Dashboard = ({navigation}) => {
     
     const [user, setUser] = useState({});
     useEffect(() => {
@@ -57,7 +57,7 @@ const Dashboard = (width, height) => {
                     <Text style={styles.courseHeaderTitle}>Courses</Text>
                 </View>
                 <CourseList width={250} height={screenHeight * 0.25} />
-                <QuizList />
+                <QuizList navigation={navigation} />
             </View>
         </SafeAreaView >
     )

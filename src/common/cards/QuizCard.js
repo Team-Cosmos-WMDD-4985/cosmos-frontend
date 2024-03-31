@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+// import { useNavigation } from '@react-navigation/native';
 import styles from "./QuizCard.style";
 import { images } from '../../constants';
 
-const QuizCard = ({ quiz }) => {
-  const navigation = useNavigation();
+const QuizCard = ({ quiz, navigation }) => {
+  // const navigation = useNavigation();
 
   const getRandomImageUrl = () => {
     return `https://picsum.photos/seed/${Math.floor(Math.random() * 1000)}/200/300`;
@@ -34,16 +34,14 @@ const QuizCard = ({ quiz }) => {
           {`${quiz.quizName}`}
         </Text>
 
-        <Text style={styles.jobType}>{quiz.totalQuestion}</Text>
+        <Text style={styles.jobType}>Total Questions: {quiz.totalQuestion}</Text>
 
         <View style={styles.weekStyle}>
           <Text style={styles.weekText} numberOfLines={1} >
             <Text style={styles.weekText}>{`${randomWeeks} / 12 Weeks`}</Text>
           </Text>
         </View>
-
       </View>
-
     </TouchableOpacity>
   );
 };

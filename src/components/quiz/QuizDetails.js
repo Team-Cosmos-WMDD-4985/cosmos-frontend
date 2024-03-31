@@ -14,8 +14,10 @@ const QuizDetails = ({ route,navigation }) => {
 
   const getQuizDetails = async () => {
     try {
-      const response = await AxiosService("GET", `quizById?courseId=${quiz._id}`, true);
+      const response = await AxiosService("GET", `quizById?quizId=${quiz._id}`, true);
+      // console.log(response.data)
       if (response.data && response.data.success) {
+        // console.log(response.data)
         setQuizDetails(response.data.quiz);
       }
     } catch (error) {
@@ -118,11 +120,11 @@ const styles = StyleSheet.create({
     marginBottom: SIZES.xSmall,
   },
   label: {
-    fontWeight: 'bold',
+    fontWeight : "700",
     marginRight: 5,
   },
   label2: {
-    fontWeight: 'bold',
+    fontWeight : "700",
     paddingLeft: SIZES.medium,
   },
   label1: {
@@ -140,8 +142,7 @@ const styles = StyleSheet.create({
     fontSize: SIZES.large,
     color: COLORS.midTeal,
     textAlign: "center",
-    fontWeight: WEIGHT.bold,
-    
+    fontWeight : "700",
   },
 });
 

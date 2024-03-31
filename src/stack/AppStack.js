@@ -47,7 +47,7 @@ function AppStack() {
   return (
     <View style={{ flex: 1 }}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="SplashScreen">
+        <Stack.Navigator initialRouteName="NavigationBar">
           <Stack.Screen
             name="SplashScreen"
             component={SplashScreen}
