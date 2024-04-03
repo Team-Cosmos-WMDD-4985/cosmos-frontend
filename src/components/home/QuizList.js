@@ -4,7 +4,7 @@ import styles from './QuizList.style';
 import QuizCard from "../../common/cards/QuizCard";
 import AxiosService from "./../../services/axios";
 
-const QuizList = () => {
+const QuizList = ({navigation}) => {
 
   const data = [{}, {}, {}];
   const [quizList, setQuizList] = useState([]);
@@ -16,7 +16,7 @@ const QuizList = () => {
   const getQuizes = async () => {
     const response = await AxiosService("GET", "getQuizByUser", true);
     
-    console.log("Quiz data ", data.data)
+    // console.log("Quiz data ", data.data)
     if(response.data && response.data.success) {
       setQuizList(response.data.data);
     }
@@ -35,6 +35,7 @@ const QuizList = () => {
         {
           quizList?.map((quiz, index) => (
             <QuizCard
+              navigation= {navigation}
               quiz={quiz}
               key={`quiz-list-${index}`}
             />
