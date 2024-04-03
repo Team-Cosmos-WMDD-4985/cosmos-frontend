@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     color: COLORS.primary,
   },
   description: {
-    ontSize: 18,
+    fontSize: 18,
     marginTop: 10,
     textAlign: 'center',
     color: COLORS.primary,

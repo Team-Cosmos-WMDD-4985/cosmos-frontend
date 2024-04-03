@@ -12,7 +12,7 @@ import {
   TouchableOpacity,
 
 } from "react-native";
-import Picker from '@react-native-picker/picker';
+// import Picker from '@react-native-picker/picker';
 import Carousel from "react-native-snap-carousel";
 import { icons, images, SHADOWS } from "../../constants";
 import { COLORS, SIZES } from "../../constants";
@@ -22,6 +22,10 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import Headers from "../../common/Headers";
 import { useDispatch } from "react-redux";
 import { setLoader } from '../../redux/user';
+import { SelectList } from 'react-native-dropdown-select-list'
+import Picker from "react-native";
+
+
 
 const { width } = Dimensions.get("window");
 
@@ -45,6 +49,9 @@ const MultipleChoiceQue = ({ route, navigation }) => {
   const [quizz, setQuizz] = useState();
   const [quizzTwo, setQuizTwo] = useState();
   const [isTrue, setIsTrue] = useState(false);
+  const [selected, setSelected] = React.useState("");
+
+
 
   const dispatch = useDispatch();
 
@@ -61,17 +68,22 @@ const MultipleChoiceQue = ({ route, navigation }) => {
   const addQuestions = async () => {
     try {
       console.log("Before AxiosService");
-      const response = await AxiosService("POST", `addQuestion/${quiz._id}`, true, {}, { question: question, options: options, answer: answer });
+      const response = await AxiosService("POST", `addQuestion/${quiz._id}`, true, {}, {
+        question: question,
+        options: options,
+        answer: selected,
+      });
       console.log("response ", response)
       await getQuizById();
       setModalVisible2(false)
       setIsRegenerated(false);
+      setQuestion("")
+      setOptions(["", "", "", ""])
       console.log("After getQuizById");
     } catch (error) {
       console.error("Error adding question:", error);
     }
   }
-
 
   const getQuizById = async () => {
     try {
@@ -192,7 +204,7 @@ const MultipleChoiceQue = ({ route, navigation }) => {
                 <Text>{optionLabels[optionIndex]}. </Text>
                 <Text>{option.optionValue}</Text>
               </View>
-             
+
             </View>
           ))}
 
@@ -263,7 +275,15 @@ const MultipleChoiceQue = ({ route, navigation }) => {
     navigation.goBack();
   }
 
-
+  const data = [
+    { key: '1', value: 'Mobiles', disabled: true },
+    { key: '2', value: 'Appliances' },
+    { key: '3', value: 'Cameras' },
+    { key: '4', value: 'Computers', disabled: true },
+    { key: '5', value: 'Vegetables' },
+    { key: '6', value: 'Diary Products' },
+    { key: '7', value: 'Drinks' },
+  ]
 
   return (
     <View>
@@ -312,13 +332,13 @@ const MultipleChoiceQue = ({ route, navigation }) => {
             <View style={styles.modalView}>
               <Text style={styles.modalText}>Enter your quiz details:</Text>
 
-              {/* Input for the question */}
+              
               <Text style={styles.label}>Question:</Text>
               <TextInput
                 style={styles.input}
                 onChangeText={text => setQuestion(text)}
                 value={question}
-                placeholder="Enter your question"
+                placeholder="Enter question"
               />
 
 
@@ -335,6 +355,7 @@ const MultipleChoiceQue = ({ route, navigation }) => {
                   placeholder="Enter option 1"
                 />
               </View>
+
               <View>
                 <Text style={styles.label}>Option 2:</Text>
                 <TextInput
@@ -348,6 +369,7 @@ const MultipleChoiceQue = ({ route, navigation }) => {
                   placeholder="Enter option 2"
                 />
               </View>
+
               <View>
                 <Text style={styles.label}>Option 3:</Text>
                 <TextInput
@@ -361,6 +383,7 @@ const MultipleChoiceQue = ({ route, navigation }) => {
                   placeholder="Enter option 3"
                 />
               </View>
+
               <View>
                 <Text style={styles.label}>Option 4:</Text>
                 <TextInput
@@ -377,14 +400,25 @@ const MultipleChoiceQue = ({ route, navigation }) => {
 
 
 
-              <Text style={styles.label}>Answer:</Text>
+
+
+              {/*
               <TextInput
                 style={styles.input}
                 onChangeText={text => setAnswer(text)}
                 value={answer}
                 placeholder="Enter the correct answer"
-              />
+              /> */}
 
+
+              <Text style={styles.label}>Answer:</Text>
+              <View style={{ width: 200 }}>
+                <SelectList
+                  setSelected={(val) => setSelected(val)}
+                  data={options}
+                  save="value"
+                />
+              </View>
 
 
 
@@ -461,7 +495,7 @@ const MultipleChoiceQue = ({ route, navigation }) => {
                 alignItems: "center",
               }}
             >
-              <Text onPress={onCheckAns}>Get All Answers</Text>
+              <Text onPress={onCheckAns}>View All Answers</Text>
             </TouchableOpacity>
           </View>
           <View>
@@ -537,7 +571,7 @@ const styles = StyleSheet.create({
     // paddingHorizontal: 30,
     borderRadius: 30,
     marginRight: 10,
-    width: 184,
+    width: 164,
     height: 54,
   },
   generateButton: {
@@ -546,7 +580,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 30,
     borderWidth: 1,
-    width: 184,
+    width: 164,
     height: 54,
   },
   cancelButtonText: {
@@ -558,6 +592,7 @@ const styles = StyleSheet.create({
     fontSize: SIZES.large,
     color: COLORS.midTeal,
     textAlign: "center",
+    width:60
   },
   button: {
     paddingVertical: 10,
@@ -657,6 +692,7 @@ const styles = StyleSheet.create({
   },
   arrows: {
     backgroundColor: "#F4F6F9",
+    // backgroundColor: COLORS.lightGray,
     borderRadius: 24,
     paddingHorizontal: 10,
     width: 48,
@@ -668,6 +704,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 5,
+    textAlign:"center"
   },
   input: {
     borderWidth: 1,
@@ -676,6 +713,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 60,
     paddingVertical: 8,
     marginBottom: 10,
+    width:"80%",
+    textAlign:"center"
   },
   submitButton: {
     backgroundColor: COLORS.primary,
@@ -688,8 +727,11 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
+    width:70,
+    textAlign:"center"
   },
   buttonContainer2: {
+    marginTop:20,
     flexDirection: 'row',
     gap: 10,
   }
