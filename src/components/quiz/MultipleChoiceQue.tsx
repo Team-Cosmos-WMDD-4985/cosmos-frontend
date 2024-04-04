@@ -185,6 +185,7 @@ const MultipleChoiceQue = ({ route, navigation }) => {
                 fontWeight: "bold",
                 fontSize: 17,
                 color: "white",
+                marginBottom: 10,
               }}
             >
               Question {index + 1}
@@ -194,7 +195,7 @@ const MultipleChoiceQue = ({ route, navigation }) => {
               style={{
                 textAlign: "left",
                 fontSize: 13,
-                marginBottom: 17,
+                marginBottom: 10,
                 color: "white",
               }}
             >
@@ -232,32 +233,33 @@ const MultipleChoiceQue = ({ route, navigation }) => {
           ))}
 
         </View>
+
         <View style={styles.iconContainer}>
           <View style={{ flexDirection: "row", }}>
-            <TouchableOpacity style={styles.arrows} onPress={handlePrevious}>
+            {/* <TouchableOpacity style={styles.arrows} onPress={handlePrevious}> */}
+            <TouchableOpacity style={styles.arrows}>
               <Icon name="chevron-left" size={15} color="black" />
             </TouchableOpacity>
             <Text style={{ fontSize: 30 }}>|</Text>
-            <TouchableOpacity style={styles.arrows} onPress={handleNext}>
+            {/* <TouchableOpacity style={styles.arrows} onPress={handleNext}> */}
+            <TouchableOpacity style={styles.arrows}>
               <Icon name="chevron-right" size={15} color="black" />
             </TouchableOpacity>
           </View>
+
           <View style={styles.numQuestions}>
             <View style={styles.indexContainer}>
               <Text style={{ color: "white" }}>{index + 1}</Text>
             </View>
-
-            {/* <Text style={{ color: "black" }}>/</Text> */}
-            {/* <Text style={{ color: "black" }}>{isRegenerated ? regeneratedQuiz.questions.length : quizz.length}</Text> */}
             <Text style={{ color: "black" }}>
               {isRegenerated ? regeneratedQuiz?.questions?.length ?? 0 : quizz?.length ?? 0}
             </Text>
-
           </View>
 
           <TouchableOpacity style={styles.arrows} onPress={handleConfirmTwo}>
             <Icon name="plus" size={15} color="black" />
           </TouchableOpacity>
+
         </View>
       </View>
     );
@@ -351,21 +353,21 @@ const MultipleChoiceQue = ({ route, navigation }) => {
           }}
         >
           <View style={styles.centeredView}>
-            <View style={styles.overlay} />
+            {/* <View style={styles.overlay} /> */}
             <View style={styles.modalView}>
               <Text style={styles.modalText}>Enter your quiz details:</Text>
 
+              <View style={styles.questionSection}>
+                <Text style={styles.label}>Question:</Text>
+                <TextInput
+                  style={styles.input}
+                  onChangeText={text => setQuestion(text)}
+                  value={question}
+                  placeholder="Enter question"
+                />
+              </View>
 
-              <Text style={styles.label}>Question:</Text>
-              <TextInput
-                style={styles.input}
-                onChangeText={text => setQuestion(text)}
-                value={question}
-                placeholder="Enter question"
-              />
-
-
-              <View>
+              <View style={styles.questionSection}>
                 <Text style={styles.label}>Option 1:</Text>
                 <TextInput
                   style={styles.input}
@@ -379,7 +381,7 @@ const MultipleChoiceQue = ({ route, navigation }) => {
                 />
               </View>
 
-              <View>
+              <View style={styles.questionSection}>
                 <Text style={styles.label}>Option 2:</Text>
                 <TextInput
                   style={styles.input}
@@ -393,7 +395,7 @@ const MultipleChoiceQue = ({ route, navigation }) => {
                 />
               </View>
 
-              <View>
+              <View style={styles.questionSection}>
                 <Text style={styles.label}>Option 3:</Text>
                 <TextInput
                   style={styles.input}
@@ -407,7 +409,7 @@ const MultipleChoiceQue = ({ route, navigation }) => {
                 />
               </View>
 
-              <View>
+              <View style={styles.questionSection}>
                 <Text style={styles.label}>Option 4:</Text>
                 <TextInput
                   style={styles.input}
@@ -421,14 +423,15 @@ const MultipleChoiceQue = ({ route, navigation }) => {
                 />
               </View>
 
-
-              <Text style={styles.label}>Answer:</Text>
-              <View style={{ width: 200 }}>
-                <SelectList
-                  setSelected={(val) => setSelected(val)}
-                  data={options}
-                  save="value"
-                />
+              <View style={styles.questionSection}>
+                <Text style={styles.label}>Answer:</Text>
+                <View>
+                  <SelectList
+                    setSelected={(val) => setSelected(val)}
+                    data={options}
+                    save="value"
+                  />
+                </View>
               </View>
 
 
@@ -471,7 +474,7 @@ const MultipleChoiceQue = ({ route, navigation }) => {
           data={isRegenerated ? regeneratedQuiz?.questions ?? [] : quizz ?? []}
           renderItem={renderItem}
           width={screenWidth * .9}
-          height={screenHeight * .8}
+          height={screenHeight * .7}
           style={styles.questionCard}
         />
         {/* </View> */}
@@ -558,6 +561,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    width: '100%',
   },
   createButton: {
     backgroundColor: COLORS.button,
@@ -636,8 +640,9 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 10,
     marginTop: 10,
-    fontSize: SIZES.medium,
+    fontSize: SIZES.xLarge,
     textAlign: "center",
+    fontWeight: 'bold',
   },
   answerTextInput: {
     marginBottom: 10,
@@ -645,6 +650,11 @@ const styles = StyleSheet.create({
     fontSize: SIZES.medium,
     textAlign: "center",
   },
+  questionSection: {
+    width: "100%",
+
+  }
+  ,
   checkcirclestyle: {
     width: 40,
     height: 40,
@@ -689,11 +699,14 @@ const styles = StyleSheet.create({
   // },
 
   iconContainer: {
+    width: '100%',
+    display: 'flex',
     flexDirection: "row",
+    flexWrap: 'nowrap',
     justifyContent: "space-between",
     paddingVertical: 10,
     alignItems: "center",
-    gap: 50
+    // gap: 50
   },
   numQuestions: {
     flexDirection: "row",
@@ -730,10 +743,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'black',
     borderRadius: 5,
-    paddingHorizontal: 60,
+    paddingHorizontal: 20,
     paddingVertical: 8,
     marginBottom: 10,
-    width: "80%",
+    width: "100%",
     textAlign: "center"
   },
   submitButton: {
@@ -742,6 +755,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginTop: 10,
     alignItems: 'center',
+    width: '45%',
   },
   submitButtonText: {
     color: 'white',
@@ -751,9 +765,13 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   buttonContainer2: {
+    display: 'flex',
     marginTop: 20,
     flexDirection: 'row',
     gap: 10,
+    width: '100%',
+    justifyContent: 'space-between',
+    marginBottom: 10,
   }
 });
 
