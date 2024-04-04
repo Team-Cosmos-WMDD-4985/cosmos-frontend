@@ -13,19 +13,18 @@ import {
 
 } from "react-native";
 // import Picker from '@react-native-picker/picker';
-import Carousel from "react-native-snap-carousel";
+// import Carousel from "react-native-snap-carousel";
+import Carousel from 'react-native-reanimated-carousel';
+
 import { icons, images, SHADOWS } from "../../constants";
 import { COLORS, SIZES } from "../../constants";
-import { NavigationProp } from "@react-navigation/native";
+// import { NavigationProp } from "@react-navigation/native";
 import AxiosService from "../../services/axios.js";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Headers from "../../common/Headers";
 import { useDispatch } from "react-redux";
 import { setLoader } from '../../redux/user';
 import { SelectList } from 'react-native-dropdown-select-list'
-import Picker from "react-native";
-
-
 
 const { width } = Dimensions.get("window");
 
@@ -36,22 +35,16 @@ const MultipleChoiceQue = ({ route, navigation }) => {
   const [color, SetColor] = useState("");
   const [regeneratedQuiz, SetRegeneratedQuiz] = useState(null);
   const [isRegenerated, setIsRegenerated] = useState(false);
-  const [selectedAnswerIndex, setSelectedAnswerIndex] = useState(0);
-
-
-
 
   const [modalVisible, setModalVisible] = useState(false)
   const [modalVisible2, setModalVisible2] = useState(false)
   const [question, setQuestion] = useState('');
   const [options, setOptions] = useState(['', '', '', '']);
   const [answer, setAnswer] = useState('');
-  const [quizz, setQuizz] = useState();
+  const [quizz, setQuizz] = useState([]);
   const [quizzTwo, setQuizTwo] = useState();
   const [isTrue, setIsTrue] = useState(false);
   const [selected, setSelected] = React.useState("");
-
-
 
   const dispatch = useDispatch();
 
@@ -85,49 +78,76 @@ const MultipleChoiceQue = ({ route, navigation }) => {
     }
   }
 
+  // const getQuizById = async () => {
+  //   try {
+  //     const response = await AxiosService("POST", `getQuizForUpdate/${quiz._id}`, true);
+  //     setQuizz(response.data.questions)
+  //     setQuizTwo(response.data)
+  //     console.log(`quizzTwo ${quizzTwo}`)
+  //   } catch (error) {
+  //     console.error("Error getting quiz details:", error);
+  //   }
+  // }
+
   const getQuizById = async () => {
     try {
       const response = await AxiosService("POST", `getQuizForUpdate/${quiz._id}`, true);
-      setQuizz(response.data.questions)
-      setQuizTwo(response.data)
-      console.log(`quizzTwo ${quizzTwo}`)
+
+      // Type narrowing
+      if ('data' in response) {
+        // Now TypeScript knows response has a data property
+        setQuizz(response.data.questions);
+        setQuizTwo(response.data);
+      } else {
+        // Handle the case where response does not have a data property
+        console.error("Unexpected response format:", response);
+      }
     } catch (error) {
       console.error("Error getting quiz details:", error);
-    }
-  }
-
-
-  console.log("this is quiz", JSON.stringify(quizz))
-
-
-
-
-  const fetchRegeneratedQuiz = async () => {
-    try {
-
-      dispatch(setLoader({ loader: true }))
-      const response = await AxiosService("POST", `regenerateQuiz/${quiz._id}/${quiz.courseId}`, true, {}, { type: type });
-      dispatch(setLoader({ loader: false }))
-      if (response && response.data) {
-        SetRegeneratedQuiz(response.data.data);
-        console.log("this is ", response.data.data);
-        setIsRegenerated(true);
-
-
-      } else {
-        console.log("Failed to regenerate quiz:", response.data.error);
-
-      }
-    } catch (err) {
-      dispatch(setLoader({ loader: false }))
-      console.log("Error fetching regenerated quiz:", err);
     }
   };
 
 
+  console.log("this is quiz", JSON.stringify(quizz))
 
+  // const fetchRegeneratedQuiz = async () => {
+  //   try {
+  //     dispatch(setLoader({ loader: true }))
+  //     const response = await AxiosService("POST", `regenerateQuiz/${quiz._id}/${quiz.courseId}`, true, {}, { type: type });
+  //     dispatch(setLoader({ loader: false }))
+  //     if (response && response.data) {
+  //       SetRegeneratedQuiz(response.data.data);
+  //       console.log("this is ", response.data.data);
+  //       setIsRegenerated(true);
+  //     } else {
+  //       console.log("Failed to regenerate quiz:", response.data.error);
+  //     }
+  //   } catch (err) {
+  //     dispatch(setLoader({ loader: false }))
+  //     console.log("Error fetching regenerated quiz:", err);
+  //   }
+  // };
 
+  const fetchRegeneratedQuiz = async () => {
+    try {
+      dispatch(setLoader({ loader: true }))
+      const response = await AxiosService("POST", `regenerateQuiz/${quiz._id}/${quiz.courseId}`, true, {}, { type: type });
 
+      // Check if 'data' property exists on the response
+      if ('data' in response) {
+        SetRegeneratedQuiz(response.data.data);
+        console.log("this is ", response.data.data);
+        setIsRegenerated(true);
+      } else {
+        console.log("Failed to regenerate quiz: Missing data");
+      }
+
+      dispatch(setLoader({ loader: false }));
+    } catch (err) {
+      console.log("Error fetching regenerated quiz:", err);
+      dispatch(setLoader({ loader: false }));
+    }
+  };
 
 
   const handleNext = () => {
@@ -224,9 +244,14 @@ const MultipleChoiceQue = ({ route, navigation }) => {
               <Text style={{ color: "white" }}>{index + 1}</Text>
             </View>
 
-            <Text style={{ color: "black" }}>/</Text>
-            <Text style={{ color: "black" }}>{isRegenerated ? regeneratedQuiz.questions.length : quizz.length}</Text>
+            {/* <Text style={{ color: "black" }}>/</Text> */}
+            {/* <Text style={{ color: "black" }}>{isRegenerated ? regeneratedQuiz.questions.length : quizz.length}</Text> */}
+            <Text style={{ color: "black" }}>
+              {isRegenerated ? regeneratedQuiz?.questions?.length ?? 0 : quizz?.length ?? 0}
+            </Text>
+
           </View>
+
           <TouchableOpacity style={styles.arrows} onPress={handleConfirmTwo}>
             <Icon name="plus" size={15} color="black" />
           </TouchableOpacity>
@@ -235,14 +260,9 @@ const MultipleChoiceQue = ({ route, navigation }) => {
     );
   };
 
-
-
-
   console.log(question)
   console.log(options)
   console.log(answer)
-
-
 
   const handleCancel = () => {
     setModalVisible(false);
@@ -286,7 +306,7 @@ const MultipleChoiceQue = ({ route, navigation }) => {
   ]
 
   return (
-    <View>
+    <View style={styles.questionContainer}>
 
       <Headers courseText="Multiple Choice" handleNavigate={handleNavigate} display={true} courseTextDes="Feel free to edit the content" />
 
@@ -332,7 +352,7 @@ const MultipleChoiceQue = ({ route, navigation }) => {
             <View style={styles.modalView}>
               <Text style={styles.modalText}>Enter your quiz details:</Text>
 
-              
+
               <Text style={styles.label}>Question:</Text>
               <TextInput
                 style={styles.input}
@@ -399,18 +419,6 @@ const MultipleChoiceQue = ({ route, navigation }) => {
               </View>
 
 
-
-
-
-              {/*
-              <TextInput
-                style={styles.input}
-                onChangeText={text => setAnswer(text)}
-                value={answer}
-                placeholder="Enter the correct answer"
-              /> */}
-
-
               <Text style={styles.label}>Answer:</Text>
               <View style={{ width: 200 }}>
                 <SelectList
@@ -419,7 +427,6 @@ const MultipleChoiceQue = ({ route, navigation }) => {
                   save="value"
                 />
               </View>
-
 
 
               <View style={styles.buttonContainer2}>
@@ -447,9 +454,9 @@ const MultipleChoiceQue = ({ route, navigation }) => {
           {/* <Button title='Check Answer' onPress={onCheckAns} /> */}
           {/* <Button title='regnerate Quiz' onPress={fetchRegeneratedQuiz} /> */}
         </View>
-        <View style={{ padding: 30 }}>
+        <View style={{ padding: 10 }}>
           <View style={{ flexDirection: "row", justifyContent: "center" }}>
-            <Carousel
+            {/* <Carousel
               ref={carouselRef}
               layout="default"
               data={isRegenerated ? regeneratedQuiz.questions : quizz}
@@ -457,6 +464,12 @@ const MultipleChoiceQue = ({ route, navigation }) => {
               sliderWidth={width}
               itemWidth={width}
               scrollEnabled={false}
+            /> */}
+            <Carousel
+              data={isRegenerated ? regeneratedQuiz?.questions ?? [] : quizz ?? []}
+              renderItem={renderItem}
+              width={width}
+              height={520}
             />
           </View>
         </View>
@@ -518,22 +531,22 @@ const MultipleChoiceQue = ({ route, navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  questionContainer: {
+    paddingHorizontal: 20,
+  },
   scrollViewContent: {
     flexGrow: 1,
-    // marginRight:30,
     alignItems: "center",
   },
   title: {
-    fontSize: 23,
-    marginTop: 75,
+    fontSize: SIZES.large,
+    // marginTop: 75,
     fontWeight: "bold",
     textAlign: "center",
   },
   carouselItem: {
-    width: width - 30,
-    height: 520,
+    // height: 520,
     alignItems: "center",
-
   },
   centeredView: {
     flex: 1,
@@ -571,8 +584,8 @@ const styles = StyleSheet.create({
     // paddingHorizontal: 30,
     borderRadius: 30,
     marginRight: 10,
-    width: 164,
-    height: 54,
+    // width: 164,
+    // height: 54,
   },
   generateButton: {
     backgroundColor: COLORS.primary,
@@ -580,8 +593,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 30,
     borderWidth: 1,
-    width: 164,
-    height: 54,
+    // width: 164,
+    // height: 54,
   },
   cancelButtonText: {
     fontSize: SIZES.large,
@@ -592,7 +605,7 @@ const styles = StyleSheet.create({
     fontSize: SIZES.large,
     color: COLORS.midTeal,
     textAlign: "center",
-    width:60
+    width: '100%',
   },
   button: {
     paddingVertical: 10,
@@ -603,7 +616,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 32,
     padding: 20,
-    width: 300,
+    width: '100%',
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -659,7 +672,7 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
 
     height: 400,
-    width: 350,
+    width: '100%',
   },
   // separator: {
   //   height: 1,
@@ -686,7 +699,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 10,
     width: 48,
-    height: 44,
+    height: 48,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -704,7 +717,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 5,
-    textAlign:"center"
+    textAlign: "center"
   },
   input: {
     borderWidth: 1,
@@ -713,8 +726,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 60,
     paddingVertical: 8,
     marginBottom: 10,
-    width:"80%",
-    textAlign:"center"
+    width: "80%",
+    textAlign: "center"
   },
   submitButton: {
     backgroundColor: COLORS.primary,
@@ -727,11 +740,11 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
-    width:70,
-    textAlign:"center"
+    width: 70,
+    textAlign: "center"
   },
   buttonContainer2: {
-    marginTop:20,
+    marginTop: 20,
     flexDirection: 'row',
     gap: 10,
   }

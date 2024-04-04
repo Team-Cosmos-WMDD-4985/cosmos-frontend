@@ -203,16 +203,18 @@ const CreateYourQuiz = ({ route, navigation }) => {
           </View>
           <TextInput style={styles.helperText}>Maximum of 30 questions only</TextInput>
         </View>
-        <View style={styles.buttonContainer1}>
-          <TouchableOpacity
-            style={[styles.button1, styles.generateButton]}
-            onPress={() => sendQuizInfo()}
-          >
-            <Text style={styles.generateButtonText}>Create Quiz</Text>
-          </TouchableOpacity>
-
-        </View>
       </ScrollView >
+
+      <View style={styles.buttonContainer1}>
+        <TouchableOpacity
+          style={[styles.button1, styles.generateButton]}
+          onPress={() => sendQuizInfo()}
+        >
+          <Text style={styles.generateButtonText}>Create Quiz</Text>
+        </TouchableOpacity>
+
+      </View>
+
     </View>
   );
 };
@@ -224,22 +226,20 @@ const styles = StyleSheet.create({
     // marginTop: 20,
     // alignItems: "center",
     borderColor: COLORS.midGray,
-    // paddingHorizontal: 20,
+    paddingHorizontal: 20,
   },
   formContainer: {
-    width: "80%",
+    width: "100%",
     justifyContent: "space-around",
 
   },
   container: {
     paddingTop: 20,
-    paddingHorizontal: 20,
+    marginTop: 10,
+    // paddingHorizontal: 20,
   },
   inputContainer: {
     marginBottom: 20,
-
-
-
   },
   label: {
     fontSize: 20,
@@ -289,8 +289,8 @@ const styles = StyleSheet.create({
   buttonContainer1: {
     flexDirection: "row",
     justifyContent: "space-around",
-    marginTop: 10,
-    marginBottom: 40,
+    marginBottom: 10,
+    marginTop: 20,
   },
   button1: {
     paddingVertical: 10,
@@ -329,6 +329,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     height: 54,
     paddingLeft: 10,
+    marginTop: 10,
   },
   clearButton: {
     position: "absolute",
@@ -345,6 +346,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 10,
     height: 54,
+    marginTop: 10,
   },
   iconButton: {
     padding: 5,

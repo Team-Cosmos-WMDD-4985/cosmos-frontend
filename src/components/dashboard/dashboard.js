@@ -56,7 +56,7 @@ const Dashboard = ({navigation}) => {
                 <View style={styles.courseHeader}>
                     <Text style={styles.courseHeaderTitle}>Courses</Text>
                 </View>
-                <CourseList width={250} height={screenHeight * 0.25} />
+                <CourseList width={200} height={screenHeight * 0.25} />
                 <QuizList navigation={navigation} />
             </View>
         </SafeAreaView >
@@ -76,8 +76,8 @@ const styles = StyleSheet.create({
         marginTop: 8,
     },
     profileImage: {
-        width: 64,
-        height: 64,
+        width: 48,
+        height: 48,
         // borderRadius: 20,
     },
     headerStack: {

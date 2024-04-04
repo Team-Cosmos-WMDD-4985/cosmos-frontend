@@ -79,7 +79,7 @@ const CourseDetails = ({ route, navigation }) => {
     setEditedTopic("");
   };
 
-  const handleConfirm = async () => {};
+  const handleConfirm = async () => { };
 
   const handleDelete = async () => {
 
@@ -89,7 +89,7 @@ const CourseDetails = ({ route, navigation }) => {
     <SafeAreaView
       style={{
         flex: 1,
-        // marginTop: 20,
+        paddingHorizontal: 20,
         backgroundColor: COLORS.white,
       }}
     >
@@ -99,32 +99,10 @@ const CourseDetails = ({ route, navigation }) => {
         display={true}
         courseTextDes="course Detail"
       />
-      {/* <View style={styles.header}>
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <Image source={icons.chevronLeft} style={styles.backIcon} />
-                </TouchableOpacity>
-                <Text style={styles.headerTitle}>Course Details</Text>
-                <Image source={images.profile} style={styles.profileImage} />
-                <View />
-            </View> */}
-      {/* <Text style={styles.courseName}>Course Name: {courseId.courseName}</Text> */}
 
       <ScrollView style={styles.scrollViewStyle}>
         {courseId ? (
           <View>
-            {/* {courseDetails.schedule && courseDetails.schedule.map((week, index) => (
-                            <View key={index}>
-                                <Text style={styles.weekLabel}>Week {week.weekName}</Text>
-                                {week.topics && week.topics.map((topic, topicIndex) => (
-                                    <Text key={topicIndex} style={styles.topic}>{topic}</Text>
-                                ))}
-                            </View>
-                        ))} */}
-            {/* <View style={styles.topicsArea}>
-                            {courseId.topics && courseId.topics.map((topic, index) => (
-                                <Text key={index} style={styles.topic}>{topic}</Text>
-                            ))}
-                        </View> */}
             {courseId.topics &&
               chunkTopicsIntoPairs(courseId.topics).map((pair, weekIndex) => (
                 <View style={styles.weekBox} key={`week-${weekIndex}`}>
@@ -144,62 +122,32 @@ const CourseDetails = ({ route, navigation }) => {
                     />
                   </TouchableOpacity>
 
-                  {/* {expandedWeekIndex === weekIndex && (<View style={styles.weekBody}>
-                                    {pair.map((topic, topicIndex) => (
-                                        <Text key={`topic-${topicIndex}`} style={styles.topic}>
-                                            {topic}
-                                        </Text>
-                                    ))}
-                                    <Image source={icons.edit} style={styles.editIcon} />
-                                </View>
-                                )} */}
-                  {/* {expandedWeekIndex === weekIndex && (
+                  {expandedWeekIndex === weekIndex && (
                     <View style={styles.weekBody}>
                       <View style={styles.topicsContainer}>
                         {pair.map((topic, topicIndex) => (
-                          <Text
-                            key={`topic-${topicIndex}`}
-                            style={styles.topic}
-                          >
-                            {topic}
-                          </Text>
+                          <View key={`topic-${topicIndex}`} style={styles.topicContainer}>
+                            <Text style={styles.topicText}>{topic}</Text>
+                            {isEditing && (
+                              <TouchableOpacity onPress={() => handleDelete(weekIndex, topicIndex)}>
+                                <Icon
+                                  name="close-circle"
+                                  size={20}
+                                  color={COLORS.black}
+                                  style={styles.deleteIcon}
+                                />
+                              </TouchableOpacity>
+                            )}
+                          </View>
                         ))}
                       </View>
-                      <View>
-                        <Image source={icons.edit} style={styles.editIcon} />
-                      </View>
+                      {!isEditing && (
+                        <TouchableOpacity onPress={handleEdit} style={styles.editIconLocation}>
+                          <Image source={icons.edit} style={styles.editIcon} />
+                        </TouchableOpacity>
+                      )}
                     </View>
                   )}
-                </View>
-              ))}
-          </View>
-        ) : ( */}
-              {expandedWeekIndex === weekIndex && (
-  <View style={styles.weekBody}>
-    <View style={styles.topicsContainer}>
-      {pair.map((topic, topicIndex) => (
-        <View key={`topic-${topicIndex}`} style={styles.topicContainer}>
-          <Text style={styles.topicText}>{topic}</Text>
-          {isEditing && (
-            <TouchableOpacity onPress={() => handleDelete(weekIndex, topicIndex)}>
-              <Icon
-                name="close-circle"
-                size={20}
-                color={COLORS.black}
-                style={styles.deleteIcon}
-              />
-            </TouchableOpacity>
-          )}
-        </View>
-      ))}
-    </View>
-    {!isEditing && (
-      <TouchableOpacity onPress={handleEdit}>
-        <Image source={icons.edit} style={styles.editIcon} />
-      </TouchableOpacity>
-    )}
-  </View>
-)}
 
 
                   {isEditing && expandedWeekIndex === weekIndex && (
@@ -259,7 +207,7 @@ const CourseDetails = ({ route, navigation }) => {
         )}
       </ScrollView>
 
-      <View style={styles.buttonContainer}>
+      <View style={styles.aiContainer}>
         <TouchableOpacity
           style={[styles.aiButton]}
           onPress={() =>
@@ -300,7 +248,6 @@ const styles = StyleSheet.create({
   scrollViewStyle: {
     display: "flex",
     marginTop: 10,
-    paddingHorizontal: 20,
     width: "100%",
   },
   weekBox: {
@@ -335,10 +282,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingVertical: 10,
-
+    borderRadius: 16,
+    paddingHorizontal: 10,
   },
   topic: {
-    borderRadius: 15,
+    borderRadius: 16,
     marginVertical: 10,
     backgroundColor: COLORS.white,
     color: COLORS.primary,
@@ -361,12 +309,14 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
-    // position: 'absolute',
-    // bottom: 10,
-    // left: 0,
-    // right: 0,
     paddingVertical: 10,
     marginTop: 10,
+  },
+  editIconLocation: {
+    position: 'absolute',
+    bottom: 10,
+    left: '90%',
+    right: 10,
   },
   aiButton: {
     display: "flex",
@@ -374,13 +324,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingVertical: 10,
-    paddingHorizontal: 10,
-    borderRadius: 20,
-    width: "90%",
+    borderRadius: 16,
+    width: "100%",
     backgroundColor: COLORS.teal,
     borderWidth: 1,
     borderColor: COLORS.teal,
-    padding: 15,
   },
   aiButtonText: {
     fontSize: SIZES.large,
@@ -394,13 +342,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     flexWrap: "wrap",
- 
-    
-  },
-  editContainer: {
-    marginTop: 20,
-    padding: 10,
-    borderColor: COLORS.primary,
   },
   addTopictext: {
     textAlign: "center",
@@ -408,14 +349,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 10,
   },
-  topicText:{
-
+  topicText: {
     backgroundColor: COLORS.white,
     color: COLORS.primary,
     paddingVertical: 5,
     paddingHorizontal: 10,
     borderColor: COLORS.primary,
-  
     alignSelf: 'flex-start',
     marginHorizontal: 5,
   },
@@ -426,22 +365,20 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     borderWidth: 1,
     padding: 10,
+    marginHorizontal: 10,
   },
   editInputText: {
     borderColor: COLORS.primary,
   },
-  //
-  buttonContainer: {
+
+  aiContainer: {
     flexDirection: "row",
     justifyContent: "space-evenly",
-    paddingBottom: 20,
-    marginTop: 20,
+    marginVertical: 10,
   },
   cancelButton: {
     borderWidth: 1,
     borderColor: COLORS.midGray,
-    // paddingVertical: 15,
-    // paddingHorizontal: 30,
     borderRadius: 30,
     marginRight: 10,
     width: 120,
@@ -456,8 +393,6 @@ const styles = StyleSheet.create({
   },
   createButton: {
     backgroundColor: COLORS.primary,
-    // paddingVertical: 15,
-    // paddingHorizontal: 30,
     borderRadius: 30,
     width: 120,
     height: 54,
@@ -473,7 +408,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 10,
   },
-  topicContainer:{
+  topicContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     borderRadius: 30,

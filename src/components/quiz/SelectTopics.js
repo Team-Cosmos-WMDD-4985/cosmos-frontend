@@ -93,12 +93,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     // marginTop: 20,
-    // paddingHorizontal: 20,
+    paddingHorizontal: 20,
   },
   container: {
     paddingTop:20,
-        paddingHorizontal: 20,
-
       },
   topicItem: {
     flexDirection: "row",
@@ -133,7 +131,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     marginTop: 20,
-    marginBottom: 70,
+    marginBottom: 10,
+
   },
   button: {
     paddingVertical: 10,

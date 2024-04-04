@@ -2,25 +2,25 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { icons, images, SIZES } from "../constants";
 
-const Headers = ({ courseText, handleNavigate, display , courseTextDes}) => {
+const Headers = ({ courseText, handleNavigate, display, courseTextDes }) => {
     return (
         <View style={styles.header}>
             <View style={styles.headerDiv}>
-            {display ? (
-                <TouchableOpacity onPress={() => handleNavigate()}>
-                    <Image source={icons.chevronLeft} style={styles.backIcon} />
-                </TouchableOpacity>
+                {display ? (
+                    <TouchableOpacity onPress={() => handleNavigate()}>
+                        <Image source={icons.chevronLeft} style={styles.backIcon} />
+                    </TouchableOpacity>
                 ) : null}
                 <View>
                     <Text style={styles.headerTitle}>{courseText}</Text>
                     <Text>{courseTextDes}</Text>
                 </View>
             </View>
-            
-                <View style={styles.profileContainer}>
-                    <Image source={images.profile} style={styles.profileImage} />
-                </View>
-            
+
+            <View style={styles.profileContainer}>
+                <Image source={images.profile} style={styles.profileImage} />
+            </View>
+
         </View>
     )
 }
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         paddingTop: 40,
-        paddingHorizontal: 20,
+        // paddingHorizontal: 20,
     },
     backIcon: {
         width: 24,
@@ -43,15 +43,15 @@ const styles = StyleSheet.create({
         gap: 10
     },
     headerTitle: {
-        fontSize: SIZES.xxLarge,
+        fontSize: SIZES.xLarge,
         fontWeight: 'bold',
     },
     profileContainer: {
-        marginRight: 10, 
+        marginLeft: 10,
     },
     profileImage: {
-        width: 40, 
-        height: 40, 
+        width: 48,
+        height: 48,
         resizeMode: 'contain'
     }
 });

@@ -7,9 +7,12 @@ import {
   Image,
   TouchableOpacity,
   StyleSheet,
+  Dimensions
 } from "react-native";
 import { COLORS, icons, images, SIZES } from "../../constants";
 import styles from "./CourseCardQuiz.style";
+
+const screenHeight = Dimensions.get('window').height;
 
 const CourseCard = ({ courses, navigation }) => {
   const getDateFormat = (startDate, endDate) => {
@@ -46,15 +49,15 @@ const CourseCard = ({ courses, navigation }) => {
 
   return (
     <ScrollView>
-      {courses.map((course) => (
+      {courses.map((course, index) => (
         <TouchableOpacity
-          key={course.id}
+          key={course.id || index} // Fallback to index if course.id is undefined
           style={styles.container()}
           onPress={() => handlePress(course.topics, course._id)}
         >
           <View>
             <Image
-              source={{ uri: getRandomImageUrl(), width:"100%" , height: 145 }}
+              source={{ uri: getRandomImageUrl(), width: "100%", height: 80 }}
               style={styles.courseStyle}
             />
           </View>

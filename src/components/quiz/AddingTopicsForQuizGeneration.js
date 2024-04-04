@@ -32,20 +32,14 @@ const AddingTopicsForQuizGeneration = ({ navigation }) => {
     }
   };
 
-  const handleNavigate =() => {
+  const handleNavigate = () => {
     navigation.navigate("NavigationBar")
   }
 
   return (
     <SafeAreaView style={styles.container}>
-      <Headers courseText="Quizzes" handleNavigate={handleNavigate} display={false} courseTextDes="Choose your course"/>
-      {/* <View style={styles.header}>
-        <Text style={styles.headerTitle}>Quizzes</Text>
-        <Image source={images.profile} style={styles.profileImage} />
-      </View> */}
-      {/* <Text style={styles.greeting}>Choose your course</Text> */}
+      <Headers courseText="Quizzes" handleNavigate={handleNavigate} display={false} courseTextDes="Choose your course" />
       <CourseCard courses={courseList} navigation={navigation} />
-      {/* <CourseListQuiz courseList={courseList} /> */}
     </SafeAreaView>
   );
 };
@@ -54,48 +48,28 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    paddingTop: 20,
-    backgroundColor: COLORS.lightGray
+    backgroundColor: COLORS.lightGray,
+    paddingHorizontal: 20,
 
   },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingTop: 40,
-    paddingHorizontal: 20,
+    // paddingTop: 40,
+    // paddingHorizontal: 20,
   },
   headerTitle: {
     fontSize: SIZES.xxLarge,
     fontWeight: "bold",
     color: COLORS.primary,
   },
-  addButton: {
-    backgroundColor: COLORS.button,
-    paddingVertical: 15,
-    paddingHorizontal: 30,
-    borderRadius: 30,
-    alignItems: "flex-end",
-    marginLeft: 200,
-    marginRight: 20,
-    marginBottom: 20,
-  },
-  addButtonText: {
-    fontSize: SIZES.large,
-    color: "#fff",
-    textAlign: "center",
-  },
-  profileImage: {
+   profileImage: {
     width: 40,
     height: 40,
     borderRadius: 20,
   },
-  greeting: {
-    fontSize: SIZES.medium,
-    marginHorizontal: 20,
-    marginTop: 20,
-    marginBottom: 30,
-  },
+
 });
 
 export default AddingTopicsForQuizGeneration;

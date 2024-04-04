@@ -32,10 +32,10 @@ function NavigationBar() {
                         iconName = focused ? icons.quiz_active : icons.quiz_inactive;
                     }
 
-                    return <Image source={iconName} style={{ width: 80, height: 80 }} resizeMode="contain" />;
+                    return <Image source={iconName} style={{ width: 60, height: 60 }} resizeMode="contain" />;
                 },
                 tabBarStyle: {
-                    height: 80, 
+                    height: 60, 
                     backgroundColor: COLORS.white,
                 },
                 tabBarShowLabel: false,

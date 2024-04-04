@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Button, Image, TouchableOpacity, Platform, ActivityIndicator } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Button, Image, TouchableOpacity, Platform, ActivityIndicator, } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as ImagePicker from 'expo-image-picker';
 import * as DocumentPicker from 'expo-document-picker';
@@ -123,17 +123,6 @@ function AddCourse({ navigation }) {
                     <ActivityIndicator size="large" color={COLORS.midTeal} />
                 </View>
             }
-
-            {/* <Headers courseText="Course Details">
-            </Headers> */}
-
-            {/* <View style={styles.header}>
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <Image source={icons.chevronLeft} style={styles.backIcon} />
-                </TouchableOpacity>
-                <Text style={styles.headerTitle}>Course Details</Text>
-                <View />
-            </View> */}
             <Headers courseText="Course Details" courseTextDes="Generate Course" handleNavigate={handleNavigate} display={true} />
 
             <View style={styles.content}>
@@ -208,18 +197,6 @@ function AddCourse({ navigation }) {
 
                 </View>
 
-                {/* The upload Course Topics Section */}
-                {/* <View>
-                    <Text style={styles.label}>Upload Course Image</Text>
-                    <View style={styles.uploadButton}>
-                        <TouchableOpacity style={styles.center} onPress={() => pickImage()}>
-                            <Image source={require('./../../assets/icons/upload.png')} style={styles.icon} />
-                            <Text style={styles.link}>Click here to browse</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View> */}
-
-                {/* The Action Button Section */}
             </View>
             <View style={styles.buttonContainer}>
                 <TouchableOpacity style={[styles.button, styles.cancelButton]} onPress={() => navigation.goBack()}>
@@ -270,6 +247,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
         position: 'relative',
+        paddingHorizontal: 20,
     },
     header: {
         flexDirection: 'row',
@@ -283,7 +261,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     content: {
-        padding: 20,
+        paddingTop: 10,
     },
     input: {
         borderWidth: 1,
@@ -350,23 +328,26 @@ const styles = StyleSheet.create({
         // bottom: 10,
         // left: 0,
         // right: 0,
-        paddingVertical: 10,
-        marginTop: '20%',
-    },
-    button: {
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        borderRadius: 20,
-        width: '40%',
+        // paddingVertical: 10,
+        marginTop: 120,
+        paddingTop: 10,
     },
     cancelButton: {
         backgroundColor: COLORS.white,
         borderWidth: 1,
         borderColor: COLORS.midGray,
         padding: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        borderRadius: 20,
+        width: '45%',
     },
     generateButton: {
         backgroundColor: COLORS.primary,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        borderRadius: 20,
+        width: '45%',
     },
     cancelButtonText: {
         fontSize: SIZES.large,
