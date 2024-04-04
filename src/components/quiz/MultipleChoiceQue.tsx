@@ -26,7 +26,8 @@ import { useDispatch } from "react-redux";
 import { setLoader } from '../../redux/user';
 import { SelectList } from 'react-native-dropdown-select-list'
 
-const { width } = Dimensions.get("window");
+const screenWidth = Dimensions.get("window").width;
+const screenHeight = Dimensions.get('window').height;
 
 const MultipleChoiceQue = ({ route, navigation }) => {
   const { quiz, type } = route.params
@@ -201,17 +202,19 @@ const MultipleChoiceQue = ({ route, navigation }) => {
             </Text>
           </View>
           {item.options.map((option, optionIndex) => (
-            <View key={optionIndex}>
+            <View key={optionIndex} style={styles.answerDiv}>
               <View
                 style={[
                   {
-                    width: 350,
+                    // width: screenWidth * .85,
+                    // marginHorizontal: 10,
+                    // marginVertical: 10,
                     padding: 20,
-                    paddingTop: 35,
+                    paddingTop: 10,
                     flexDirection: "row",
                     alignItems: "center",
                     borderColor: "black",
-                    borderWidth: 0.5,
+                    borderWidth: 1,
                     backgroundColor:
                       isTrue && option.optionValue === item.answer ? "#D7FFF3" : "white",
                   },
@@ -450,13 +453,12 @@ const MultipleChoiceQue = ({ route, navigation }) => {
         </Modal>
 
         {/* <Text style={styles.title}>Multiple Choice Question</Text> */}
-        <View style={{ marginTop: 19, alignSelf: "flex-end", marginRight: 20, flexDirection: 'row' }}>
-          {/* <Button title='Check Answer' onPress={onCheckAns} /> */}
-          {/* <Button title='regnerate Quiz' onPress={fetchRegeneratedQuiz} /> */}
-        </View>
-        <View style={{ padding: 10 }}>
-          <View style={{ flexDirection: "row", justifyContent: "center" }}>
-            {/* <Carousel
+        {/* <View style={{ marginTop: 19, alignSelf: "flex-end", marginRight: 20, flexDirection: 'row' }}> */}
+        {/* <Button title='Check Answer' onPress={onCheckAns} /> */}
+        {/* <Button title='regnerate Quiz' onPress={fetchRegeneratedQuiz} /> */}
+        {/* </View> */}
+        {/* <View style={{ padding: 10, flexDirection: "row", justifyContent: "center" }}> */}
+        {/* <Carousel
               ref={carouselRef}
               layout="default"
               data={isRegenerated ? regeneratedQuiz.questions : quizz}
@@ -465,14 +467,14 @@ const MultipleChoiceQue = ({ route, navigation }) => {
               itemWidth={width}
               scrollEnabled={false}
             /> */}
-            <Carousel
-              data={isRegenerated ? regeneratedQuiz?.questions ?? [] : quizz ?? []}
-              renderItem={renderItem}
-              width={width}
-              height={520}
-            />
-          </View>
-        </View>
+        <Carousel
+          data={isRegenerated ? regeneratedQuiz?.questions ?? [] : quizz ?? []}
+          renderItem={renderItem}
+          width={screenWidth * .9}
+          height={screenHeight * .8}
+          style={styles.questionCard}
+        />
+        {/* </View> */}
         {/* <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 10, marginBottom:30,  gap:50  }}>
         <View style={{ marginTop: 30, alignSelf: "flex-end", marginRight: 20 }}>
           <Button title='Check Answer' onPress={onCheckAns} />
@@ -545,8 +547,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   carouselItem: {
-    // height: 520,
     alignItems: "center",
+    width: '100%',
+    paddingHorizontal: 10,
+  },
+  questionCard: {
+    marginTop: 10,
   },
   centeredView: {
     flex: 1,
@@ -555,8 +561,8 @@ const styles = StyleSheet.create({
   },
   createButton: {
     backgroundColor: COLORS.button,
-    paddingVertical: 15,
-    paddingHorizontal: 30,
+    // paddingVertical: 15,
+    // paddingHorizontal: 30,
     borderRadius: 30,
     textAlign: "center",
   },
@@ -565,13 +571,13 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     // justifyContent: 'space-evenly',
-    paddingBottom: 20,
+    // paddingBottom: 20,
     // marginTop: 20,
   },
   btnContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingBottom: 20,
+    // paddingBottom: 20,
     // marginTop: 20,
   },
   cancelButton: {
@@ -652,16 +658,20 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primary,
     padding: 10,
     width: "100%",
-    height: 100,
+    // marginHorizontal:20,
+    // height: 100,
     borderTopRightRadius: SIZES.medium,
     borderTopLeftRadius: SIZES.medium,
     justifyContent: "space-between",
     borderColor: "black",
     borderWidth: 1,
   },
+  answerDiv: {
+    width: '100%',
+  },
   options: {
-    width: 350,
-    padding: 20,
+    width: '100%',
+    // padding: 20,
     flexDirection: "row",
   },
   box: {
@@ -670,8 +680,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     // borderColor: "black",
     // borderWidth: 1,
-
-    height: 400,
+    // height: 400,
     width: '100%',
   },
   // separator: {
@@ -682,11 +691,9 @@ const styles = StyleSheet.create({
   iconContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingVertical: "10%",
+    paddingVertical: 10,
     alignItems: "center",
     gap: 50
-
-
   },
   numQuestions: {
     flexDirection: "row",
