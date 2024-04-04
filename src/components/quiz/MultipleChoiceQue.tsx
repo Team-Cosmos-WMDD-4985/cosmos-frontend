@@ -474,7 +474,7 @@ const MultipleChoiceQue = ({ route, navigation }) => {
           data={isRegenerated ? regeneratedQuiz?.questions ?? [] : quizz ?? []}
           renderItem={renderItem}
           width={screenWidth * .9}
-          height={screenHeight * .7}
+          height={screenHeight * .65}
           style={styles.questionCard}
         />
         {/* </View> */}
@@ -488,22 +488,23 @@ const MultipleChoiceQue = ({ route, navigation }) => {
         <View style={styles.buttonContainer}>
           <View style={styles.btnContainer}>
             <TouchableOpacity
-              style={[styles.button, styles.cancelButton]}
+              style={styles.cancelButton}
               onPress={isTrueFunc}
             >
-              <Text style={styles.cancelButtonText}>Get Answer</Text>
+              <Text style={styles.cancelButtonText} numberOfLines={1}
+              >Get Answer</Text>
 
             </TouchableOpacity>
-            {/* <Text onPress={isTrueFunc} style={styles.cancelButtonText}>Get Answers2</Text> */}
+
             <TouchableOpacity
-              style={[styles.button, styles.generateButton]}
+              style={styles.generateButton}
               onPress={handleConfirm}
             >
-              <Text style={styles.generateButtonText}>Save</Text>
+              <Text style={styles.generateButtonText} numberOfLines={1}
+              >Save</Text>
             </TouchableOpacity>
           </View>
 
-          {/* <View style={{  justifyContent: "center", width : 150, borderRadius:10 }}><Button  title="Download PDF" onPress={handleCancel} /></View> */}
           <View>
             <TouchableOpacity
               onPress={handleCancel}
@@ -574,28 +575,26 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: "column",
     alignItems: "center",
-    // justifyContent: 'space-evenly',
-    // paddingBottom: 20,
-    // marginTop: 20,
+    justifyContent: 'space-evenly',
+    marginTop: 10,
+    width: '100%',
   },
   btnContainer: {
+    display: 'flex',
     flexDirection: "row",
+    width: '100%',
     justifyContent: "space-between",
-    // paddingBottom: 20,
+    paddingBottom: 10,
     // marginTop: 20,
   },
   cancelButton: {
     backgroundColor: COLORS.lightGray,
     borderWidth: 1,
     borderColor: COLORS.button,
-    // paddingVertical: 15,
     alignItems: "center",
     justifyContent: "center",
-    // paddingHorizontal: 30,
     borderRadius: 30,
-    marginRight: 10,
-    // width: 164,
-    // height: 54,
+    width: '49%',
   },
   generateButton: {
     backgroundColor: COLORS.primary,
@@ -603,13 +602,16 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 30,
     borderWidth: 1,
-    // width: 164,
-    // height: 54,
+    width: '49%',
+    paddingVertical: 10,
+
   },
   cancelButtonText: {
     fontSize: SIZES.large,
     color: COLORS.button,
     textAlign: "center",
+    paddingHorizontal: 0,
+    marginHorizontal: 0,
   },
   generateButtonText: {
     fontSize: SIZES.large,
@@ -756,19 +758,18 @@ const styles = StyleSheet.create({
     marginTop: 10,
     alignItems: 'center',
     width: '45%',
+    marginBottom: 10,
   },
   submitButtonText: {
     color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
-    width: 70,
     textAlign: "center"
   },
   buttonContainer2: {
     display: 'flex',
     marginTop: 20,
     flexDirection: 'row',
-    gap: 10,
     width: '100%',
     justifyContent: 'space-between',
     marginBottom: 10,

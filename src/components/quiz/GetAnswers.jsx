@@ -25,7 +25,7 @@ const GetAnswer = ({ route, navigation }) => {
                             <Text style={styles.questionDes}>{question.question}</Text>
                         </View>
                         <View style={styles.answerDiv}>
-                            <Text>Your answer: </Text>
+                            <Text>Correct answer: </Text>
                             <Text style={styles.answer}>{question.answer || "No Answer Yet"}</Text>
                         </View>
                     </View>
@@ -38,7 +38,7 @@ const GetAnswer = ({ route, navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // paddingHorizontal: 20,
+        paddingHorizontal: 20,
         paddingVertical: 10,
         // alignItems: "center"
     },
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     },
     quizContainer: {
         backgroundColor: "#3C3D43",
-        width: 350,
+        width: '100%',
         height: 100,
         borderRadius: 20,
         borderBottomLeftRadius: 0,
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     },
 
     answerDiv: {
-        width: 350,
+        width: '100%',
         borderWidth: 1,
         padding: 20,
         borderRadius: 30,
@@ -93,7 +93,8 @@ const styles = StyleSheet.create({
         color:"white"
      },
      scrollViewDiv:{
-        marginTop:30
+        width: '100%',
+        marginTop:20
      }
 });
 

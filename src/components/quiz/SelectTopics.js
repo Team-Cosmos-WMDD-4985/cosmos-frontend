@@ -38,7 +38,7 @@ const SelectTopics = ({ route, navigation }) => {
   };
 
   const renderTopicItem = ({ item, index }) => (
-    
+
     <TouchableOpacity
       style={[styles.topicItem, item.selected ? styles.topicItemSelected : {}]}
       onPress={() => toggleTopic(index)}
@@ -61,14 +61,14 @@ const SelectTopics = ({ route, navigation }) => {
   }
   return (
     <View style={styles.flexContainer}>
-      <Headers courseText="Choose Topics"  display={true} handleNavigate={handleNavigate} courseTextDes="Select topics to create quiz"/>
+      <Headers courseText="Choose Topics" display={true} handleNavigate={handleNavigate} courseTextDes="Select topics to create quiz" />
 
       <FlatList
         data={selectedTopics}
         renderItem={renderTopicItem}
         keyExtractor={(item, index) => `topic-${index}`}
         style={styles.container}
-        
+
       />
       <View style={styles.buttonContainer}>
         <TouchableOpacity
@@ -96,9 +96,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   container: {
-    paddingTop:20,
-      },
+    paddingTop: 20,
+  },
   topicItem: {
+    width: '100%',
+    display: 'flex',
     flexDirection: "row",
     alignItems: "center",
     borderWidth: 1,
@@ -107,32 +109,35 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     fontSize: SIZES.medium,
     borderRadius: 30,
-    paddingHorizontal: 10,
-   
+    // paddingHorizontal: 50,
+    paddingRight: 50,
   },
   topicItemSelected: {
     backgroundColor: COLORS.lightTeal,
+    paddingHorizontal: 10,
   },
   checkboxIcon: {
     marginRight: 10,
+    paddingHorizontal: 10,
   },
   weekText: {
     marginRight: 10,
   },
   topicText: {
     fontSize: SIZES.medium,
+    marginRight: 10,
   },
   textContainer: {
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
+    paddingRight: 10,
   },
   buttonContainer: {
     flexDirection: "row",
-    justifyContent: "space-around",
-    marginTop: 20,
+    justifyContent: "space-between",
+    marginTop: 10,
     marginBottom: 10,
-
   },
   button: {
     paddingVertical: 10,
@@ -144,9 +149,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: COLORS.midGray,
     padding: 15,
+    width: '49%',
   },
   generateButton: {
     backgroundColor: COLORS.primary,
+    width: '49%',
+
   },
   cancelButtonText: {
     fontSize: SIZES.large,

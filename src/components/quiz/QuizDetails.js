@@ -4,7 +4,7 @@ import AxiosService from "../../services/axios";
 import { COLORS, SIZES, WEIGHT, images, SHADOWS } from "../../constants";
 import Headers from '../../common/Headers';
 
-const QuizDetails = ({ route,navigation }) => {
+const QuizDetails = ({ route, navigation }) => {
   const { quiz } = route.params;
   const [quizDetails, setQuizDetails] = useState(null);
 
@@ -30,11 +30,11 @@ const QuizDetails = ({ route,navigation }) => {
 
   const handleNavigate = () => {
     navigation.navigate("NavigationBar");
-}
+  }
 
   return (
     <View style={styles.pageContainer}>
-      <Headers courseText="Quizzes" handleNavigate={handleNavigate} display={true} courseTextDes="course Detail"/>
+      <Headers courseText="Quizzes" handleNavigate={handleNavigate} display={true} courseTextDes="course Detail" />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.container}>
           <View style={styles.content}>
@@ -74,11 +74,11 @@ const QuizDetails = ({ route,navigation }) => {
         </View>
       </ScrollView>
       <TouchableOpacity
-            style={[styles.button1, styles.generateButton]}
-            onPress={() => navigation.navigate("NavigationBar")}
-          >
-            <Text style={styles.generateButtonText}>Return</Text>
-          </TouchableOpacity>
+        style={[styles.button1, styles.generateButton]}
+        onPress={() => navigation.navigate("NavigationBar")}
+      >
+        <Text style={styles.generateButtonText}>Return</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -87,6 +87,7 @@ const styles = StyleSheet.create({
   pageContainer: {
     flex: 1,
     backgroundColor: COLORS.white,
+    paddingHorizontal: 20,
   },
   scrollContainer: {
     flexGrow: 1,
@@ -98,7 +99,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     ...SHADOWS.medium,
     shadowColor: COLORS.white,
-    margin: 20,
+    marginTop: 20,
   },
   content: {
     flex: 1,
@@ -120,11 +121,11 @@ const styles = StyleSheet.create({
     marginBottom: SIZES.xSmall,
   },
   label: {
-    fontWeight : "700",
+    fontWeight: "700",
     marginRight: 5,
   },
   label2: {
-    fontWeight : "700",
+    fontWeight: "700",
     paddingLeft: SIZES.medium,
   },
   label1: {
@@ -132,7 +133,8 @@ const styles = StyleSheet.create({
   },
   button1: {
     paddingVertical: 10,
-    margin: 20,
+    marginTop: 10,
+    marginBottom: 10,
     borderRadius: 20,
   },
   generateButton: {
@@ -142,7 +144,7 @@ const styles = StyleSheet.create({
     fontSize: SIZES.large,
     color: COLORS.midTeal,
     textAlign: "center",
-    fontWeight : "700",
+    fontWeight: "700",
   },
 });
 

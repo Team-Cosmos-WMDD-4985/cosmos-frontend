@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput ,StyleSheet, Button, Image, TouchableOpacity, ScrollView, SafeAreaView, Modal } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Button, Image, TouchableOpacity, ScrollView, SafeAreaView, Modal } from 'react-native';
 import { COLORS, SIZES } from "./../../constants";
 import { HStack, VStack } from 'native-base';
 import { icons, images } from "./../../constants";
@@ -40,22 +40,22 @@ function AddTopics({ navigation, route }) {
 
     const handleTopicConfirm = () => {
         const copySchedule = JSON.parse(JSON.stringify(schedule));
-        if( copySchedule[activeIndexToAdd].topics && Array.isArray(copySchedule[activeIndexToAdd].topics) ) {
+        if (copySchedule[activeIndexToAdd].topics && Array.isArray(copySchedule[activeIndexToAdd].topics)) {
             copySchedule[activeIndexToAdd].topics.push(newTopicValue)
         } else {
             copySchedule[activeIndexToAdd].topics = [newTopicValue];
         }
-    
+
         setSchedule(copySchedule)
         setNewTopicValue(null)
         setTopicInputModal(false);
     }
-    
+
     const handleTopicCancel = () => {
         setNewTopicValue("");
         setTopicInputModal(false);
     }
-    
+
     const addTopics = async (index) => {
         console.log(index)
         setActiveIndexToAdd(index)
@@ -65,7 +65,7 @@ function AddTopics({ navigation, route }) {
 
     const handleNavigate = () => {
         navigation.navigate("NavigationBar");
-      };
+    };
 
     const handleCancel = () => {
         setModalVisible(false);
@@ -77,9 +77,9 @@ function AddTopics({ navigation, route }) {
             const finalCourseData = JSON.parse(JSON.stringify(courseData));
             finalCourseData.schedule = schedule;
             setCourseData(finalCourseData)
-            const response = await AxiosService("POST", "updateSchedule", true, {}, {finalCourseData, courseId});
+            const response = await AxiosService("POST", "updateSchedule", true, {}, { finalCourseData, courseId });
             console.log(response.data)
-            console.log("AddTopic finalCourseData: ",finalCourseData)
+            console.log("AddTopic finalCourseData: ", finalCourseData)
 
             navigation.navigate("NavigationBar")
         } catch (err) {
@@ -90,7 +90,13 @@ function AddTopics({ navigation, route }) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <ScrollView showsVerticalScrollIndicator={true}>
+            <Headers
+                courseText="Manage Topics"
+                courseTextDes="Edit Course"
+                handleNavigate={handleNavigate}
+                display={true}
+            />
+            <ScrollView showsVerticalScrollIndicator={true} style={styles.scrollContainer}>
 
                 <Modal
                     animationType="slide"
@@ -141,12 +147,12 @@ function AddTopics({ navigation, route }) {
                             <Text style={styles.modalText}>Add topics</Text>
                             <View >
 
-                                    <TextInput 
-                                        style={styles.addTopicInput} 
-                                        placeholder='Topic Name'
-                                        onChangeText={(text) => {setNewTopicValue(text)}}
-                                        value={newTopicValue}
-                                    />
+                                <TextInput
+                                    style={styles.addTopicInput}
+                                    placeholder='Topic Name'
+                                    onChangeText={(text) => { setNewTopicValue(text) }}
+                                    value={newTopicValue}
+                                />
 
                                 <View style={styles.buttonContainer}>
                                     <TouchableOpacity
@@ -168,19 +174,7 @@ function AddTopics({ navigation, route }) {
                     </View>
                 </Modal>
 
-                <View >
-                <Headers
-        courseText="Manage Topics"
-        courseTextDes="Edit Course"
-        handleNavigate={handleNavigate}
-        display={true}
-        // courseTextDes="Manage Topics"
-      />
-                    {/* <TouchableOpacity onPress={() => navigation.goBack()}>
-                        <Image source={icons.chevronLeft} style={styles.backIcon} />
-                    </TouchableOpacity>
-                    <Text style={styles.headerTitle}>Manage Topics</Text> */}
-                </View>
+
 
                 {
                     schedule.length > 0 ? (
@@ -193,8 +187,8 @@ function AddTopics({ navigation, route }) {
                                             <View style={styles.chip} key={`tag-${innerIndex}`}>
                                                 <Text
                                                     key={`text-${innerIndex}`}
-                                                    // onPress={handleClick}
-                                                    // onClose={handleDelete}
+                                                // onPress={handleClick}
+                                                // onClose={handleDelete}
                                                 >
                                                     {item}
                                                 </Text>
@@ -203,16 +197,16 @@ function AddTopics({ navigation, route }) {
                                                         <Text style={styles.addSignText}>x</Text>
                                                     </View>
                                                 </TouchableOpacity>
-                                               
+
                                             </View>
                                         ))
                                     }
-                                    <TouchableOpacity style={styles.addSign} onPress={() => addTopics(index) }>
+                                    <TouchableOpacity style={styles.addSign} onPress={() => addTopics(index)}>
                                         <View >
                                             <Text style={styles.addSignText}>+</Text>
                                         </View>
                                     </TouchableOpacity>
-                                    
+
                                 </View>
                             </View>
                         ))
@@ -245,6 +239,11 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
         paddingTop: 20,
+        paddingHorizontal: 20,
+    },
+    scrollContainer: {
+        marginTop: 20,
+
     },
     header: {
         flexDirection: 'row',
@@ -283,8 +282,8 @@ const styles = StyleSheet.create({
 
     topicByWeek: {
         flexDirection: 'column',
-        marginVertical: 10,
-        marginHorizontal: 20,
+        marginVertical: 20,
+        // marginHorizontal: 20,
     },
     topicBox: {
         display: 'flex',
@@ -307,24 +306,28 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     buttonContainer: {
+        display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-evenly',
-        paddingBottom: 20,
-        marginTop: 20,
+        justifyContent: 'space-between',
+        paddingBottom: 10,
+        marginTop: 10,
+        width: '100%',
     },
     cancelButton: {
         borderWidth: 1,
         borderColor: COLORS.midGray,
         paddingVertical: 15,
-        paddingHorizontal: 30,
+        // paddingHorizontal: 30,
         borderRadius: 30,
-        marginRight: 10,
+        width: '48%',
     },
     createButton: {
         backgroundColor: COLORS.primary,
         paddingVertical: 15,
-        paddingHorizontal: 30,
+        // paddingHorizontal: 30,
         borderRadius: 30,
+        width: '48%',
+
     },
     cancelButtonText: {
         fontSize: SIZES.large,
@@ -397,7 +400,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-
+        paddingHorizontal: 20,
     },
     modalView: {
         backgroundColor: "white",
@@ -423,7 +426,7 @@ const styles = StyleSheet.create({
         fontSize: SIZES.xLarge,
         fontWeight: 'bold',
         textAlign: "center",
-        
+
     },
     checkcirclestyle: {
         width: 80,
