@@ -16,6 +16,15 @@ const QuizCard = ({ quiz, navigation }) => {
     // Navigate to QuizDetails screen with quiz details
     navigation.navigate('QuizDetails', { quiz });
   };
+  const renderInitialsPlaceholder = (topicName) => {
+    const initials = topicName && topicName.length > 0 ? topicName.substring(0, 2).toUpperCase() : '';
+   
+    return (
+      <View style={styles.initialsPlaceholder}>
+        <Text style={styles.initialsText}>{initials}</Text>
+      </View>
+    );
+  };
 
   return (
     <TouchableOpacity
@@ -23,10 +32,11 @@ const QuizCard = ({ quiz, navigation }) => {
       onPress={handleQuizPress}
     >
       <TouchableOpacity style={styles.logoContainer}>
-        <Image
+        {/* <Image
           source={quiz.image ? { uri: quiz.image } : { uri: getRandomImageUrl() }}
           style={styles.logoImage}
-        />
+        /> */}
+        {renderInitialsPlaceholder(quiz.quizName)}
       </TouchableOpacity>
 
       <View style={styles.textContainer}>

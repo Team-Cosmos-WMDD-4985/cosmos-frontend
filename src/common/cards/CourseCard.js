@@ -1,3 +1,6 @@
+
+
+
 import React from 'react'
 import { View, Text, TouchableOpacity, Image, StyleSheet, Dimensions } from 'react-native'
 import { icons, images } from "./../../constants"
@@ -42,6 +45,7 @@ const CourseCard = ({ courses, item, index, width = 400, height = Dimensions.get
       alignItems: "center",
       borderTopLeftRadius: 20,
       borderTopRightRadius: 20,
+      
     },
     infoContainer: {
       height: height * 0.5, 
@@ -49,6 +53,11 @@ const CourseCard = ({ courses, item, index, width = 400, height = Dimensions.get
       paddingVertical: 5,
 
     },
+      initialsText:{
+color: COLORS.midTeal,
+fontSize: SIZES.xLarge,
+  },
+    
     courseStyle: {
       width: '100%',
       height: '100%', 
@@ -62,6 +71,15 @@ const CourseCard = ({ courses, item, index, width = 400, height = Dimensions.get
       return { uri: item.image };
     }
     return { uri: `https://picsum.photos/300/200?random=${index}` };
+  };
+  const renderInitialsPlaceholder = (topicName) => {
+    const initials = topicName && topicName.length > 0 ? topicName.substring(0, 2).toUpperCase() : '';
+   
+    return (
+      <View style={styles.initialsPlaceholder}>
+        <Text style={dynamicStyles.initialsText}>{initials}</Text>
+      </View>
+    );
   };
 
 
@@ -93,7 +111,8 @@ const CourseCard = ({ courses, item, index, width = 400, height = Dimensions.get
     >
 
       <View style={dynamicStyles.logoContainer}>
-        <Image source={getImageSource()} style={styles.courseStyle} />
+        {/* <Image source={getImageSource()} style={styles.courseStyle} /> */}
+        {renderInitialsPlaceholder(item.courseName)}
       </View>
 
       <View style={dynamicStyles.infoContainer}>

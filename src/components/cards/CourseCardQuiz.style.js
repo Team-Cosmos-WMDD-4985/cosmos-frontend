@@ -1,21 +1,27 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet,Dimensions  } from "react-native";
 
 import { COLORS, FONT, SHADOWS, SIZES } from "../../constants";
 
 const screenHeight = Dimensions.get('window').height;
 
-
 const styles = StyleSheet.create({
   container: () => ({
+    // width: 389,
+    // height: 240,
     height: screenHeight * 0.25,
+
+    margin: 1,
     textAlign: "center",
+    
+    
+    
+    // padding: SIZES.xLarge,
     backgroundColor: "#FFF",
     borderRadius: SIZES.medium,
     justifyContent: "space-between",
     ...SHADOWS.medium,
     shadowColor: COLORS.white,
     marginTop: 20,
-    // width: "100%",
 
   }),
 
@@ -26,13 +32,13 @@ const styles = StyleSheet.create({
     borderRadius: SIZES.medium,
     justifyContent: "center",
     alignItems: "center",
-
+    
 
   },
   logoImage: {
     width: 50,
     height: 50,
-
+    
   },
   courseDate: {
     fontSize: SIZES.medium,
@@ -42,11 +48,11 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   infoContainer: {
-    height: screenHeight * 0.125,
+    height: 120,
     // marginTop: SIZES.xSmall,
     display: "flex",
     flexDirection: "column",
-    padding: 5,
+    padding: 10,
     gap: 5,
 
   },
@@ -57,15 +63,13 @@ const styles = StyleSheet.create({
   firstLine: {
     display: "flex",
     justifyContent: "space-between",
-    flexDirection: "row"
+    flexDirection: "row",
   },
   courseName: ({
     fontSize: SIZES.large,
-    fontFamily: FONT.medium,
+    fontFamily: FONT.bold,
     color: COLORS.primary,
     // lineHeight: SIZES.small
-    fontWeight: 'bold',
-
   }),
   weekStyle: {
     display: 'flex',
@@ -73,14 +77,14 @@ const styles = StyleSheet.create({
     color: COLORS.midGray,
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-
+    
   },
   weekText: {
     // padding: 10,
     color: COLORS.midGray,
     fontSize: SIZES.small,
-
-  },
+    
+   },
   publisher: (selectedJob) => ({
     fontSize: SIZES.medium - 2,
     fontFamily: FONT.bold,
@@ -90,17 +94,33 @@ const styles = StyleSheet.create({
     fontSize: SIZES.medium - 2,
     fontFamily: FONT.regular,
     color: "#B3AEC6",
-
+  
   },
   courseStyle: {
     borderTopLeftRadius: SIZES.medium,
     borderTopRightRadius: SIZES.medium,
     width: '100%',
-  }
+  },
+  initialsPlaceholder: {
+    width:"100%" ,
+     height: 100 ,
+    borderTopLeftRadius: SIZES.medium,
+    borderTopRightRadius: SIZES.medium, 
+    backgroundColor: COLORS.primary,
+    justifyContent: "center",
+    alignItems: "center",
+    color: COLORS.white,
+  },
+  initialsText:{
+color: COLORS.midTeal,
+fontSize: SIZES.xLarge,
+  },
   // courseStyle: {
   //   width: "100%",
+  
+  
+},
 
-  // }
-});
+  );
 
 export default styles;
