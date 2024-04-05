@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
     borderRadius: SIZES.medium,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: COLORS.primary,
   },
   logoImage: {
     width: screenHeight * 0.1, // 12.5% of the screen height
@@ -56,6 +57,10 @@ const styles = StyleSheet.create({
   color: COLORS.midGray,
   fontSize: SIZES.small,
 },
+initialsText:{
+  color: COLORS.midTeal,
+  fontSize: SIZES.xLarge,
+    },
 });
 
 export default styles;

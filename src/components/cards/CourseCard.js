@@ -1,4 +1,3 @@
-// export default CourseCard;
 import React from "react";
 import {
   View,
@@ -7,12 +6,9 @@ import {
   Image,
   TouchableOpacity,
   StyleSheet,
-  Dimensions
 } from "react-native";
 import { COLORS, icons, images, SIZES } from "../../constants";
 import styles from "./CourseCardQuiz.style";
-
-const screenHeight = Dimensions.get('window').height;
 
 const CourseCard = ({ courses, navigation }) => {
   const getDateFormat = (startDate, endDate) => {
@@ -44,22 +40,35 @@ const CourseCard = ({ courses, navigation }) => {
     return `https://picsum.photos/seed/${seed}/200/300`;
   };
 
+  const renderInitialsPlaceholder = (topicName) => {
+    const initials = topicName && topicName.length > 0 ? topicName.substring(0, 2).toUpperCase() : '';
+   
+    return (
+      <View style={styles.initialsPlaceholder}>
+        <Text style={styles.initialsText}>{initials}</Text>
+      </View>
+    );
+  };
+  
 
+  
 
 
   return (
     <ScrollView>
-      {courses.map((course, index) => (
+      {courses.map((course) => (
         <TouchableOpacity
-          key={course.id || index} // Fallback to index if course.id is undefined
+          key={course.id}
           style={styles.container()}
           onPress={() => handlePress(course.topics, course._id)}
         >
           <View>
-            <Image
-              source={{ uri: getRandomImageUrl(), width: "100%", height: 80 }}
+            {/* <Image
+              source={{ uri: getRandomImageUrl(), width:"100%" , height: 145 }}
               style={styles.courseStyle}
-            />
+            /> */}
+            {renderInitialsPlaceholder(course.courseName)}
+           
           </View>
           <View style={styles.infoContainer}>
             <View style={styles.firstLine}>
