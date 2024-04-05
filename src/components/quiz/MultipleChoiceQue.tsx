@@ -152,12 +152,12 @@ const MultipleChoiceQue = ({ route, navigation }) => {
 
 
   const handleNext = () => {
-    carouselRef.current.snapToNext();
+    carouselRef.current?.next();
     setIsTrue(false);
   };
 
   const handlePrevious = () => {
-    carouselRef.current.snapToPrev();
+    carouselRef.current.prev();
     setIsTrue(false);
 
   };
@@ -238,11 +238,11 @@ const MultipleChoiceQue = ({ route, navigation }) => {
           <View style={{ flexDirection: "row", }}>
             {/* <TouchableOpacity style={styles.arrows} onPress={handlePrevious}> */}
             <TouchableOpacity style={styles.arrows}>
-              <Icon name="chevron-left" size={15} color="black" />
+              <Icon name="chevron-left" size={15} color="black" onPress={handlePrevious}  />
             </TouchableOpacity>
             <Text style={{ fontSize: 30 }}>|</Text>
             {/* <TouchableOpacity style={styles.arrows} onPress={handleNext}> */}
-            <TouchableOpacity style={styles.arrows}>
+            <TouchableOpacity style={styles.arrows} onPress={handleNext}>
               <Icon name="chevron-right" size={15} color="black" />
             </TouchableOpacity>
           </View>
@@ -476,6 +476,8 @@ const MultipleChoiceQue = ({ route, navigation }) => {
           width={screenWidth * .9}
           height={screenHeight * .65}
           style={styles.questionCard}
+          ref={carouselRef}
+          
         />
         {/* </View> */}
         {/* <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 10, marginBottom:30,  gap:50  }}>

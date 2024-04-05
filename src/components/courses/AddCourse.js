@@ -134,7 +134,7 @@ function AddCourse({ navigation }) {
                         style={styles.input}
                         onChangeText={setCourseName}
                         value={courseName}
-                        placeholder="Project 2"
+                        placeholder="Course Name"
                     />
                 </View>
 
