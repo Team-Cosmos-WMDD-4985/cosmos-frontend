@@ -211,7 +211,7 @@ const MultipleChoiceQue = ({ route, navigation }) => {
                     // marginHorizontal: 10,
                     // marginVertical: 10,
                     padding: 20,
-                    paddingTop: 10,
+                    // paddingTop: 10,
                     flexDirection: "row",
                     alignItems: "center",
                     borderColor: "black",
@@ -507,30 +507,32 @@ const MultipleChoiceQue = ({ route, navigation }) => {
             </TouchableOpacity>
           </View>
 
-          <View>
-            <TouchableOpacity
-              onPress={handleCancel}
-              style={{
-                borderBottomWidth: 1,
-                borderBottomColor: COLORS.primary,
-                alignItems: "center",
-              }}
-            >
-              <Text onPress={onCheckAns}>View All Answers</Text>
-            </TouchableOpacity>
-          </View>
-          <View>
-            <TouchableOpacity
-              onPress={() => { }}
-              style={{
-                borderBottomWidth: 1,
-                borderBottomColor: COLORS.primary,
-                alignItems: "center",
-                marginTop: 10,
-              }}
-            >
-              <Text onPress={fetchRegeneratedQuiz}>Regenerate the quiz</Text>
-            </TouchableOpacity>
+          <View style={{marginTop:10}}>
+            <View>
+              <TouchableOpacity
+                onPress={handleCancel}
+                style={{
+                  borderBottomWidth: 1,
+                  borderBottomColor: COLORS.primary,
+                  alignItems: "center",
+                }}
+              >
+                <Text onPress={onCheckAns}>View All Answers</Text>
+              </TouchableOpacity>
+            </View>
+            <View>
+              <TouchableOpacity
+                onPress={() => { }}
+                style={{
+                  borderBottomWidth: 1,
+                  borderBottomColor: COLORS.primary,
+                  alignItems: "center",
+                  marginTop: 10,
+                }}
+              >
+                <Text onPress={fetchRegeneratedQuiz}>Regenerate the quiz</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </ScrollView>
@@ -556,6 +558,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: '100%',
     paddingHorizontal: 10,
+    marginTop:30
   },
   questionCard: {
     marginTop: 10,
@@ -682,6 +685,7 @@ const styles = StyleSheet.create({
   },
   answerDiv: {
     width: '100%',
+    
   },
   options: {
     width: '100%',
