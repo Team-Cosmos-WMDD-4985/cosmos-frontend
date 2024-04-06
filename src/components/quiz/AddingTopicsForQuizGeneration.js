@@ -40,7 +40,7 @@ const AddingTopicsForQuizGeneration = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       <Headers courseText="Quizzes" handleNavigate={handleNavigate} display={false} courseTextDes="Choose your course" />
       <CourseCard courses={courseList} navigation={navigation} />
-    </SafeAreaView>
+        </SafeAreaView>
   );
 };
 
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: COLORS.primary,
   },
-   profileImage: {
+  profileImage: {
     width: 40,
     height: 40,
     borderRadius: 20,

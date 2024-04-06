@@ -17,9 +17,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   logoContainer: {
-    width: 85,
-    height: 85,
-    borderRadius: SIZES.medium,
+    width: screenHeight * 0.1, // 12.5% of the screen height
+    height: screenHeight * 0.1, // 12.5% of the screen height
+    borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: COLORS.primary,

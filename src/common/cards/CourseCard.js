@@ -1,7 +1,4 @@
-
-
-
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet, Dimensions } from 'react-native'
 import { icons, images } from "./../../constants"
 import { COLORS, FONT, SHADOWS, SIZES } from "../../constants";
@@ -10,12 +7,13 @@ import { useNavigation } from '@react-navigation/native';
 
 const CourseCard = ({ courses, item, index, width = 400, height = Dimensions.get('window').height * 0.5 }) => {
   const navigation = useNavigation();
+  const [imageUri, setImageUri] = useState('');
 
-    const handleCoursePress = (topics) => {
+  const handleCoursePress = (topics) => {
     const { courseId } = item;
     // navigation.navigate('CourseDetails', { courseId });
     // navigation.navigate('CourseDetails', { topics, courseId: item });
-    navigation.navigate('CourseDetails', { courseId: item, finalCourseData: item , schedule:item});
+    navigation.navigate('CourseDetails', { courseId: item, finalCourseData: item, schedule: item });
 
   };
 
@@ -31,50 +29,83 @@ const CourseCard = ({ courses, item, index, width = 400, height = Dimensions.get
       borderWidth: 1,
       ...SHADOWS.medium,
       shadowColor: COLORS.lightGray,
-      shadowOffset: { width: 0, height: 10 }, 
-      shadowOpacity: 0.3, 
-      shadowRadius: 20, 
-      elevation: 8, 
+      shadowOffset: { width: 0, height: 10 },
+      shadowOpacity: 0.3,
+      shadowRadius: 20,
+      elevation: 8,
       marginBottom: 10,
     },
     logoContainer: {
       width: "100%",
-      height: height * 0.5, 
+      height: height * 0.5,
       backgroundColor: COLORS.primary,
       justifyContent: "center",
       alignItems: "center",
       borderTopLeftRadius: 20,
       borderTopRightRadius: 20,
-      
+
     },
     infoContainer: {
-      height: height * 0.5, 
+      height: height * 0.5,
       paddingHorizontal: 10,
       paddingVertical: 5,
 
     },
-      initialsText:{
-color: COLORS.midTeal,
-fontSize: SIZES.xLarge,
-  },
-    
+    initialsText: {
+      color: COLORS.midTeal,
+      fontSize: SIZES.xLarge,
+    },
+
     courseStyle: {
       width: '100%',
-      height: '100%', 
+      height: '100%',
       borderTopLeftRadius: 20,
       borderTopRightRadius: 20,
     },
   });
 
-  const getImageSource = () => {
-    if (item.image && item.image !== '') {
-      return { uri: item.image };
+  // const getImageSource = () => {
+  //   if (item.image && item.image !== '') {
+  //     return { uri: item.image };
+  //   }
+  //   return { uri: `https://picsum.photos/300/200?random=${index}` };
+  // };
+
+  const getUnsplashImageSource = async (category) => {
+    const accessKey = '7UVrYE94CZ8NKed1LdJph-Nsc4DxjhFgH4xriKpt1KE';
+    const response = await fetch(`https://api.unsplash.com/search/photos?query=${category}&client_id=${accessKey}`);
+    const data = await response.json();
+
+    if (data && data.results && data.results.length > 0) {
+      const imageUrl = data.results[0].urls.regular;
+      return { uri: imageUrl };
+    } else {
+      console.log('No images found for the specified category');
+      return null;
     }
-    return { uri: `https://picsum.photos/300/200?random=${index}` };
   };
+
+  const categories = [
+    'education', 'learning', 'school', 'study', 'classroom',
+    'books', 'university', 'homework', 'online learning', 'library',
+    'student life', 'teacher', 'lecture', 'science', 'mathematics'
+  ];
+
+  useEffect(() => {
+    const fetchImage = async () => {
+      const randomCategory = categories[Math.floor(Math.random() * categories.length)];
+      const imageSource = await getUnsplashImageSource(randomCategory);
+      if (imageSource && imageSource.uri) {
+        setImageUri(imageSource.uri);
+      }
+    };
+
+    fetchImage();
+  }, [item, index]);
+
   const renderInitialsPlaceholder = (topicName) => {
     const initials = topicName && topicName.length > 0 ? topicName.substring(0, 2).toUpperCase() : '';
-   
+
     return (
       <View style={styles.initialsPlaceholder}>
         <Text style={dynamicStyles.initialsText}>{initials}</Text>
@@ -112,7 +143,13 @@ fontSize: SIZES.xLarge,
 
       <View style={dynamicStyles.logoContainer}>
         {/* <Image source={getImageSource()} style={styles.courseStyle} /> */}
-        {renderInitialsPlaceholder(item.courseName)}
+        {/* {renderInitialsPlaceholder(item.courseName)} */}
+        {imageUri ? (
+          <Image source={{ uri: imageUri }} style={dynamicStyles.courseStyle} />
+        ) : (
+          // Placeholder or loading state if needed
+          <Text>Loading...</Text>
+        )}
       </View>
 
       <View style={dynamicStyles.infoContainer}>
