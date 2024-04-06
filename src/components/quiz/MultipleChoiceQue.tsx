@@ -558,10 +558,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: '100%',
     paddingHorizontal: 10,
-    marginTop:30
+    marginTop:5
   },
   questionCard: {
-    marginTop: 10,
+    marginTop: 5,
   },
   centeredView: {
     flex: 1,
