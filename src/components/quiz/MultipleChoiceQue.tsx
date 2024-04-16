@@ -238,7 +238,7 @@ const MultipleChoiceQue = ({ route, navigation }) => {
           <View style={{ flexDirection: "row", }}>
             {/* <TouchableOpacity style={styles.arrows} onPress={handlePrevious}> */}
             <TouchableOpacity style={styles.arrows}>
-              <Icon name="chevron-left" size={15} color="black" onPress={handlePrevious}  />
+              <Icon name="chevron-left" size={15} color="black" onPress={handlePrevious} />
             </TouchableOpacity>
             <Text style={{ fontSize: 30 }}>|</Text>
             {/* <TouchableOpacity style={styles.arrows} onPress={handleNext}> */}
@@ -284,8 +284,10 @@ const MultipleChoiceQue = ({ route, navigation }) => {
 
   const handleConfirm = () => {
     setModalVisible(true);
-    navigation.navigate("NavigationBar");
+    // navigation.navigate("NavigationBar");
   };
+
+
   const handleConfirmTwo = () => {
     setModalVisible2(true);
     console.log("Confirm Pressed");
@@ -293,7 +295,7 @@ const MultipleChoiceQue = ({ route, navigation }) => {
 
 
   const handleSave = () => {
-
+    navigation.navigate("NavigationBar");
   }
 
   const handleNavigate = () => {
@@ -316,7 +318,43 @@ const MultipleChoiceQue = ({ route, navigation }) => {
       <Headers courseText="Multiple Choice" handleNavigate={handleNavigate} display={true} courseTextDes="Feel free to edit the content" />
 
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
+
+
         <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            setModalVisible(!modalVisible);
+
+          }}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.overlay} />
+            <View style={styles.modalViewTwo}>
+              <Image source={icons.checkcircle} style={styles.checkcirclestyleTwo} />
+              <Text style={styles.modalText}>Confirm to Save Quiz.</Text>
+              <View style={styles.buttonContainerTwo}>
+                <TouchableOpacity
+                  style={styles.cancelButtonTwo}
+                  onPress={handleCancel}
+                >
+                  <Text style={styles.cancelButtonText}>Cancel</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.createButtonTwo}
+                  onPress={handleSave}
+                >
+                  <Text style={styles.generateButtonText}>Confirm</Text>
+                </TouchableOpacity>
+              </View>
+
+            </View>
+          </View>
+        </Modal>
+
+
+        {/* <Modal
           animationType="slide"
           transparent={true}
           visible={modalVisible}
@@ -339,7 +377,7 @@ const MultipleChoiceQue = ({ route, navigation }) => {
               </View>
             </View>
           </View>
-        </Modal>
+        </Modal> */}
 
 
 
@@ -440,7 +478,7 @@ const MultipleChoiceQue = ({ route, navigation }) => {
                   style={styles.submitButton}
                   onPress={addQuestions}
                 >
-                  <Text style={styles.generateButtonText}>Save</Text>
+                  <Text style={styles.generateButtonText} onPress={handleConfirm}>Save</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
@@ -477,7 +515,7 @@ const MultipleChoiceQue = ({ route, navigation }) => {
           height={screenHeight * .65}
           style={styles.questionCard}
           ref={carouselRef}
-          
+
         />
         {/* </View> */}
         {/* <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 10, marginBottom:30,  gap:50  }}>
@@ -507,7 +545,7 @@ const MultipleChoiceQue = ({ route, navigation }) => {
             </TouchableOpacity>
           </View>
 
-          <View style={{marginTop:10}}>
+          <View style={{ marginTop: 10 }}>
             <View>
               <TouchableOpacity
                 onPress={handleCancel}
@@ -558,7 +596,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: '100%',
     paddingHorizontal: 10,
-    marginTop:5
+    marginTop: 5
   },
   questionCard: {
     marginTop: 5,
@@ -583,7 +621,19 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     marginTop: 10,
     width: '100%',
+    gap: 10,
   },
+
+
+  buttonContainerTwo: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: 'space-evenly',
+    marginTop: 10,
+    width: '100%',
+    gap: 10,
+  },
+
   btnContainer: {
     display: 'flex',
     flexDirection: "row",
@@ -644,6 +694,23 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
   },
+  modalViewTwo: {
+    backgroundColor: "white",
+        borderRadius: 32,
+        padding: 20,
+        width: '90%',
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.75,
+        shadowRadius: 3.84,
+        elevation: 5,
+        borderColor: COLORS.midTeal,
+        borderWidth: 3,
+  },
   modalText: {
     marginBottom: 10,
     marginTop: 10,
@@ -667,6 +734,10 @@ const styles = StyleSheet.create({
     height: 40,
     margin: 30,
   },
+  checkcirclestyleTwo: {
+    width: 80,
+    height: 80,
+  },
   overlay: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: "rgba(0, 0, 0, 0.8)",
@@ -685,7 +756,7 @@ const styles = StyleSheet.create({
   },
   answerDiv: {
     width: '100%',
-    
+
   },
   options: {
     width: '100%',
@@ -779,7 +850,23 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'space-between',
     marginBottom: 10,
-  }
+  },
+  createButtonTwo: {
+    backgroundColor: COLORS.primary,
+    paddingVertical: 15,
+    // paddingHorizontal: 30,
+    borderRadius: 30,
+    width: '48%',
+
+  },
+  cancelButtonTwo: {
+    borderWidth: 1,
+    borderColor: COLORS.midGray,
+    paddingVertical: 15,
+    // paddingHorizontal: 30,
+    borderRadius: 30,
+    width: '48%',
+  },
 });
 
 export default MultipleChoiceQue;

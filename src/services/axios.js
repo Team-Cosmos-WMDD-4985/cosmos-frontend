@@ -2,8 +2,8 @@ import axios from "axios"
 import secoreStoreService from "./secureStore";
 
 // Live url
-const url = "https://my-guru.ca/api";
-// const url = "https://3e0a-207-35-73-116.ngrok-free.app"
+// const url = "https://my-guru.ca/api";
+const url = "https://5059-2001-569-52f6-b300-2504-1f36-1123-6bed.ngrok-free.app"
 export default async function useApi(type, endpoint, tokenRequired = true , params = {}, body = {}, headers = {}) {
 
     console.log("Type ", type)
